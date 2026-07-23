@@ -404,44 +404,10 @@
     {% block header_banner %}{% endblock %}
 
     <main>
-        {% block content %}<div class="hero-actions">
-                        <a href="#" class="btn btn-primary-custom text-white px-4 py-2 rounded-pill">Explore Programs</a>
-                        <a href="#" class="btn btn-outline-custom px-4 py-2 rounded-pill">About Us</a>
-                    </div>
-                </div>
- 
-                <div class="hero-illustration">
-                    <div class="call-scene">
-                        <div class="call-speaker">
-                            <div class="speaker-avatar">
-                                <i class="fa-solid fa-user-tie"></i>
-                                <div class="speaker-pulse"></div>
-                            </div>
-                            <div class="speaker-waves"><span></span><span></span><span></span></div>
-                        </div>
- 
-                        <div class="call-connector">
-                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                        </div>
- 
-                        <div class="call-laptop">
-                            <div class="laptop-screen">
-                                <span class="live-badge"><i class="fa-solid fa-circle"></i> Live</span>
-                                <div class="laptop-avatar">
-                                    <i class="fa-solid fa-user-graduate"></i>
-                                    <div class="live-ring"></div>
-                                </div>
-                            </div>
-                            <div class="laptop-base"></div>
-                        </div>
- 
-                        <div class="chat-bubble">
-                            <span class="dot-typing"></span><span class="dot-typing"></span><span class="dot-typing"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>{% endblock %}
+        {% block content %}{% endblock %}
     </main>
+
+    {% include 'Erudition/footer.html' %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
