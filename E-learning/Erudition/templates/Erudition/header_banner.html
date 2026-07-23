@@ -1,0 +1,33 @@
+<section class="global-header-banner" role="banner">
+    <div class="banner-shape shape-1"></div>
+    <div class="banner-shape shape-2"></div>
+    <div class="banner-shape shape-3"></div>
+    <div class="banner-accent accent-1"></div>
+    <div class="banner-accent accent-2"></div>
+    <div class="container banner-container">
+        <div class="banner-glass">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-7">
+                    <p class="banner-eyebrow"><i class="bi bi-award-fill"></i> Erudition Infinite</p>
+                    <h1 class="banner-title">{{ page_title }}</h1>
+                    {% if page_subtitle %}
+                    <p class="banner-subtitle">{{ page_subtitle }}</p>
+                    {% endif %}
+                </div>
+                <div class="col-lg-5 text-lg-end">
+                    <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                        <ol class="breadcrumb justify-content-lg-end mb-0">
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="banner-wave-bottom">
+        <svg viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
+            <path fill="#ffffff" d="M0,36 C240,98 480,0 720,44 C960,88 1200,20 1440,56 L1440,120 L0,120 Z"></path>
+        </svg>
+    </div>
+</section>
