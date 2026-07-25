@@ -17,12 +17,12 @@
                 <div class="footer-panel">
                     <h3 class="footer-heading">Quick Links</h3>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="#" class="footer-link">Home</a></li>
-                        <li><a href="#" class="footer-link">About Us</a></li>
-                        <li><a href="#" class="footer-link">Services</a></li>
-                        <li><a href="#" class="footer-link">Training Programs</a></li>
-                        <li><a href="#" class="footer-link">Gallery</a></li>
-                        <li><a href="#" class="footer-link">Contact Us</a></li>
+                        <li><a href="{% url 'home' %}" class="footer-link">Home</a></li>
+                        <li><a href="{% url 'about' %}" class="footer-link">About Us</a></li>
+                        <li><a href="{% url 'courses' %}" class="footer-link">Services</a></li>
+                        <li><a href="{% url 'courses' %}" class="footer-link">Training Programs</a></li>
+                        <li><a href="{% url 'home' %}" class="footer-link">Gallery</a></li>
+                        <li><a href="{% url 'home' %}" class="footer-link">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
@@ -31,11 +31,11 @@
                 <div class="footer-panel">
                     <h3 class="footer-heading">Resources</h3>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
-                        <li><a href="#" class="footer-link">Refund Policy</a></li>
-                        <li><a href="#" class="footer-link">Terms & Conditions</a></li>
-                        <li><a href="#" class="footer-link">Our Mission</a></li>
-                        <li><a href="#" class="footer-link">Our Vision</a></li>
+                        <li><a href="{% url 'privacy_policy' %}" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="{% url 'refund_policy' %}" class="footer-link">Refund Policy</a></li>
+                        <li><a href="{% url 'terms_conditions' %}" class="footer-link">Terms & Conditions</a></li>
+                        <li><a href="{% url 'our_mission' %}" class="footer-link">Our Mission</a></li>
+                        <li><a href="{% url 'our_vision' %}" class="footer-link">Our Vision</a></li>
                     </ul>
                 </div>
             </div>
