@@ -369,9 +369,98 @@
                 transform: none !important;
             }
         }
+
+        .announcement-bar {
+            width: 100%;
+            background: linear-gradient(90deg, #071a3b 0%, #193a8a 50%, #2452c7 100%);
+            color: #ffffff;
+            padding: 0.8rem 0;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            box-shadow: 0 4px 16px rgba(7, 26, 59, 0.15);
+            overflow: hidden;
+            position: relative;
+            animation: announceFadeIn 0.4s ease;
+        }
+
+        .announcement-bar .announcement-track {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            animation: tickerScroll 22s linear infinite;
+            will-change: transform;
+            white-space: nowrap;
+        }
+
+        .announcement-bar:hover .announcement-track {
+            animation-play-state: paused;
+        }
+
+        .announcement-bar .announcement-group {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .announcement-bar .announcement-item {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            padding: 0 2.25rem;
+        }
+
+        .announcement-bar .announcement-group .announcement-item + .announcement-item {
+            margin-left: 5rem;
+        }
+
+        @keyframes announceFadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes tickerScroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 767.98px) {
+            .announcement-bar {
+                padding: 0.7rem 0;
+            }
+            .announcement-bar .announcement-item {
+                font-size: 0.9rem;
+                padding: 0 1.25rem;
+            }
+            .announcement-bar .announcement-group .announcement-item + .announcement-item {
+                margin-left: 3rem;
+            }
+        }
     </style>
 </head>
 <body>
+    {% if active_announcement %}
+    <div class="announcement-bar" role="status" aria-live="polite">
+        <div class="announcement-track">
+            <div class="announcement-group" aria-hidden="true">
+                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
+                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
+                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
+                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
+                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
+            </div>
+            <div class="announcement-group" aria-hidden="true">
+                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
+                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
+                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
+                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
+                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-3" href="{% url 'home' %}">

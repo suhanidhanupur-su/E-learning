@@ -11,3 +11,15 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Announcement(models.Model):
+    message = models.TextField()
+    is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return self.message[:50]
