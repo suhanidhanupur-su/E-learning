@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .forms import ProfileUpdateForm
+from .models import Profile
 
 
 def home(request):
@@ -58,9 +59,14 @@ def our_vision(request):
     })
 
 
+def get_or_create_profile(user):
+    profile, created = Profile.objects.get_or_create(user=user)
+    return profile
+
+
 @login_required
 def profile_view(request):
-    profile = request.user.profile
+    profile = get_or_create_profile(request.user)
     return render(request, 'Erudition/profile.html', {
         'profile': profile,
         'page_title': 'My Profile',
@@ -70,7 +76,7 @@ def profile_view(request):
 
 @login_required
 def edit_profile(request):
-    profile = request.user.profile
+    profile = get_or_create_profile(request.user)
 
     if request.method == 'POST':
         form = ProfileUpdateForm(request.POST, request.FILES, user=request.user)
