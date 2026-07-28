@@ -1,0 +1,87 @@
+{% extends 'Erudition/base.html' %}
+
+{% block title %}{{ page_title }} | Erudition{% endblock %}
+
+{% block header_banner %}
+    {% include 'Erudition/header_banner.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger shadow-sm" role="alert">
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <div class="d-inline-flex align-items-center gap-2 text-primary fw-semibold mb-2">
+                            <i class="bi bi-pencil-square"></i>
+                            Edit Profile
+                        </div>
+                        <h2 class="h3 mb-1 fw-bold text-dark">Refine your profile details</h2>
+                        <p class="text-muted mb-0">Keep your account information polished, accurate, and professional.</p>
+                    </div>
+
+                    <div class="text-center mb-4">
+                        {% if profile.profile_photo %}
+                            <img src="{{ profile.profile_photo.url }}" alt="Current profile photo" class="img-fluid rounded-circle border border-4 border-primary-subtle shadow" style="width: 140px; height: 140px; object-fit: cover;">
+                        {% else %}
+                            <div class="rounded-circle border border-4 border-primary-subtle shadow d-flex align-items-center justify-content-center bg-light mx-auto" style="width: 140px; height: 140px;">
+                                <i class="bi bi-person-circle text-primary" style="font-size: 4rem;"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data" class="row g-3">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label for="id_full_name" class="form-label fw-semibold">Full Name</label>
+                            <input type="text" class="form-control rounded-3 shadow-sm {% if form.full_name.errors %}is-invalid{% endif %}" id="id_full_name" name="full_name" value="{{ form.full_name.value|default:'' }}" required>
+                            {% if form.full_name.errors %}
+                                <div class="invalid-feedback d-block">{{ form.full_name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_email" class="form-label fw-semibold">Email Address</label>
+                            <input type="email" class="form-control rounded-3 shadow-sm {% if form.email.errors %}is-invalid{% endif %}" id="id_email" name="email" value="{{ form.email.value|default:'' }}" required>
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback d-block">{{ form.email.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_phone_number" class="form-label fw-semibold">Phone Number</label>
+                            <input type="text" class="form-control rounded-3 shadow-sm {% if form.phone_number.errors %}is-invalid{% endif %}" id="id_phone_number" name="phone_number" value="{{ form.phone_number.value|default:'' }}" required>
+                            {% if form.phone_number.errors %}
+                                <div class="invalid-feedback d-block">{{ form.phone_number.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_profile_photo" class="form-label fw-semibold">Profile Photo</label>
+                            <input type="file" class="form-control rounded-3 shadow-sm {% if form.profile_photo.errors %}is-invalid{% endif %}" id="id_profile_photo" name="profile_photo" accept="image/jpeg,image/png,image/webp,image/jpg">
+                            {% if form.profile_photo.errors %}
+                                <div class="invalid-feedback d-block">{{ form.profile_photo.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12 pt-3 d-flex flex-column flex-md-row justify-content-between gap-3">
+                            <a href="{% url 'profile' %}" class="btn btn-outline-custom rounded-pill px-4 py-2 text-primary border-primary">
+                                <i class="bi bi-arrow-left me-2"></i>Back to Profile
+                            </a>
+                            <button type="submit" class="btn btn-primary-custom rounded-pill px-4 py-2">
+                                <i class="bi bi-check-circle me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

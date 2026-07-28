@@ -1,4 +1,8 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
+
+from .forms import ProfileUpdateForm
 
 
 def home(request):
@@ -51,4 +55,51 @@ def our_vision(request):
     return render(request, 'Erudition/our_vision.html', {
         'page_title': 'Our Vision',
         'page_subtitle': 'Building a future where organizations thrive through thoughtful education and strategic transformation.',
+    })
+
+
+@login_required
+def profile_view(request):
+    profile = request.user.profile
+    return render(request, 'Erudition/profile.html', {
+        'profile': profile,
+        'page_title': 'My Profile',
+        'page_subtitle': 'Manage your personal details and professional presence.',
+    })
+
+
+@login_required
+def edit_profile(request):
+    profile = request.user.profile
+
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, user=request.user)
+        if form.is_valid():
+            full_name = form.cleaned_data['full_name'].strip()
+            names = full_name.split(maxsplit=1)
+            request.user.first_name = names[0] if names else ''
+            request.user.last_name = names[1] if len(names) > 1 else ''
+            request.user.email = form.cleaned_data['email']
+            request.user.save(update_fields=['first_name', 'last_name', 'email'])
+
+            profile.full_name = full_name
+            profile.phone_number = form.cleaned_data['phone_number']
+            if form.cleaned_data.get('profile_photo'):
+                profile.profile_photo = form.cleaned_data['profile_photo']
+            profile.save()
+
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('profile')
+    else:
+        form = ProfileUpdateForm(initial={
+            'full_name': profile.full_name or f"{request.user.first_name} {request.user.last_name}".strip(),
+            'email': request.user.email,
+            'phone_number': profile.phone_number,
+        }, user=request.user)
+
+    return render(request, 'Erudition/edit_profile.html', {
+        'form': form,
+        'profile': profile,
+        'page_title': 'Edit Profile',
+        'page_subtitle': 'Update your contact details and professional photo.',
     })
