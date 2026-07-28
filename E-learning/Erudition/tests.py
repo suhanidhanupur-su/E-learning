@@ -28,6 +28,12 @@ class ProfileFlowTests(TestCase):
 
         self.assertEqual(response.status_code, 302)
 
+    def test_login_page_is_available(self):
+        response = self.client.get('/accounts/login/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Login')
+
     def test_edit_profile_updates_user_details(self):
         self.client.login(username='profileuser', password='strong-password-123')
 
