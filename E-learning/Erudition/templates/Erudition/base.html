@@ -7,6 +7,7 @@
     <title>{% block title %}Erudition{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'Erudition/images/LOGO.png' %}">
     <link rel="stylesheet" href="{% static 'Erudition/css/style.css' %}">
     <style>
          /* ===== Animated hero banner (blue consultancy theme) ===== */
@@ -477,27 +478,6 @@
     </style>
 </head>
 <body>
-    {% if active_announcement %}
-    <div class="announcement-bar" role="status" aria-live="polite">
-        <div class="announcement-track">
-            <div class="announcement-group" aria-hidden="true">
-                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
-                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
-                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
-                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
-                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
-            </div>
-            <div class="announcement-group" aria-hidden="true">
-                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
-                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
-                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
-                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
-                <span class="announcement-item"><i class="bi bi-megaphone-fill"></i> {{ active_announcement.message }}</span>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-3" href="{% url 'home' %}">

@@ -18,11 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.templatetags.static import static as static_tag
+from django.views.generic.base import RedirectView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('favicon.ico', RedirectView.as_view(url=static_tag('Erudition/images/LOGO.png'), permanent=True)),
     path('', include('Erudition.urls')),
 ]
 

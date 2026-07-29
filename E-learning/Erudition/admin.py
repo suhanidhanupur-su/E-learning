@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Announcement, Category
+from .models import Announcement, Category, LiveClass
 
 
 @admin.register(Category)
@@ -16,3 +16,11 @@ class AnnouncementAdmin(admin.ModelAdmin):
     list_filter = ("is_active",)
     search_fields = ("message",)
     ordering = ("-created_at",)
+
+
+@admin.register(LiveClass)
+class LiveClassAdmin(admin.ModelAdmin):
+    list_display = ("title", "instructor", "start_time", "duration_minutes", "is_active")
+    list_filter = ("is_active", "start_time")
+    search_fields = ("title", "instructor", "description")
+    ordering = ("start_time",)

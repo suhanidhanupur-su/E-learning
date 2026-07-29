@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .forms import ProfileUpdateForm
-from .models import Profile
+from .models import LiveClass, Profile
 
 
 def home(request):
@@ -21,6 +21,15 @@ def courses(request):
     return render(request, 'Erudition/courses.html', {
         'page_title': 'Courses',
         'page_subtitle': 'Browse our curated collection of skills, certifications, and live training offerings built for modern professionals.',
+    })
+
+
+def live_classes(request):
+    live_classes = LiveClass.objects.filter(is_active=True).order_by('start_time')
+    return render(request, 'Erudition/live_classes.html', {
+        'live_classes': live_classes,
+        'page_title': 'Live Classes',
+        'page_subtitle': 'Join our upcoming live sessions with expert instructors and practical learning experiences.',
     })
 
 

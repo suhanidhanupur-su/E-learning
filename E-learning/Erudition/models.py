@@ -43,6 +43,22 @@ class Profile(models.Model):
         return self.full_name or self.user.username
 
 
+class LiveClass(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    instructor = models.CharField(max_length=255, blank=True)
+    start_time = models.DateTimeField()
+    duration_minutes = models.PositiveIntegerField(default=60)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('start_time',)
+
+    def __str__(self):
+        return self.title
+
+
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

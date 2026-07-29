@@ -15,6 +15,21 @@ class HomePageTests(TestCase):
         self.assertContains(response, 'Courses')
 
 
+class LiveClassesPageTests(TestCase):
+    def test_live_classes_page_renders(self):
+        response = self.client.get('/live-classes/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Live Classes')
+
+
+class FaviconTests(TestCase):
+    def test_favicon_redirects_to_a_static_asset(self):
+        response = self.client.get('/favicon.ico')
+
+        self.assertEqual(response.status_code, 301)
+
+
 class ProfileFlowTests(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user(
