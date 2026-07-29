@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.db.models.signals import pre_save
+from django.utils.text import slugify
 
 
 class Category(models.Model):
@@ -63,3 +65,41 @@ class LiveClass(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.get_or_create(user=instance)
+
+
+class Course(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='courses')
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    short_description = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True)
+    course_image = models.ImageField(upload_to='courses/', blank=True, null=True)
+    instructor_name = models.CharField(max_length=255, blank=True)
+    duration = models.CharField(max_length=50, blank=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    is_featured = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-created_at',)
+
+    def __str__(self):
+        return self.title
+
+
+def _generate_unique_slug(instance, slug_field_name='slug'):
+    base = slugify(instance.title)[:200]
+    slug = base
+    Model = instance.__class__
+    counter = 1
+    while Model.objects.filter(**{slug_field_name: slug}).exclude(pk=instance.pk).exists():
+        slug = f"{base}-{counter}"
+        counter += 1
+    return slug
+
+
+@receiver(pre_save, sender=Course)
+def ensure_course_slug(sender, instance, **kwargs):
+    if not instance.slug:
+        instance.slug = _generate_unique_slug(instance)

@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .forms import ProfileUpdateForm
-from .models import LiveClass, Profile
+from .models import LiveClass, Profile, Category, Course
+from django.db.models import Prefetch
 
 
 def home(request):
@@ -18,9 +19,14 @@ def about(request):
 
 
 def courses(request):
+    categories = Category.objects.prefetch_related(
+        Prefetch('courses', queryset=Course.objects.filter(is_active=True).order_by('-is_featured', '-created_at'))
+    ).order_by('name')
+
     return render(request, 'Erudition/courses.html', {
         'page_title': 'Courses',
         'page_subtitle': 'Browse our curated collection of skills, certifications, and live training offerings built for modern professionals.',
+        'categories': categories,
     })
 
 
