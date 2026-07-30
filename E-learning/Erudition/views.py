@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .forms import ProfileUpdateForm
-from .models import LiveClass, Profile, Category, Course
+from .models import LiveClass, Profile, Category, Course, TeamMember
 from django.db.models import Prefetch
 
 
@@ -12,9 +12,11 @@ def home(request):
 
 
 def about(request):
+    team_members = TeamMember.objects.filter(is_active=True).order_by('display_order', 'employee_name')
     return render(request, 'Erudition/about.html', {
         'page_title': 'About Us',
         'page_subtitle': 'Discover our premium corporate and educational learning experiences designed for teams, leaders, and institutions.',
+        'team_members': team_members,
     })
 
 

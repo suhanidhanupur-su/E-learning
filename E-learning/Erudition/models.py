@@ -45,6 +45,23 @@ class Profile(models.Model):
         return self.full_name or self.user.username
 
 
+class TeamMember(models.Model):
+    employee_image = models.ImageField(upload_to='team/', blank=False)
+    employee_name = models.CharField(max_length=150)
+    role = models.CharField(max_length=150)
+    description = models.TextField()
+    display_order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["display_order", "employee_name"]
+
+    def __str__(self):
+        return self.employee_name
+
+
 class LiveClass(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)

@@ -29,7 +29,46 @@
                 </div>
             </div>
         </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-10">
+                <div class="page-card shadow-soft">
+                    <div class="card-body">
+                        <h2 class="section-heading text-center">Our Leadership Team</h2>
+                        <p class="section-text text-center mb-5">
+                            Meet the experienced trainers and mentors driving excellence at Erudition Infinite.
+                        </p>
+
+                        {% if team_members %}
+                            <div class="row g-4 align-items-stretch">
+                                {% for member in team_members %}
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="team-card h-100 d-flex flex-column">
+                                            {% if member.employee_image %}
+                                                <img src="{{ member.employee_image.url }}" alt="{{ member.employee_name }}" class="team-card-image">
+                                            {% else %}
+                                                <div class="team-card-image team-card-image-placeholder">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            {% endif %}
+                                            <div class="team-card-body text-center p-4">
+                                                <h4 class="team-name mb-2">{{ member.employee_name }}</h4>
+                                                <p class="team-role mb-3">{{ member.role }}</p>
+                                                <p class="team-description mb-0">{{ member.description }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-4">
+                                <p class="section-text mb-0">No team members available.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
 </section>
 {% endblock %}

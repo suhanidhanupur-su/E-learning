@@ -1,6 +1,7 @@
 from django.contrib import admin
+from django.utils.html import format_html
 
-from .models import Announcement, Category, LiveClass, Course
+from .models import Announcement, Category, LiveClass, Course, TeamMember
 
 
 @admin.register(Category)
@@ -33,3 +34,18 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ("title", "instructor_name", "short_description", "description")
     prepopulated_fields = {"slug": ("title",)}
     ordering = ("-created_at",)
+
+
+@admin.register(TeamMember)
+class TeamMemberAdmin(admin.ModelAdmin):
+    def employee_image_thumbnail(self, obj):
+        if obj.employee_image:
+            return format_html('<img src="{}" width="50" height="50" style="object-fit:cover; border-radius:6px;" />', obj.employee_image.url)
+        return "-"
+
+    employee_image_thumbnail.short_description = "Image"
+
+    list_display = ("employee_image_thumbnail", "employee_name", "role")
+    search_fields = ("employee_name", "role")
+    ordering = ("employee_name",)
+    list_per_page = 10

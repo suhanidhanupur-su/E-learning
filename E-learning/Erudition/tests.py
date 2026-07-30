@@ -5,6 +5,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from PIL import Image
 
+from .models import TeamMember
+
 
 class HomePageTests(TestCase):
     def test_homepage_renders(self):
@@ -28,6 +30,26 @@ class FaviconTests(TestCase):
         response = self.client.get('/favicon.ico')
 
         self.assertEqual(response.status_code, 301)
+
+
+class TeamMemberModelTests(TestCase):
+    def test_team_member_is_created_with_expected_defaults(self):
+        image = BytesIO()
+        Image.new('RGB', (100, 100), color='gold').save(image, format='PNG')
+        image.seek(0)
+        uploaded_image = SimpleUploadedFile('trainer.png', image.getvalue(), content_type='image/png')
+
+        team_member = TeamMember.objects.create(
+            employee_image=uploaded_image,
+            employee_name='Aarav Sharma',
+            role='Corporate Trainer',
+            description='Senior corporate trainer with a focus on leadership development.',
+            display_order=2,
+        )
+
+        self.assertTrue(team_member.is_active)
+        self.assertEqual(team_member.display_order, 2)
+        self.assertEqual(str(team_member), 'Aarav Sharma')
 
 
 class ProfileFlowTests(TestCase):
