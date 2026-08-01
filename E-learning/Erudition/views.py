@@ -21,23 +21,52 @@ def about(request):
 
 
 def courses(request):
-    categories = Category.objects.prefetch_related(
-        Prefetch('courses', queryset=Course.objects.filter(is_active=True).order_by('-is_featured', '-created_at'))
-    ).order_by('name')
+    category_slug = request.GET.get('category')
+    categories = Category.objects.order_by('name')
+    courses = Course.objects.filter(is_active=True)
+
+    if category_slug:
+        courses = courses.filter(category__slug=category_slug)
+
+    courses = courses.order_by('-is_featured', '-created_at')
 
     return render(request, 'Erudition/courses.html', {
+        'categories': categories,
+        'courses': courses,
+        'active_category_slug': category_slug,
         'page_title': 'Courses',
         'page_subtitle': 'Browse our curated collection of skills, certifications, and live training offerings built for modern professionals.',
-        'categories': categories,
     })
 
 
 def live_classes(request):
-    live_classes = LiveClass.objects.filter(is_active=True).order_by('start_time')
+    category_slug = request.GET.get('category')
+    categories = Category.objects.order_by('name')
+    live_classes = LiveClass.objects.filter(is_active=True)
+
+    if category_slug:
+        live_classes = live_classes.filter(category__slug=category_slug)
+
+    live_classes = live_classes.order_by('start_time')
+
     return render(request, 'Erudition/live_classes.html', {
+        'categories': categories,
         'live_classes': live_classes,
+        'active_category_slug': category_slug,
         'page_title': 'Live Classes',
         'page_subtitle': 'Join our upcoming live sessions with expert instructors and practical learning experiences.',
+    })
+
+
+def articles(request):
+    category_slug = request.GET.get('category')
+    categories = Category.objects.order_by('name')
+
+    return render(request, 'Erudition/articles.html', {
+        'categories': categories,
+        'active_category_slug': category_slug,
+        'page_title': 'Articles',
+        'page_subtitle': 'Explore thought leadership and practical business insights aligned with our learning programs.',
     })
 
 

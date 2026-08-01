@@ -478,28 +478,36 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg sticky-top">
+        <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-3" href="{% url 'home' %}">
-                <img src="{% static 'Erudition/images/LOGO.png' %}" alt="Erudition logo" class="logo-img">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'Erudition/images/logo.png' %}" alt="Erudition Infinite" class="logo-img">
             </a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav align-items-lg-center ms-lg-3">
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'courses' %}">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'about' %}">About</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="coursesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Courses</a>
+                        <ul class="dropdown-menu" aria-labelledby="coursesDropdown">
+                            <li><a class="dropdown-item" href="#">All Courses</a></li>
+                            <li><a class="dropdown-item" href="#">Leadership Development</a></li>
+                            <li><a class="dropdown-item" href="#">Communication Skills</a></li>
+                            <li><a class="dropdown-item" href="#">Personality Development</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="#">Live Classes</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Articles</a></li>
                 </ul>
-
+ 
                 <form class="nav-search ms-lg-auto" role="search" onsubmit="return false;">
-                    <i class="bi bi-search"></i>
+                    <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="search" placeholder="Search for courses, articles, skills...">
                 </form>
-
+ 
                 <div class="d-flex align-items-center nav-actions ms-lg-3">
                     <a href="#" class="nav-link-plain">Sign In</a>
                     <a href="#" class="btn-register">Register</a>
@@ -507,6 +515,7 @@
             </div>
         </div>
     </nav>
+
 
     {% block header_banner %}{% endblock %}
 

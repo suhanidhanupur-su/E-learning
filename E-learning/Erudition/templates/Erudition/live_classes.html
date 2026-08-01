@@ -18,6 +18,9 @@
                             Join our live sessions and learn directly from experienced instructors in real time.
                         </p>
 
+                        {% load category_tags %}
+                        {% category_tabs active_slug=active_category_slug %}
+
                         {% if live_classes %}
                             <div class="row g-4 mt-3">
                                 {% for live_class in live_classes %}

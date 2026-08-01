@@ -21,8 +21,8 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 @admin.register(LiveClass)
 class LiveClassAdmin(admin.ModelAdmin):
-    list_display = ("title", "instructor", "start_time", "duration_minutes", "is_active")
-    list_filter = ("is_active", "start_time")
+    list_display = ("title", "category", "instructor", "start_time", "duration_minutes", "is_active")
+    list_filter = ("is_active", "start_time", "category")
     search_fields = ("title", "instructor", "description")
     ordering = ("start_time",)
 

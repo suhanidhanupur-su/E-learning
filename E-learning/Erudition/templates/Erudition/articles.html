@@ -1,0 +1,33 @@
+{% extends 'Erudition/base.html' %}
+
+{% block title %}Articles | Erudition{% endblock %}
+
+{% block header_banner %}
+    {% include 'Erudition/header_banner.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="page-card shadow-soft">
+                    <div class="card-body">
+                        <h2 class="section-heading">Articles</h2>
+                        <p class="section-text">
+                            Explore thought leadership and practical business insights aligned with our learning programs.
+                        </p>
+
+                        {% load category_tags %}
+                        {% category_tabs active_slug=active_category_slug %}
+
+                        <div class="alert alert-warning mt-4" role="alert">
+                            Article filtering is set up, but the article model is not yet connected. This placeholder page will display articles once the model is added.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

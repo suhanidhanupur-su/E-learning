@@ -63,6 +63,13 @@ class TeamMember(models.Model):
 
 
 class LiveClass(models.Model):
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='live_classes'
+    )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     instructor = models.CharField(max_length=255, blank=True)

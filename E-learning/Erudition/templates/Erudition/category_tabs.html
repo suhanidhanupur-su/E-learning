@@ -1,0 +1,42 @@
+{# Reusable Category Tabs component
+   Use: {% load category_tags %}  then  {% category_tabs %}
+
+   Design: Blue & Gold theme. Uses Bootstrap utilities only for layout and styling.
+#}
+
+<div class="category-tabs-container">
+  <div class="d-flex flex-row flex-nowrap overflow-auto align-items-center bg-white rounded-pill shadow-sm p-2">
+    {# "All" tab #}
+    {% if not active_slug or active_slug == 'all' %}
+      <a href="{{ request_path }}" class="btn btn-primary rounded-pill px-4 py-2 me-3">All</a>
+    {% else %}
+      <a href="{{ request_path }}" class="btn btn-light rounded-pill px-4 py-2 me-3 text-dark border-0">All</a>
+    {% endif %}
+
+    {# Dynamic categories from the database #}
+    {% for category in categories %}
+      {% with category_url=request_path|add:'?category='|add:category.slug %}
+        {% if active_slug and category.slug == active_slug %}
+          <a href="{{ category_url }}" class="btn btn-primary rounded-pill px-4 py-2 me-3">{{ category.name }}</a>
+        {% else %}
+          <a href="{{ category_url }}" class="btn btn-light rounded-pill px-4 py-2 me-3 text-dark border-0">{{ category.name }}</a>
+        {% endif %}
+      {% endwith %}
+    {% empty %}
+      <span class="text-muted px-3">No categories</span>
+    {% endfor %}
+  </div>
+</div>
+
+{# Notes:
+ - This component renders horizontal, scrollable tabs on small screens and a horizontal row on desktop.
+ - It intentionally does not implement filtering or links; use `data-slug` attributes or replace `href` where you integrate filtering.
+ - To include on a page template: load the tag library and call the tag:
+
+   {% load category_tags %}
+   {% category_tabs %}
+
+   Or pass the active slug:
+   {% category_tabs active_slug=selected_category.slug %}
+
+#}
