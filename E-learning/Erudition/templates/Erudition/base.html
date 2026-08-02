@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 {% load static %}
 <head>
@@ -20,16 +20,14 @@
             position: sticky;
             top: 0;
             z-index: 1050;
-            background: rgba(8, 15, 40, 0.96);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-            transition: background 0.3s ease;
+            background: #ffffff;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 2px 20px rgba(15, 23, 42, 0.08);
+            transition: box-shadow 0.3s ease;
             padding: 0;
         }
         .site-navbar.scrolled {
-            background: rgba(5, 10, 28, 0.99);
+            box-shadow: 0 4px 32px rgba(15, 23, 42, 0.14);
         }
         .navbar-inner {
             display: flex;
@@ -47,10 +45,9 @@
             margin-right: 2rem;
         }
         .nav-logo img {
-            height: 42px;
+            height: 44px;
             width: auto;
             object-fit: contain;
-            filter: brightness(1.1);
         }
         /* Nav links */
         .nav-links {
@@ -74,9 +71,9 @@
             align-items: center;
             gap: 5px;
             height: 100%;
-            padding: 0 1.1rem;
-            color: rgba(255,255,255,0.82);
-            font-size: 0.92rem;
+            padding: 0 1rem;
+            color: #1e293b;
+            font-size: 0.93rem;
             font-weight: 600;
             text-decoration: none;
             letter-spacing: 0.01em;
@@ -95,49 +92,64 @@
             left: 50%;
             transform: translateX(-50%);
             width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            height: 2.5px;
+            background: linear-gradient(90deg, #1e40af, #3b82f6);
             border-radius: 2px;
-            transition: width 0.25s ease;
+            transition: width 0.28s ease;
         }
         .nav-links > li > a:hover,
         .nav-links > li > .nav-drop-trigger:hover {
-            color: #ffffff;
+            color: #1e40af;
         }
         .nav-links > li > a:hover::after,
         .nav-links > li > .nav-drop-trigger:hover::after,
         .nav-links > li.active > a::after {
-            width: 60%;
+            width: 65%;
         }
         .nav-links > li.active > a {
-            color: #ffffff;
+            color: #1e40af;
         }
         .nav-drop-trigger .drop-arrow {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
+            color: #64748b;
             transition: transform 0.25s ease;
             margin-left: 2px;
         }
         .nav-links > li.open .nav-drop-trigger .drop-arrow {
             transform: rotate(180deg);
+            color: #1e40af;
         }
         /* Dropdown */
         .nav-dropdown {
             position: absolute;
-            top: calc(100% + 6px);
+            top: calc(100% + 10px);
             left: 50%;
-            transform: translateX(-50%) translateY(8px);
-            min-width: 220px;
-            background: rgba(10, 18, 50, 0.97);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
+            transform: translateX(-50%) translateY(10px);
+            min-width: 230px;
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 18px;
             padding: 10px 8px;
-            box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.14),
+                        0 4px 16px rgba(15, 23, 42, 0.06);
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.22s ease, transform 0.22s ease;
             z-index: 200;
+        }
+        /* Small triangle pointer */
+        .nav-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #ffffff;
+            border-left: 1px solid rgba(15,23,42,0.08);
+            border-top: 1px solid rgba(15,23,42,0.08);
+            transform: translateX(-50%) rotate(45deg);
         }
         .nav-links > li.open .nav-dropdown {
             opacity: 1;
@@ -149,37 +161,37 @@
             align-items: center;
             gap: 10px;
             padding: 10px 14px;
-            border-radius: 10px;
-            color: rgba(255,255,255,0.8);
+            border-radius: 11px;
+            color: #334155;
             font-size: 0.88rem;
             font-weight: 500;
             text-decoration: none;
             transition: background 0.18s ease, color 0.18s ease;
         }
         .nav-dropdown a .dd-icon {
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             border-radius: 8px;
-            background: rgba(59,130,246,0.15);
+            background: rgba(30, 64, 175, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.78rem;
-            color: #60a5fa;
+            font-size: 0.8rem;
+            color: #1e40af;
             flex-shrink: 0;
-            transition: background 0.18s ease;
+            transition: background 0.18s ease, color 0.18s ease;
         }
         .nav-dropdown a:hover {
-            background: rgba(59,130,246,0.12);
-            color: #ffffff;
+            background: rgba(30, 64, 175, 0.06);
+            color: #1e40af;
         }
         .nav-dropdown a:hover .dd-icon {
-            background: rgba(59,130,246,0.25);
+            background: rgba(30, 64, 175, 0.14);
         }
         .dd-divider {
             height: 1px;
-            background: rgba(255,255,255,0.07);
-            margin: 6px 4px;
+            background: rgba(15, 23, 42, 0.07);
+            margin: 6px 6px;
         }
         /* Search bar */
         .nav-search-wrap {
@@ -189,29 +201,31 @@
         }
         .nav-search-wrap input {
             height: 38px;
-            width: 220px;
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.12);
+            width: 210px;
+            background: #f1f5f9;
+            border: 1.5px solid #e2e8f0;
             border-radius: 999px;
-            color: #ffffff;
+            color: #0f172a;
             font-size: 0.85rem;
+            font-family: inherit;
             padding: 0 14px 0 38px;
             outline: none;
-            transition: border-color 0.22s ease, background 0.22s ease, width 0.3s ease;
+            transition: border-color 0.22s ease, background 0.22s ease, width 0.3s ease, box-shadow 0.22s ease;
         }
-        .nav-search-wrap input::placeholder { color: rgba(255,255,255,0.42); }
+        .nav-search-wrap input::placeholder { color: #94a3b8; }
         .nav-search-wrap input:focus {
-            border-color: rgba(59,130,246,0.55);
-            background: rgba(255,255,255,0.1);
-            width: 270px;
+            border-color: #3b82f6;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+            width: 260px;
         }
         .nav-search-icon {
             position: absolute;
-            left: 12px;
+            left: 13px;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(255,255,255,0.42);
-            font-size: 0.8rem;
+            color: #94a3b8;
+            font-size: 0.82rem;
             pointer-events: none;
         }
         /* Auth buttons */
@@ -224,40 +238,45 @@
         }
         .btn-nav-signin {
             height: 38px;
-            padding: 0 18px;
-            border: 1px solid rgba(255,255,255,0.22);
+            padding: 0 20px;
+            border: 1.5px solid #cbd5e1;
             border-radius: 999px;
             background: transparent;
-            color: rgba(255,255,255,0.85);
+            color: #334155;
             font-size: 0.85rem;
             font-weight: 600;
+            font-family: inherit;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             transition: border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+            cursor: pointer;
         }
         .btn-nav-signin:hover {
-            border-color: rgba(255,255,255,0.5);
-            color: #ffffff;
-            background: rgba(255,255,255,0.06);
+            border-color: #1e40af;
+            color: #1e40af;
+            background: rgba(30, 64, 175, 0.05);
         }
         .btn-nav-register {
             height: 38px;
-            padding: 0 20px;
+            padding: 0 22px;
             border-radius: 999px;
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
             color: #ffffff;
             font-size: 0.85rem;
             font-weight: 700;
+            font-family: inherit;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            box-shadow: 0 8px 20px rgba(59,130,246,0.35);
+            border: none;
+            box-shadow: 0 6px 18px rgba(59, 130, 246, 0.32);
             transition: transform 0.22s ease, box-shadow 0.22s ease;
+            cursor: pointer;
         }
         .btn-nav-register:hover {
             transform: translateY(-1px);
-            box-shadow: 0 12px 28px rgba(59,130,246,0.5);
+            box-shadow: 0 10px 26px rgba(59, 130, 246, 0.48);
             color: #ffffff;
         }
         /* Mobile hamburger */
@@ -275,7 +294,7 @@
             display: block;
             width: 24px;
             height: 2px;
-            background: rgba(255,255,255,0.85);
+            background: #334155;
             border-radius: 2px;
             transition: transform 0.25s ease, opacity 0.25s ease;
         }
@@ -292,12 +311,12 @@
                 top: 72px;
                 left: 0;
                 right: 0;
-                background: rgba(5,10,28,0.98);
-                backdrop-filter: blur(24px);
-                padding: 1rem;
+                background: #ffffff;
+                border-bottom: 1px solid rgba(15,23,42,0.08);
+                box-shadow: 0 8px 30px rgba(15,23,42,0.1);
+                padding: 0.75rem;
                 height: auto;
                 z-index: 1049;
-                border-bottom: 1px solid rgba(255,255,255,0.08);
                 gap: 2px;
             }
             .nav-links.mobile-open > li { height: auto; }
@@ -308,6 +327,12 @@
                 border-radius: 10px;
                 width: 100%;
                 justify-content: space-between;
+                color: #1e293b;
+            }
+            .nav-links.mobile-open > li > a:hover,
+            .nav-links.mobile-open > li > .nav-drop-trigger:hover {
+                background: #f1f5f9;
+                color: #1e40af;
             }
             .nav-links.mobile-open > li > a::after,
             .nav-links.mobile-open > li > .nav-drop-trigger::after { display: none; }
@@ -318,11 +343,12 @@
                 pointer-events: auto;
                 box-shadow: none;
                 border: none;
-                background: rgba(255,255,255,0.04);
+                background: #f8fafc;
                 border-radius: 12px;
                 margin-top: 4px;
                 display: none;
             }
+            .nav-dropdown::before { display: none; }
             .nav-links > li.open .nav-dropdown { display: block; }
             .nav-auth-mobile {
                 display: flex;
@@ -844,12 +870,6 @@
 
                     <li><a href="#">Live Classes</a></li>
                     <li><a href="#">Articles</a></li>
-
-                    <!-- Mobile-only auth -->
-                    <li class="nav-auth-mobile">
-                        <a href="#" class="btn-nav-signin" style="flex:1;justify-content:center">Sign In</a>
-                        <a href="#" class="btn-nav-register" style="flex:1;justify-content:center">Register</a>
-                    </li>
                 </ul>
 
                 <!-- Search -->

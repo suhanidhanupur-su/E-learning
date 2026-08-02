@@ -12,11 +12,11 @@
                poster="{% static 'Erudition/images/LOGO.png' %}">
             <source src="{% static 'videos/use_this_logo_and_then_generat (1).mp4' %}" type="video/mp4">
         </video>
-        <!-- Dark gradient overlay so text is always readable -->
+        <!-- Dark gradient overlay -->
         <div class="hero-video-fade"></div>
     </div>
 
-    <!-- Centred hero content -->
+    <!-- Perfectly centred hero content -->
     <div class="hero-content-center">
         <div class="container">
             <div class="hero-inner">
@@ -48,11 +48,11 @@
 
                 <!-- CTA buttons -->
                 <div class="hero-actions">
-                    <a href="#" class="btn btn-primary-custom text-white px-4 py-2 rounded-pill">
-                        <i class="bi bi-grid-3x3-gap-fill me-2"></i>Explore Programs
+                    <a href="#" class="hero-btn-primary">
+                        <i class="bi bi-grid-3x3-gap-fill"></i> Explore Programs
                     </a>
-                    <a href="#" class="btn btn-outline-custom px-4 py-2 rounded-pill">
-                        <i class="bi bi-info-circle me-2"></i>About Us
+                    <a href="#" class="hero-btn-outline">
+                        <i class="bi bi-info-circle"></i> About Us
                     </a>
                 </div>
 
@@ -70,7 +70,7 @@
 </section>
 
 <style>
-/* ===== Full-screen video hero (home page only) ===== */
+/* ===== Full-screen video hero ===== */
 .hero-section {
     position: relative;
     width: 100%;
@@ -91,82 +91,94 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: center top;
 }
 
-/* Rich dark overlay: heavier at top & bottom for legibility */
+/* Stronger overlay so text pops */
 .hero-video-fade {
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(180deg,
-            rgba(5, 10, 28, 0.72) 0%,
-            rgba(5, 10, 28, 0.40) 40%,
-            rgba(5, 10, 28, 0.55) 70%,
-            rgba(5, 10, 28, 0.88) 100%
-        );
+    background: linear-gradient(
+        170deg,
+        rgba(5, 10, 28, 0.82) 0%,
+        rgba(5, 10, 28, 0.60) 38%,
+        rgba(5, 10, 28, 0.70) 65%,
+        rgba(5, 10, 28, 0.92) 100%
+    );
     pointer-events: none;
 }
 
-/* Content sits above video */
+/* ===== CENTERED content wrapper ===== */
 .hero-content-center {
     position: relative;
     z-index: 1;
     display: flex;
-    align-items: center;
+    align-items: center;          /* vertical centre */
+    justify-content: center;      /* horizontal centre */
     min-height: 100vh;
-    padding: 7rem 0 5rem;
+    padding: 8rem 1rem 5rem;      /* top pad clears navbar */
+    text-align: center;           /* all text centred */
 }
 
+/* Inner box — centred, constrained width */
 .hero-inner {
-    max-width: 720px;
+    max-width: 860px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
 }
 
-/* Eyebrow */
+/* ── Eyebrow ── */
 .hero-eyebrow-label {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(59, 130, 246, 0.18);
-    border: 1px solid rgba(59, 130, 246, 0.35);
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.40);
     color: #93c5fd;
     font-weight: 600;
-    font-size: 0.82rem;
-    padding: 7px 18px;
+    font-size: 0.78rem;
+    padding: 8px 20px;
     border-radius: 999px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.6rem;
     opacity: 0;
     animation: fadeUp 0.7s ease 0.1s forwards;
 }
-.hero-eyebrow-label i { font-size: 1rem; color: #60a5fa; }
+.hero-eyebrow-label i {
+    font-size: 1rem;
+    color: #60a5fa;
+}
 
-/* Headline */
+/* ── Headline — BIG ── */
 .hero-title {
-    font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+    font-size: clamp(3rem, 7vw, 5.2rem);   /* much larger */
     font-weight: 900;
-    line-height: 1.08;
+    line-height: 1.06;
     color: #f8fafc;
-    margin: 0 0 1.4rem;
-    letter-spacing: -0.02em;
-    text-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    margin: 0 0 1rem;
+    letter-spacing: -0.03em;
+    text-shadow: 0 6px 30px rgba(0, 0, 0, 0.5);
     opacity: 0;
     animation: fadeUp 0.7s ease 0.2s forwards;
 }
 
-/* Rotator */
+/* ── Animated rotator ── */
 .hero-rotator {
     display: block;
     position: relative;
-    height: 1.12em;
+    height: 1.1em;
     overflow: hidden;
-    color: #60a5fa;
 }
 .hero-rotator span {
     position: absolute;
     left: 0;
+    right: 0;
     top: 0;
+    text-align: center;
     opacity: 0;
     transform: translateY(100%);
     animation: rotateWord 10s infinite;
@@ -182,92 +194,119 @@
 .hero-rotator span:nth-child(5) { animation-delay: 8s; }
 
 @keyframes rotateWord {
-    0%, 2%  { opacity: 0; transform: translateY(100%); }
-    6%, 16% { opacity: 1; transform: translateY(0); }
+    0%, 2%    { opacity: 0; transform: translateY(100%); }
+    6%, 16%   { opacity: 1; transform: translateY(0); }
     20%, 100% { opacity: 0; transform: translateY(-100%); }
 }
 
-/* Sub-text */
+/* ── Sub-text — bigger, centred ── */
 .hero-subtext {
-    color: rgba(226, 232, 240, 0.92);
-    font-size: 1.1rem;
-    line-height: 1.85;
-    max-width: 620px;
-    margin: 0 0 2.2rem;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    color: rgba(226, 232, 240, 0.90);
+    font-size: clamp(1.05rem, 2vw, 1.25rem);   /* bigger */
+    line-height: 1.9;
+    max-width: 680px;
+    margin: 1.4rem 0 2.4rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
     opacity: 0;
     animation: fadeUp 0.7s ease 0.35s forwards;
 }
 
-/* CTA buttons */
+/* ── CTA buttons — centred ── */
 .hero-actions {
     display: flex;
-    gap: 14px;
+    justify-content: center;
+    gap: 16px;
     flex-wrap: wrap;
-    margin-bottom: 2.2rem;
+    margin-bottom: 2.5rem;
     opacity: 0;
     animation: fadeUp 0.7s ease 0.5s forwards;
 }
-.btn-primary-custom {
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
-    border: none;
-    color: #ffffff !important;
+
+.hero-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 52px;
+    padding: 0 32px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: #ffffff;
+    font-size: 1rem;
     font-weight: 700;
-    font-size: 0.95rem;
-    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4);
+    font-family: inherit;
+    text-decoration: none;
+    border: none;
+    box-shadow: 0 14px 36px rgba(59, 130, 246, 0.42);
     transition: transform 0.22s ease, box-shadow 0.22s ease;
+    cursor: pointer;
 }
-.btn-primary-custom:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 42px rgba(59, 130, 246, 0.55);
-}
-.btn-outline-custom {
-    border: 1.5px solid rgba(255,255,255,0.45);
-    color: #ffffff !important;
-    background: rgba(255,255,255,0.07);
-    font-weight: 600;
-    font-size: 0.95rem;
-    backdrop-filter: blur(6px);
-    transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
-}
-.btn-outline-custom:hover {
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.7);
-    transform: translateY(-2px);
+.hero-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 48px rgba(59, 130, 246, 0.58);
+    color: #ffffff;
 }
 
-/* Trust badges */
+.hero-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 52px;
+    padding: 0 32px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.50);
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+    cursor: pointer;
+}
+.hero-btn-outline:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.80);
+    transform: translateY(-3px);
+    color: #ffffff;
+}
+
+/* ── Trust badges — centred ── */
 .hero-badges {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 20px;
     opacity: 0;
     animation: fadeUp 0.7s ease 0.65s forwards;
 }
 .hero-badges span {
     display: flex;
     align-items: center;
-    gap: 6px;
-    color: rgba(255,255,255,0.75);
-    font-size: 0.85rem;
+    gap: 7px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.9rem;
     font-weight: 500;
 }
 .hero-badges span i {
     color: #34d399;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
+/* Shared keyframe */
 @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(22px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Mobile */
+/* ── Mobile ── */
 @media (max-width: 767px) {
-    .hero-content-center { padding: 6rem 0 4rem; }
-    .hero-title { font-size: clamp(2.1rem, 8vw, 3rem); }
-    .hero-subtext { font-size: 0.98rem; }
-    .hero-badges { gap: 10px; }
+    .hero-content-center { padding: 7rem 1rem 4rem; }
+    .hero-title           { font-size: clamp(2.4rem, 9vw, 3.4rem); }
+    .hero-subtext         { font-size: 1rem; }
+    .hero-btn-primary,
+    .hero-btn-outline     { height: 46px; padding: 0 24px; font-size: 0.93rem; }
+    .hero-badges          { gap: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -275,8 +314,8 @@
     .hero-title,
     .hero-subtext,
     .hero-actions,
-    .hero-badges { opacity: 1; animation: none; transform: none; }
-    .hero-rotator span { animation: none; opacity: 1; }
+    .hero-badges          { opacity: 1; animation: none; transform: none; }
+    .hero-rotator span    { animation: none; opacity: 1; }
     .hero-rotator span:not(:first-child) { display: none; }
 }
 </style>
