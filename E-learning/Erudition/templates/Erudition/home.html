@@ -5,36 +5,279 @@
 
 {% block content %}
 <section class="hero-section">
+
+    <!-- Full-screen background video -->
     <div class="hero-video-bg">
-        <video class="hero-video" autoplay muted loop playsinline poster="{% static 'Erudition/images/LOGO.png' %}">
+        <video class="hero-video" autoplay muted loop playsinline
+               poster="{% static 'Erudition/images/LOGO.png' %}">
             <source src="{% static 'videos/use_this_logo_and_then_generat (1).mp4' %}" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
+        <!-- Dark gradient overlay so text is always readable -->
         <div class="hero-video-fade"></div>
     </div>
 
-    <div class="container hero-flex">
-        <div class="hero-inner">
-            <h1 class="hero-title">
-                Practical training for
-                <span class="hero-rotator">
-                    <span>individuals</span>
-                    <span>students</span>
-                    <span>professionals</span>
-                    <span>institutions</span>
-                    <span>corporates</span>
-                </span>
-            </h1>
-            <p class="hero-subtext">
-                Erudition designs and delivers professional training programs —
-                expert-led workshops, certifications and consultancy that help
-                people and organizations build real, workplace-ready skills.
-            </p>
-            <div class="hero-actions">
-                <a href="#" class="btn btn-primary-custom text-white px-4 py-2 rounded-pill">Explore Programs</a>
-                <a href="#" class="btn btn-outline-custom px-4 py-2 rounded-pill">About Us</a>
+    <!-- Centred hero content -->
+    <div class="hero-content-center">
+        <div class="container">
+            <div class="hero-inner">
+
+                <!-- Eyebrow label -->
+                <div class="hero-eyebrow-label">
+                    <i class="bi bi-mortarboard-fill"></i>
+                    Professional Training &amp; Development
+                </div>
+
+                <!-- Animated headline -->
+                <h1 class="hero-title">
+                    Practical training for
+                    <span class="hero-rotator">
+                        <span>individuals</span>
+                        <span>students</span>
+                        <span>professionals</span>
+                        <span>institutions</span>
+                        <span>corporates</span>
+                    </span>
+                </h1>
+
+                <!-- Sub-text -->
+                <p class="hero-subtext">
+                    Erudition designs and delivers professional training programs —
+                    expert-led workshops, certifications and consultancy that help
+                    people and organizations build real, workplace-ready skills.
+                </p>
+
+                <!-- CTA buttons -->
+                <div class="hero-actions">
+                    <a href="#" class="btn btn-primary-custom text-white px-4 py-2 rounded-pill">
+                        <i class="bi bi-grid-3x3-gap-fill me-2"></i>Explore Programs
+                    </a>
+                    <a href="#" class="btn btn-outline-custom px-4 py-2 rounded-pill">
+                        <i class="bi bi-info-circle me-2"></i>About Us
+                    </a>
+                </div>
+
+                <!-- Trust badges -->
+                <div class="hero-badges">
+                    <span><i class="bi bi-check-circle-fill"></i> Expert-led workshops</span>
+                    <span><i class="bi bi-check-circle-fill"></i> Certified programs</span>
+                    <span><i class="bi bi-check-circle-fill"></i> Real-world skills</span>
+                </div>
+
             </div>
         </div>
     </div>
+
 </section>
+
+<style>
+/* ===== Full-screen video hero (home page only) ===== */
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Video fills entire section */
+.hero-video-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+.hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Rich dark overlay: heavier at top & bottom for legibility */
+.hero-video-fade {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg,
+            rgba(5, 10, 28, 0.72) 0%,
+            rgba(5, 10, 28, 0.40) 40%,
+            rgba(5, 10, 28, 0.55) 70%,
+            rgba(5, 10, 28, 0.88) 100%
+        );
+    pointer-events: none;
+}
+
+/* Content sits above video */
+.hero-content-center {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    padding: 7rem 0 5rem;
+}
+
+.hero-inner {
+    max-width: 720px;
+}
+
+/* Eyebrow */
+.hero-eyebrow-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.18);
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    color: #93c5fd;
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding: 7px 18px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.1s forwards;
+}
+.hero-eyebrow-label i { font-size: 1rem; color: #60a5fa; }
+
+/* Headline */
+.hero-title {
+    font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.08;
+    color: #f8fafc;
+    margin: 0 0 1.4rem;
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.2s forwards;
+}
+
+/* Rotator */
+.hero-rotator {
+    display: block;
+    position: relative;
+    height: 1.12em;
+    overflow: hidden;
+    color: #60a5fa;
+}
+.hero-rotator span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transform: translateY(100%);
+    animation: rotateWord 10s infinite;
+    background: linear-gradient(90deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.hero-rotator span:nth-child(1) { animation-delay: 0s; }
+.hero-rotator span:nth-child(2) { animation-delay: 2s; }
+.hero-rotator span:nth-child(3) { animation-delay: 4s; }
+.hero-rotator span:nth-child(4) { animation-delay: 6s; }
+.hero-rotator span:nth-child(5) { animation-delay: 8s; }
+
+@keyframes rotateWord {
+    0%, 2%  { opacity: 0; transform: translateY(100%); }
+    6%, 16% { opacity: 1; transform: translateY(0); }
+    20%, 100% { opacity: 0; transform: translateY(-100%); }
+}
+
+/* Sub-text */
+.hero-subtext {
+    color: rgba(226, 232, 240, 0.92);
+    font-size: 1.1rem;
+    line-height: 1.85;
+    max-width: 620px;
+    margin: 0 0 2.2rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.35s forwards;
+}
+
+/* CTA buttons */
+.hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 2.2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.5s forwards;
+}
+.btn-primary-custom {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    border: none;
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 42px rgba(59, 130, 246, 0.55);
+}
+.btn-outline-custom {
+    border: 1.5px solid rgba(255,255,255,0.45);
+    color: #ffffff !important;
+    background: rgba(255,255,255,0.07);
+    font-weight: 600;
+    font-size: 0.95rem;
+    backdrop-filter: blur(6px);
+    transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+.btn-outline-custom:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.7);
+    transform: translateY(-2px);
+}
+
+/* Trust badges */
+.hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.65s forwards;
+}
+.hero-badges span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+.hero-badges span i {
+    color: #34d399;
+    font-size: 0.9rem;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .hero-content-center { padding: 6rem 0 4rem; }
+    .hero-title { font-size: clamp(2.1rem, 8vw, 3rem); }
+    .hero-subtext { font-size: 0.98rem; }
+    .hero-badges { gap: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-eyebrow-label,
+    .hero-title,
+    .hero-subtext,
+    .hero-actions,
+    .hero-badges { opacity: 1; animation: none; transform: none; }
+    .hero-rotator span { animation: none; opacity: 1; }
+    .hero-rotator span:not(:first-child) { display: none; }
+}
+</style>
 {% endblock %}

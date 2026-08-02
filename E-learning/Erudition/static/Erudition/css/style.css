@@ -66,9 +66,12 @@ img {
 .nav-search {
     border-radius: 20px;
     border: none;
-    background: #ffffff;
-    padding: 2rem;
     background: #f1f5f9;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 .about-intro-copy {
     padding-right: 1rem;
 }
@@ -273,13 +276,12 @@ img {
     height: 90px;
 }
 
-/* Homepage hero section */
+/* Homepage hero section (full styles in home.html) */
 .hero-section {
     position: relative;
     width: 100%;
-    min-height: calc(100vh - 90px);
+    min-height: 100vh;
     overflow: hidden;
-    padding: 0;
     isolation: isolate;
     background: #0b1f4d;
     color: #eef2ff;
