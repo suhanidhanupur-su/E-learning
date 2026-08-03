@@ -69,7 +69,255 @@
 
 </section>
 
+<!-- ====== STATISTICS STRIP ====== -->
+<section class="stats-strip">
+    <div class="container">
+        <div class="stats-grid">
+
+            <!-- Stat 1 -->
+            <div class="stat-card">
+                <div class="stat-icon-wrap">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="stat-body">
+                    <span class="stat-number" data-target="10" data-suffix="+">0+</span>
+                    <span class="stat-label">Courses Available</span>
+                </div>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="stat-card">
+                <div class="stat-icon-wrap">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-body">
+                    <span class="stat-number" data-target="4000" data-suffix="+">0+</span>
+                    <span class="stat-label">Students Trained</span>
+                </div>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="stat-card">
+                <div class="stat-icon-wrap">
+                    <i class="fas fa-award"></i>
+                </div>
+                <div class="stat-body">
+                    <span class="stat-number" data-target="2500" data-suffix="+">0+</span>
+                    <span class="stat-label">Certifications Awarded</span>
+                </div>
+            </div>
+
+            <!-- Stat 4 -->
+            <div class="stat-card">
+                <div class="stat-icon-wrap">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="stat-body">
+                    <span class="stat-number" data-target="500" data-suffix="+">0+</span>
+                    <span class="stat-label">Live Sessions Delivered</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+/* Animated counter — fires once when the strip scrolls into view */
+(function () {
+    const strip = document.querySelector('.stats-strip');
+    if (!strip) return;
+
+    function animateCounters() {
+        strip.querySelectorAll('.stat-number').forEach(function (el) {
+            const target = parseInt(el.dataset.target, 10);
+            const suffix = el.dataset.suffix || '';
+            const duration = 1800;
+            const step = Math.ceil(duration / 60);
+            let current = 0;
+            const increment = Math.ceil(target / (duration / step));
+            const timer = setInterval(function () {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                el.textContent = current.toLocaleString() + suffix;
+            }, step);
+        });
+    }
+
+    /* IntersectionObserver — animate only when visible */
+    const observer = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+            animateCounters();
+            observer.disconnect();
+        }
+    }, { threshold: 0.35 });
+
+    observer.observe(strip);
+})();
+</script>
+
 <style>
+/* ====== STATISTICS STRIP ====== */
+.stats-strip {
+    background: #ffffff;
+    border-top: 1px solid rgba(212, 175, 55, 0.30);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.30);
+    padding: 0;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 4px 24px rgba(15, 23, 42, 0.05);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    divide: none;
+}
+
+/* Vertical dividers between cards (desktop) */
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 2.2rem 1.8rem;
+    border-right: 1px solid rgba(212, 175, 55, 0.18);
+    transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+    cursor: default;
+    position: relative;
+}
+.stat-card:last-child {
+    border-right: none;
+}
+
+/* Hover: lift + glow */
+.stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.10),
+                0 2px 8px rgba(212, 175, 55, 0.10);
+    background: #fdfbf4;
+    z-index: 1;
+}
+
+/* Gold shimmer line at top on hover */
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #d4af37, #f7e07a, #d4af37);
+    opacity: 0;
+    transition: opacity 0.28s ease;
+    border-radius: 0 0 3px 3px;
+}
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+/* Icon wrapper */
+.stat-icon-wrap {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.06) 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.28s ease, border-color 0.28s ease, transform 0.28s ease;
+}
+.stat-card:hover .stat-icon-wrap {
+    background: linear-gradient(135deg, rgba(212,175,55,0.22) 0%, rgba(212,175,55,0.10) 100%);
+    border-color: rgba(212, 175, 55, 0.45);
+    transform: scale(1.08);
+}
+.stat-icon-wrap i {
+    font-size: 1.55rem;
+    color: #d4af37;
+    line-height: 1;
+}
+
+/* Text block */
+.stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+/* Big bold number */
+.stat-number {
+    font-size: 2.15rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    transition: color 0.22s ease;
+}
+.stat-card:hover .stat-number {
+    color: #1e3a8a;
+}
+
+/* Label */
+.stat-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    transition: color 0.22s ease;
+}
+.stat-card:hover .stat-label {
+    color: #d4af37;
+}
+
+/* ---- Tablet: 2 columns ---- */
+@media (max-width: 991px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .stat-card:nth-child(2) { border-right: none; }
+    .stat-card:nth-child(1),
+    .stat-card:nth-child(2) {
+        border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+    }
+    .stat-card:nth-child(3),
+    .stat-card:nth-child(4) {
+        border-bottom: none;
+    }
+    .stat-card { padding: 1.8rem 1.4rem; }
+    .stat-number { font-size: 1.85rem; }
+}
+
+/* ---- Mobile: 1 column ---- */
+@media (max-width: 575px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .stat-card {
+        border-right: none;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        padding: 1.4rem 1.2rem;
+        gap: 1rem;
+    }
+    .stat-card:last-child { border-bottom: none; }
+    .stat-card:nth-child(2) { border-right: none; }
+    .stat-number { font-size: 1.7rem; }
+    .stat-icon-wrap { width: 50px; height: 50px; }
+    .stat-icon-wrap i { font-size: 1.3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stat-card { transition: none; }
+    .stat-card:hover { transform: none; }
+}
+
 /* ===== Full-screen video hero ===== */
 .hero-section {
     position: relative;
@@ -318,5 +566,990 @@
     .hero-rotator span    { animation: none; opacity: 1; }
     .hero-rotator span:not(:first-child) { display: none; }
 }
+</style>
+
+<!-- ============================================================
+     SECTION 1 — FEATURED COURSES
+============================================================ -->
+<section class="hp-section featured-courses-section">
+  <div class="container">
+
+    <!-- Heading -->
+    <div class="hp-section-head">
+      <span class="hp-eyebrow">OUR PROGRAMS</span>
+      <h2 class="hp-heading">Featured Courses</h2>
+      <p class="hp-subhead">Practical, expert-led programs designed to build real-world skills fast.</p>
+    </div>
+
+    <!-- Cards -->
+    <div class="courses-grid">
+
+      <!-- Card 1 -->
+      <div class="course-card">
+        <div class="course-img-wrap">
+          <img src="https://placehold.co/400x220/1e3a8a/ffffff?text=Leadership" alt="Leadership Development" class="course-img">
+          <span class="course-badge">Leadership</span>
+        </div>
+        <div class="course-body">
+          <h3 class="course-title">Leadership Development Program</h3>
+          <p class="course-desc">Build strategic thinking, team management and executive communication skills for the modern workplace.</p>
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 8 Weeks</span>
+            <span><i class="fas fa-star"></i> 4.9</span>
+          </div>
+          <div class="course-footer">
+            <span class="course-price">₹4,999</span>
+            <a href="#" class="course-enroll-btn">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="course-card">
+        <div class="course-img-wrap">
+          <img src="https://placehold.co/400x220/0f4c81/ffffff?text=Communication" alt="Communication Skills" class="course-img">
+          <span class="course-badge">Communication</span>
+        </div>
+        <div class="course-body">
+          <h3 class="course-title">Advanced Communication Skills</h3>
+          <p class="course-desc">Master public speaking, business writing and interpersonal communication to accelerate your career.</p>
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 6 Weeks</span>
+            <span><i class="fas fa-star"></i> 4.8</span>
+          </div>
+          <div class="course-footer">
+            <span class="course-price">₹3,499</span>
+            <a href="#" class="course-enroll-btn">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="course-card">
+        <div class="course-img-wrap">
+          <img src="https://placehold.co/400x220/1a5276/ffffff?text=Personality" alt="Personality Development" class="course-img">
+          <span class="course-badge">Personality</span>
+        </div>
+        <div class="course-body">
+          <h3 class="course-title">Personality Development Bootcamp</h3>
+          <p class="course-desc">Transform your confidence, body language and personal brand through intensive, hands-on sessions.</p>
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 4 Weeks</span>
+            <span><i class="fas fa-star"></i> 4.7</span>
+          </div>
+          <div class="course-footer">
+            <span class="course-price">₹2,999</span>
+            <a href="#" class="course-enroll-btn">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="course-card">
+        <div class="course-img-wrap">
+          <img src="https://placehold.co/400x220/154360/ffffff?text=Corporate" alt="Corporate Training" class="course-img">
+          <span class="course-badge">Corporate</span>
+        </div>
+        <div class="course-body">
+          <h3 class="course-title">Corporate Training & Consultancy</h3>
+          <p class="course-desc">Customised organisational learning solutions for teams, managers and enterprise leaders.</p>
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> Flexible</span>
+            <span><i class="fas fa-star"></i> 5.0</span>
+          </div>
+          <div class="course-footer">
+            <span class="course-price">Custom</span>
+            <a href="#" class="course-enroll-btn">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /courses-grid -->
+
+    <!-- CTA -->
+    <div class="hp-cta-wrap">
+      <a href="#" class="hp-btn-outline-blue">View All Courses</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 2 — UPCOMING LIVE CLASSES
+============================================================ -->
+<section class="hp-section live-section">
+  <div class="container">
+
+    <div class="hp-section-head">
+      <span class="hp-eyebrow">LIVE &amp; INTERACTIVE</span>
+      <h2 class="hp-heading">Upcoming Live Classes</h2>
+      <p class="hp-subhead">Join our real-time sessions led by industry experts — ask questions, get answers, grow faster.</p>
+    </div>
+
+    <div class="live-grid">
+
+      <!-- Live Card 1 -->
+      <div class="live-card">
+        <div class="live-img-wrap">
+          <img src="https://placehold.co/640x300/0b2f6e/ffffff?text=Live+Class" alt="Live Class" class="live-img">
+          <span class="live-badge"><i class="fas fa-circle"></i> LIVE</span>
+        </div>
+        <div class="live-body">
+          <h3 class="live-title">Masterclass: Executive Presence &amp; Boardroom Communication</h3>
+          <div class="live-meta-row">
+            <span><i class="fas fa-calendar-alt"></i> 10 Aug 2025</span>
+            <span><i class="fas fa-clock"></i> 6:00 PM – 8:00 PM IST</span>
+          </div>
+          <p class="live-desc">An intensive 2-hour live workshop on projecting authority, handling high-stakes conversations and commanding any room.</p>
+          <a href="#" class="live-register-btn">Register Free</a>
+        </div>
+      </div>
+
+      <!-- Live Card 2 -->
+      <div class="live-card">
+        <div class="live-img-wrap">
+          <img src="https://placehold.co/640x300/154360/ffffff?text=Live+Session" alt="Live Session" class="live-img">
+          <span class="live-badge"><i class="fas fa-circle"></i> LIVE</span>
+        </div>
+        <div class="live-body">
+          <h3 class="live-title">Workshop: Confidence Building for Young Professionals</h3>
+          <div class="live-meta-row">
+            <span><i class="fas fa-calendar-alt"></i> 17 Aug 2025</span>
+            <span><i class="fas fa-clock"></i> 5:00 PM – 7:00 PM IST</span>
+          </div>
+          <p class="live-desc">A practical, interactive session covering mindset shifts, body language techniques and confidence anchors for career growth.</p>
+          <a href="#" class="live-register-btn">Register Free</a>
+        </div>
+      </div>
+
+    </div><!-- /live-grid -->
+
+    <div class="hp-cta-wrap">
+      <a href="#" class="hp-btn-outline-blue">View All Live Classes</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 3 — LATEST ARTICLES
+============================================================ -->
+<section class="hp-section articles-section">
+  <div class="container">
+
+    <div class="hp-section-head">
+      <span class="hp-eyebrow">KNOWLEDGE HUB</span>
+      <h2 class="hp-heading">Latest Articles</h2>
+      <p class="hp-subhead">Insights, strategies and practical advice to help you grow professionally.</p>
+    </div>
+
+    <div class="articles-grid">
+
+      <!-- Article 1 -->
+      <div class="article-card">
+        <div class="article-img-wrap">
+          <img src="https://placehold.co/600x280/1e3a8a/ffffff?text=Article" alt="Article" class="article-img">
+        </div>
+        <div class="article-body">
+          <span class="article-category">Leadership</span>
+          <h3 class="article-title">5 Habits That Separate Good Managers From Great Leaders</h3>
+          <p class="article-excerpt">Leadership isn't a title — it's a set of daily habits. Discover the five key behaviours that transform managers into leaders others genuinely want to follow.</p>
+          <div class="article-footer">
+            <span class="article-author"><i class="fas fa-user-circle"></i> Erudition Team</span>
+            <span class="article-time"><i class="fas fa-book-open"></i> 5 min read</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Article 2 -->
+      <div class="article-card">
+        <div class="article-img-wrap">
+          <img src="https://placehold.co/600x280/0f4c81/ffffff?text=Article" alt="Article" class="article-img">
+        </div>
+        <div class="article-body">
+          <span class="article-category">Communication</span>
+          <h3 class="article-title">How to Speak With Confidence in Any Situation</h3>
+          <p class="article-excerpt">Whether it's a boardroom presentation or a difficult conversation, these proven techniques will help you communicate clearly and confidently every time.</p>
+          <div class="article-footer">
+            <span class="article-author"><i class="fas fa-user-circle"></i> Erudition Team</span>
+            <span class="article-time"><i class="fas fa-book-open"></i> 4 min read</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Article 3 -->
+      <div class="article-card">
+        <div class="article-img-wrap">
+          <img src="https://placehold.co/600x280/1a5276/ffffff?text=Article" alt="Article" class="article-img">
+        </div>
+        <div class="article-body">
+          <span class="article-category">Career Growth</span>
+          <h3 class="article-title">Why Soft Skills Are the New Hard Skills in 2025</h3>
+          <p class="article-excerpt">Technical expertise gets you hired — but emotional intelligence, communication and adaptability are what get you promoted and keep you relevant.</p>
+          <div class="article-footer">
+            <span class="article-author"><i class="fas fa-user-circle"></i> Erudition Team</span>
+            <span class="article-time"><i class="fas fa-book-open"></i> 6 min read</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /articles-grid -->
+
+    <div class="hp-cta-wrap">
+      <a href="#" class="hp-btn-outline-blue">Read More Articles</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 4 — TESTIMONIALS
+============================================================ -->
+<section class="hp-section testimonials-section">
+  <!-- Grid pattern overlay -->
+  <div class="testi-grid-overlay"></div>
+  <div class="container" style="position:relative;z-index:2;">
+
+    <div class="hp-section-head" style="color:#fff;">
+      <span class="hp-eyebrow testi-eyebrow">STUDENT STORIES</span>
+      <h2 class="hp-heading" style="color:#ffffff;">What Our Students Say</h2>
+      <p class="hp-subhead" style="color:rgba(255,255,255,0.72);">Real results from real learners — across industries, roles and career stages.</p>
+    </div>
+
+    <div class="testi-grid">
+
+      <!-- Testimonial 1 -->
+      <div class="testi-card">
+        <div class="testi-top">
+          <span class="testi-verified"><i class="fas fa-check-circle"></i> Verified</span>
+          <div class="testi-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </div>
+        <p class="testi-text">"The Leadership Development Program completely transformed the way I manage my team. The frameworks are practical, the facilitators are outstanding, and the outcomes are immediate. Worth every rupee."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AM</div>
+          <div>
+            <p class="testi-name">Arjun Mehta</p>
+            <p class="testi-role">Senior Manager, TCS</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="testi-card">
+        <div class="testi-top">
+          <span class="testi-verified"><i class="fas fa-check-circle"></i> Verified</span>
+          <div class="testi-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </div>
+        <p class="testi-text">"I attended the Communication Skills workshop before my MBA interviews. The confidence boost was real — I cracked my top-choice institute. Erudition's approach is unlike any other training I've seen."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">PS</div>
+          <div>
+            <p class="testi-name">Priya Sharma</p>
+            <p class="testi-role">MBA Candidate, IIM Ahmedabad</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="testi-card">
+        <div class="testi-top">
+          <span class="testi-verified"><i class="fas fa-check-circle"></i> Verified</span>
+          <div class="testi-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </div>
+        <p class="testi-text">"Our company enrolled 40 employees in Erudition's Corporate Training program. The ROI in just 3 months was phenomenal — productivity improved, conflicts reduced, client satisfaction scores climbed."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">RK</div>
+          <div>
+            <p class="testi-name">Rohan Kapoor</p>
+            <p class="testi-role">HR Director, Infosys</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /testi-grid -->
+
+    <!-- Slider dots -->
+    <div class="testi-dots">
+      <span class="testi-dot active"></span>
+      <span class="testi-dot"></span>
+      <span class="testi-dot"></span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 5 — FINAL CTA
+============================================================ -->
+<section class="hp-section cta-final-section">
+  <div class="container">
+    <div class="cta-final-inner">
+
+      <!-- Decoration orbs -->
+      <div class="cta-orb cta-orb-1"></div>
+      <div class="cta-orb cta-orb-2"></div>
+
+      <div class="cta-final-content">
+        <span class="hp-eyebrow cta-eyebrow">TAKE THE NEXT STEP</span>
+        <h2 class="cta-final-heading">Begin Your Professional<br>Transformation</h2>
+        <p class="cta-final-para">Join thousands of individuals, students and organisations who have already unlocked their potential through Erudition's world-class training programs.</p>
+        <div class="cta-final-btns">
+          <a href="#" class="cta-btn-primary">
+            <i class="fas fa-rocket"></i> Register Now
+          </a>
+          <a href="#" class="cta-btn-outline">
+            <i class="fas fa-th-large"></i> Browse Courses
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     ALL SECTION CSS
+============================================================ -->
+<style>
+
+/* ── Shared section utilities ── */
+.hp-section {
+  padding: 5.5rem 0;
+}
+.hp-section-head {
+  text-align: center;
+  margin-bottom: 3.2rem;
+}
+.hp-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #d4af37;
+  margin-bottom: 0.6rem;
+}
+.hp-heading {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.7rem;
+  line-height: 1.12;
+}
+.hp-subhead {
+  font-size: 1rem;
+  color: #64748b;
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+.hp-cta-wrap {
+  text-align: center;
+  margin-top: 2.8rem;
+}
+.hp-btn-outline-blue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 32px;
+  border-radius: 999px;
+  border: 2px solid #1e3a8a;
+  background: #ffffff;
+  color: #1e3a8a;
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-decoration: none;
+  transition: background 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+}
+.hp-btn-outline-blue:hover {
+  background: #1e3a8a;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(30,58,138,0.22);
+}
+
+/* ══════════════════════════
+   FEATURED COURSES
+══════════════════════════ */
+.featured-courses-section {
+  background: #f8fafc;
+}
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+}
+.course-card {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(15,23,42,0.07);
+  border: 1px solid rgba(15,23,42,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+.course-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 60px rgba(15,23,42,0.14);
+}
+.course-img-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 170px;
+  flex-shrink: 0;
+}
+.course-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+.course-card:hover .course-img {
+  transform: scale(1.06);
+}
+.course-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #d4af37;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+.course-body {
+  padding: 1.2rem 1.3rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.6rem;
+}
+.course-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.35;
+  margin: 0;
+  transition: color 0.22s ease;
+}
+.course-card:hover .course-title {
+  color: #1e3a8a;
+}
+.course-desc {
+  font-size: 0.83rem;
+  color: #64748b;
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+.course-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+.course-meta i { color: #d4af37; margin-right: 4px; }
+.course-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.7rem;
+  border-top: 1px solid #f1f5f9;
+}
+.course-price {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #b45309;
+}
+.course-enroll-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.course-enroll-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(59,130,246,0.35);
+  color: #fff;
+}
+@media (max-width: 1100px) {
+  .courses-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .courses-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════
+   LIVE CLASSES
+══════════════════════════ */
+.live-section {
+  background: #ffffff;
+}
+.live-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.8rem;
+}
+.live-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(15,23,42,0.08);
+  border: 1px solid rgba(15,23,42,0.07);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+.live-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 56px rgba(15,23,42,0.13);
+}
+.live-img-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 210px;
+  flex-shrink: 0;
+}
+.live-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+.live-card:hover .live-img { transform: scale(1.04); }
+.live-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 5px 14px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.live-badge i { font-size: 0.45rem; color: #bbf7d0; animation: livePulse 1.2s ease-in-out infinite; }
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.live-body {
+  padding: 1.5rem 1.6rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+.live-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.35;
+  margin: 0;
+}
+.live-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.82rem;
+  color: #64748b;
+  font-weight: 500;
+}
+.live-meta-row i { color: #d4af37; margin-right: 5px; }
+.live-desc {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.75;
+  margin: 0;
+  flex: 1;
+}
+.live-register-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: auto;
+}
+.live-register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(59,130,246,0.38);
+  color: #fff;
+}
+@media (max-width: 768px) {
+  .live-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════
+   LATEST ARTICLES
+══════════════════════════ */
+.articles-section {
+  background: #f8fafc;
+}
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.article-card {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(15,23,42,0.07);
+  border: 1px solid rgba(15,23,42,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+.article-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 22px 56px rgba(15,23,42,0.13);
+}
+.article-img-wrap {
+  overflow: hidden;
+  height: 190px;
+  flex-shrink: 0;
+}
+.article-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+.article-card:hover .article-img { transform: scale(1.05); }
+.article-body {
+  padding: 1.3rem 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+.article-category {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #d4af37;
+}
+.article-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.38;
+  margin: 0;
+  transition: color 0.22s ease;
+}
+.article-card:hover .article-title { color: #1e3a8a; }
+.article-excerpt {
+  font-size: 0.84rem;
+  color: #64748b;
+  line-height: 1.75;
+  margin: 0;
+  flex: 1;
+  /* 2-line clamp */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.article-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.85rem;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-top: auto;
+}
+.article-footer i { color: #d4af37; margin-right: 4px; }
+@media (max-width: 900px) {
+  .articles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .articles-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════
+   TESTIMONIALS
+══════════════════════════ */
+.testimonials-section {
+  background: linear-gradient(145deg, #0b1230 0%, #0f1f4d 45%, #071627 100%);
+  position: relative;
+  overflow: hidden;
+}
+.testi-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212,175,55,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,175,55,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+.testi-eyebrow { color: #d4af37; }
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;
+}
+.testi-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(212,175,55,0.22);
+  border-radius: 20px;
+  padding: 2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+  backdrop-filter: blur(6px);
+}
+.testi-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(212,175,55,0.6);
+  box-shadow: 0 0 0 1px rgba(212,175,55,0.2),
+              0 20px 50px rgba(0,0,0,0.4);
+}
+.testi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.testi-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #86efac;
+  background: rgba(134,239,172,0.1);
+  border: 1px solid rgba(134,239,172,0.2);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.testi-stars { color: #d4af37; font-size: 0.82rem; letter-spacing: 2px; }
+.testi-text {
+  color: rgba(255,255,255,0.82);
+  font-size: 0.92rem;
+  line-height: 1.82;
+  margin: 0;
+  font-style: italic;
+  flex: 1;
+}
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(212,175,55,0.14);
+}
+.testi-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  border: 2px solid rgba(212,175,55,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+.testi-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 2px;
+}
+.testi-role {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.50);
+  margin: 0;
+}
+/* Dots */
+.testi-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2.4rem;
+}
+.testi-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.3);
+  cursor: pointer;
+  transition: background 0.22s ease, transform 0.22s ease;
+}
+.testi-dot.active {
+  background: #d4af37;
+  transform: scale(1.3);
+}
+.testi-dot:hover { background: rgba(212,175,55,0.65); }
+@media (max-width: 900px) {
+  .testi-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
+}
+@media (max-width: 600px) {
+  .testi-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════
+   FINAL CTA
+══════════════════════════ */
+.cta-final-section {
+  background: #ffffff;
+  padding: 6rem 0;
+}
+.cta-final-inner {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 4rem 2rem;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #fefce8 100%);
+  border: 1px solid rgba(212,175,55,0.2);
+  box-shadow: 0 20px 60px rgba(15,23,42,0.08);
+  overflow: hidden;
+}
+.cta-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+.cta-orb-1 {
+  width: 280px; height: 280px;
+  background: rgba(30,58,138,0.08);
+  top: -80px; left: -60px;
+}
+.cta-orb-2 {
+  width: 220px; height: 220px;
+  background: rgba(212,175,55,0.10);
+  bottom: -60px; right: -40px;
+}
+.cta-final-content { position: relative; z-index: 1; }
+.cta-eyebrow { color: #d4af37; margin-bottom: 0.8rem; display: block; }
+.cta-final-heading {
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  margin: 0 0 1.1rem;
+}
+.cta-final-para {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.85;
+  max-width: 540px;
+  margin: 0 auto 2.2rem;
+}
+.cta-final-btns {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.cta-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 32px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-decoration: none;
+  box-shadow: 0 12px 32px rgba(30,58,138,0.28);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.cta-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 42px rgba(30,58,138,0.4);
+  color: #ffffff;
+}
+.cta-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 32px;
+  border-radius: 999px;
+  border: 2px solid #1e3a8a;
+  background: #ffffff;
+  color: #1e3a8a;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-decoration: none;
+  transition: background 0.22s ease, color 0.22s ease, transform 0.22s ease;
+}
+.cta-btn-outline:hover {
+  background: #1e3a8a;
+  color: #ffffff;
+  transform: translateY(-3px);
+}
+@media (max-width: 600px) {
+  .cta-final-inner { padding: 2.8rem 1.2rem; }
+  .cta-btn-primary, .cta-btn-outline { width: 100%; justify-content: center; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .course-card, .live-card, .article-card,
+  .testi-card, .hp-btn-outline-blue,
+  .cta-btn-primary, .cta-btn-outline { transition: none; }
+  .course-card:hover, .live-card:hover,
+  .article-card:hover, .testi-card:hover { transform: none; }
+}
+
 </style>
 {% endblock %}
