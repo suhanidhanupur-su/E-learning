@@ -1,34 +1,325 @@
-<section class="global-header-banner" role="banner">
-    <div class="banner-shape shape-1"></div>
-    <div class="banner-shape shape-2"></div>
-    <div class="banner-shape shape-3"></div>
-    <div class="banner-accent accent-1"></div>
-    <div class="banner-accent accent-2"></div>
-    <div class="container banner-container">
-        <div class="banner-glass">
-            <div class="row align-items-center gy-4">
-                <div class="col-lg-7">
-                    <p class="banner-eyebrow"><i class="bi bi-award-fill"></i> Erudition Infinite</p>
-                    <h1 class="banner-title">{{ page_title }}</h1>
-                    {% if page_subtitle %}
-                    <p class="banner-subtitle">{{ page_subtitle }}</p>
-                    {% endif %}
-                </div>
-                <div class="col-lg-5 text-lg-end">
-                    <nav aria-label="breadcrumb" class="banner-breadcrumb">
-                        <ol class="breadcrumb justify-content-lg-end mb-0">
-                            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
+<header class="page-header-banner">
+    <div class="phb-bg">
+        <span class="phb-blur phb-blur-1"></span>
+        <span class="phb-blur phb-blur-2"></span>
+        <span class="phb-blur phb-blur-3"></span>
+
+        <svg class="phb-shape phb-shape-1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,3 95,27 95,73 50,97 5,73 5,27" fill="none" stroke="#D4AF37" stroke-width="0.6"/>
+        </svg>
+        <svg class="phb-shape phb-shape-2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="46" fill="none" stroke="#D4AF37" stroke-width="0.5"/>
+        </svg>
+
+        <span class="phb-particle p1"></span>
+        <span class="phb-particle p2"></span>
+        <span class="phb-particle p3"></span>
+        <span class="phb-particle p4"></span>
+        <span class="phb-particle p5"></span>
+        <span class="phb-particle p6"></span>
+        <span class="phb-particle p7"></span>
+        <span class="phb-particle p8"></span>
+
+        <span class="phb-diagonal-lines"></span>
+        <span class="phb-sheen"></span>
     </div>
-    <div class="banner-wave-bottom">
-        <svg viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
-            <path fill="#ffffff" d="M0,36 C240,98 480,0 720,44 C960,88 1200,20 1440,56 L1440,120 L0,120 Z"></path>
+
+    <div class="container phb-content">
+        <nav class="phb-breadcrumb" aria-label="breadcrumb">
+            <a href="{% url 'home' %}">Home</a>
+            <span class="sep">/</span>
+            <span class="current">{% firstof page_title "Page" %}</span>
+        </nav>
+
+        <h1 class="phb-title">{% firstof page_heading page_title "Page Title" %}</h1>
+        <span class="phb-divider"></span>
+
+        <p class="phb-subtitle">
+            {% firstof page_subtitle "A premier institute for corporate training, leadership development, and management consultancy." %}
+        </p>
+    </div>
+
+    <div class="phb-wave">
+        <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,32 C240,80 480,0 720,24 C960,48 1200,88 1440,40 L1440,90 L0,90 Z" fill="#f8fafc"></path>
         </svg>
     </div>
-    
-</section>
+</header>
+
+<style>
+    /* ===== Premium Header Banner — Navy / Royal Blue / Gold ===== */
+    .page-header-banner {
+        --navy: #0B1F4D;
+        --royal: #1E40AF;
+        --gold: #D4AF37;
+        --gold-light: #f0d97d;
+
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        margin: 0;
+        padding: 2.75rem 0 4rem;
+        isolation: isolate;
+        color: #ffffff;
+        background: linear-gradient(120deg, var(--navy) 0%, var(--royal) 45%, var(--navy) 100%);
+        background-size: 220% 220%;
+        animation: phbGradientShift 14s ease-in-out infinite;
+    }
+
+    @keyframes phbGradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    .phb-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    /* diagonal light sheen sweep */
+    .phb-sheen {
+        position: absolute;
+        top: -40%;
+        left: -60%;
+        width: 45%;
+        height: 180%;
+        background: linear-gradient(
+            100deg,
+            transparent 0%,
+            rgba(255,255,255,0.05) 35%,
+            rgba(212,175,55,0.16) 50%,
+            rgba(255,255,255,0.05) 65%,
+            transparent 100%
+        );
+        transform: rotate(12deg);
+        animation: phbSheenSweep 6.5s ease-in-out infinite;
+    }
+    @keyframes phbSheenSweep {
+        0% { left: -60%; }
+        45%, 100% { left: 130%; }
+    }
+
+    .phb-blur {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(65px);
+        opacity: 0.55;
+    }
+    .phb-blur-1 {
+        width: 320px;
+        height: 320px;
+        top: -130px;
+        left: -80px;
+        background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, rgba(212,175,55,0) 70%);
+        animation: phbFloat1 9s ease-in-out infinite;
+    }
+    .phb-blur-2 {
+        width: 340px;
+        height: 340px;
+        bottom: -150px;
+        right: -90px;
+        background: radial-gradient(circle, rgba(96,165,250,0.30) 0%, rgba(96,165,250,0) 70%);
+        animation: phbFloat2 11s ease-in-out infinite;
+    }
+    .phb-blur-3 {
+        width: 220px;
+        height: 220px;
+        top: 12%;
+        right: 16%;
+        background: radial-gradient(circle, rgba(212,175,55,0.20) 0%, rgba(212,175,55,0) 70%);
+        animation: phbFloat1 8s ease-in-out infinite reverse;
+    }
+    @keyframes phbFloat1 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(30px, 22px) scale(1.1); }
+    }
+    @keyframes phbFloat2 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(-26px, -18px) scale(1.08); }
+    }
+
+    .phb-shape {
+        position: absolute;
+        opacity: 0.16;
+    }
+    .phb-shape-1 {
+        width: 180px;
+        height: 180px;
+        top: 6%;
+        right: 6%;
+        animation: phbRotate 36s linear infinite;
+    }
+    .phb-shape-2 {
+        width: 130px;
+        height: 130px;
+        bottom: 8%;
+        left: 5%;
+        animation: phbRotate 48s linear infinite reverse;
+    }
+    @keyframes phbRotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    .phb-diagonal-lines {
+        position: absolute;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+            45deg,
+            rgba(255,255,255,0.035) 0px,
+            rgba(255,255,255,0.035) 1px,
+            transparent 1px,
+            transparent 46px
+        );
+        opacity: 0.6;
+    }
+
+    /* floating golden particles — twinkle + drift */
+    .phb-particle {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--gold-light);
+        box-shadow: 0 0 8px 2px rgba(212,175,55,0.6);
+        opacity: 0;
+        animation: phbTwinkle 5.5s ease-in-out infinite;
+    }
+    .p1 { top: 16%; left: 10%; animation-delay: 0s; }
+    .p2 { top: 28%; left: 84%; animation-delay: 0.8s; }
+    .p3 { top: 62%; left: 20%; animation-delay: 1.6s; }
+    .p4 { top: 74%; left: 70%; animation-delay: 2.4s; }
+    .p5 { top: 14%; left: 55%; animation-delay: 3.2s; }
+    .p6 { top: 46%; left: 92%; animation-delay: 2s; }
+    .p7 { top: 82%; left: 40%; animation-delay: 1.2s; }
+    .p8 { top: 36%; left: 6%; animation-delay: 3.8s; }
+    @keyframes phbTwinkle {
+        0%, 100% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+        50% { opacity: 1; transform: translate(10px, -18px) scale(1); }
+    }
+
+    .phb-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0.5rem 1.5rem 0;
+    }
+    .phb-content::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 640px;
+        height: 260px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(ellipse, rgba(11,31,77,0.35) 0%, rgba(11,31,77,0) 72%);
+        z-index: -1;
+    }
+
+    .phb-breadcrumb {
+        font-size: 0.8rem;
+        margin-bottom: 0.85rem;
+        opacity: 0;
+        animation: phbFadeUp 0.7s ease forwards;
+        letter-spacing: 0.3px;
+    }
+    .phb-breadcrumb a {
+        color: rgba(212,175,55,0.85);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+    .phb-breadcrumb a:hover { color: var(--gold-light); }
+    .phb-breadcrumb .sep { margin: 0 8px; color: rgba(212,175,55,0.4); }
+    .phb-breadcrumb .current { color: var(--gold-light); font-weight: 600; }
+
+    .phb-title {
+        font-size: clamp(1.9rem, 4vw, 3rem);
+        font-weight: 800;
+        line-height: 1.15;
+        color: #ffffff;
+        margin: 0 0 0.85rem;
+        text-shadow: 0 4px 24px rgba(0,0,0,0.25);
+        opacity: 0;
+        animation: phbFadeUp 0.75s ease 0.15s forwards;
+    }
+
+    .phb-divider {
+        display: inline-block;
+        width: 72px;
+        height: 4px;
+        border-radius: 999px;
+        margin: 0 0 1.15rem;
+        background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+        background-size: 200% 100%;
+        box-shadow: 0 0 14px 2px rgba(212,175,55,0.55);
+        transform: scaleX(0);
+        transform-origin: center;
+        opacity: 0;
+        animation: phbDividerDraw 0.6s ease 0.32s forwards, phbDividerShimmer 3s linear 1s infinite;
+    }
+    @keyframes phbDividerDraw {
+        to { opacity: 1; transform: scaleX(1); }
+    }
+    @keyframes phbDividerShimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+
+    .phb-subtitle {
+        font-size: 1rem;
+        font-weight: 300;
+        color: rgba(255,255,255,0.82);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.7;
+        opacity: 0;
+        animation: phbFadeUp 0.7s ease 0.45s forwards;
+    }
+
+    @keyframes phbFadeUp {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .phb-wave {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        line-height: 0;
+        z-index: 1;
+    }
+    .phb-wave svg {
+        display: block;
+        width: 100%;
+        height: 48px;
+    }
+
+    @media (max-width: 767.98px) {
+        .page-header-banner { padding: 2rem 0 3rem; }
+        .phb-content { padding: 0.25rem 1rem 0; }
+        .phb-title { font-size: 1.65rem; }
+        .phb-subtitle { font-size: 0.9rem; }
+        .phb-wave svg { height: 30px; }
+        .phb-shape-1, .phb-shape-2 { opacity: 0.1; }
+        .phb-sheen { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .page-header-banner,
+        .phb-blur-1, .phb-blur-2, .phb-blur-3,
+        .phb-shape-1, .phb-shape-2,
+        .phb-particle, .phb-sheen, .phb-divider {
+            animation: none !important;
+        }
+        .phb-breadcrumb, .phb-title, .phb-divider, .phb-subtitle {
+            opacity: 1;
+            animation: none !important;
+            transform: none !important;
+        }
+    }
+</style>

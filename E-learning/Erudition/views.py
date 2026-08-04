@@ -155,3 +155,6 @@ def edit_profile(request):
         'page_title': 'Edit Profile',
         'page_subtitle': 'Update your contact details and professional photo.',
     })
+
+
+
