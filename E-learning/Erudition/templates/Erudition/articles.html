@@ -8,22 +8,67 @@
 
 
 {% block content %}
-<section class="page-section">
+<section class="page-section articles-page">
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row gx-4 gy-4 justify-content-center">
+            <div class="col-12">
+                <div class="articles-hero-card page-card shadow-soft overflow-hidden">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-lg-7">
+                            <div class="card-body py-5 py-lg-6 px-4 px-lg-5">
+                                <span class="eyebrow-label">Knowledge Hub</span>
+                                <h1 class="articles-hero-title">Curated insights for modern learners and leaders</h1>
+                                <p class="articles-hero-text">Deepen your understanding with executive-grade articles, expert strategy notes, and premium learning commentary from the Erudition Infinite team.</p>
+                                <div class="articles-hero-actions d-flex flex-wrap gap-3 mt-4">
+                                    <a href="{% url 'courses' %}" class="btn btn-primary-custom rounded-pill px-4 py-2">Explore Courses</a>
+                                    <a href="?category=all" class="btn btn-outline-custom rounded-pill px-4 py-2">View All Categories</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="articles-hero-visual d-flex align-items-center justify-content-center h-100 p-4">
+                                <div class="articles-hero-panel text-center">
+                                    <span class="articles-hero-badge">Premium Reads</span>
+                                    <h2>Coming soon</h2>
+                                    <p>We’ve prepared the page structure and category filters. Once the articles model is connected, your content will appear here in a premium publication layout.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-lg-10">
                 <div class="page-card shadow-soft">
-                    <div class="card-body">
-                        <h2 class="section-heading">Articles</h2>
-                        <p class="section-text">
-                            Explore thought leadership and practical business insights aligned with our learning programs.
-                        </p>
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
+                            <div>
+                                <h2 class="section-heading mb-2">Articles</h2>
+                                <p class="section-text mb-0">Explore thought leadership and practical business insights aligned with our learning programs.</p>
+                            </div>
+                        </div>
 
-                        {% load category_tags %}
-                        {% category_tabs active_slug=active_category_slug %}
+                    <div class="category-tabs-container">
+    <div class="d-flex flex-row flex-nowrap overflow-auto align-items-center bg-white rounded-pill shadow-sm p-2">
+        <a href="{% url 'articles' %}" class="btn btn-primary rounded-pill px-4 py-2 me-3">All</a>
 
-                        <div class="alert alert-warning mt-4" role="alert">
-                            Article filtering is set up, but the article model is not yet connected. This placeholder page will display articles once the model is added.
+        {% for category in categories %}
+            <a href="{% url 'articles' %}?category={{ category.slug }}"
+               class="btn btn-light rounded-pill px-4 py-2 me-3">
+                {{ category.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+
+                        <div class="articles-empty-state mt-5 text-center">
+                            <div class="articles-empty-illustration">
+                                <i class="fas fa-feather-alt"></i>
+                            </div>
+                            <h3>Articles are coming soon</h3>
+                            <p>When the article model is connected, your curated content will appear here with filtered categories, premium summaries, and recommended reading paths.</p>
+                            <a href="{% url 'courses' %}" class="btn btn-primary-custom rounded-pill px-4 py-2 mt-3">Browse Courses</a>
                         </div>
                     </div>
                 </div>

@@ -599,8 +599,117 @@ img {
     border: none;
     background: #ffffff;
 }
-.live-page-section {
-    background: linear-gradient(180deg, #f7fbff 0%, #ecf4ff 100%);
+.articles-page {
+    background: linear-gradient(180deg, #f7f9ff 0%, #eef4ff 100%);
+}
+.articles-hero-card {
+    background: linear-gradient(180deg, #eef4ff 0%, #ffffff 100%);
+    border: 1px solid rgba(14, 73, 145, 0.12);
+    box-shadow: 0 28px 80px rgba(11, 31, 77, 0.12);
+}
+.eyebrow-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.2rem;
+    border-radius: 999px;
+    background: rgba(212, 175, 55, 0.16);
+    color: #0b3d91;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    margin-bottom: 1.25rem;
+}
+.articles-hero-title {
+    font-size: clamp(2rem, 2.6vw, 3.3rem);
+    line-height: 1.05;
+    font-weight: 800;
+    color: #0b1f4d;
+    margin-bottom: 1.25rem;
+}
+.articles-hero-text {
+    color: #475569;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    max-width: 590px;
+}
+.articles-hero-actions .btn {
+    min-width: 170px;
+}
+.articles-hero-visual {
+    min-height: 280px;
+    background: radial-gradient(circle at top left, rgba(14, 73, 145, 0.14), transparent 32%),
+                radial-gradient(circle at bottom right, rgba(212, 175, 55, 0.16), transparent 24%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(235, 245, 255, 0.92) 100%);
+}
+.articles-hero-panel {
+    width: 100%;
+    max-width: 320px;
+    min-height: 220px;
+    padding: 2rem;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(14, 73, 145, 0.12);
+    box-shadow: 0 22px 52px rgba(11, 31, 77, 0.12);
+}
+.articles-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #d4af37, #f8e8a3);
+    color: #071427;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    margin-bottom: 1.2rem;
+}
+.articles-hero-panel h2 {
+    font-size: 2rem;
+    color: #0b1f4d;
+    margin-bottom: 0.9rem;
+}
+.articles-hero-panel p {
+    color: #475569;
+    line-height: 1.75;
+    margin-bottom: 0;
+}
+.articles-empty-state {
+    padding: 3rem 2rem;
+    background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
+    border: 1px solid rgba(14, 73, 145, 0.14);
+    border-radius: 2rem;
+    box-shadow: 0 18px 45px rgba(11, 31, 77, 0.08);
+}
+.articles-empty-illustration {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(14, 73, 145, 0.18), rgba(212, 175, 55, 0.18));
+    color: #0b3d91;
+    font-size: 2rem;
+    box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.18);
+}
+.articles-empty-state h3 {
+    color: #0b1f4d;
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+}
+.articles-empty-state p {
+    color: #475569;
+    line-height: 1.75;
+    max-width: 640px;
+    margin: 0 auto 1.25rem;
+}
+@media (max-width: 991.98px) {
+    .articles-hero-panel {
+        margin: 0 auto;
+    }
 }
 .glass-card {
     background: rgba(255, 255, 255, 0.92);
