@@ -41,6 +41,7 @@ def courses(request):
 
 def live_classes(request):
     category_slug = request.GET.get('category')
+    search_query = request.GET.get('search', '')
     categories = Category.objects.order_by('name')
     live_classes = LiveClass.objects.filter(is_active=True)
 
@@ -48,11 +49,18 @@ def live_classes(request):
         live_classes = live_classes.filter(category__slug=category_slug)
 
     live_classes = live_classes.order_by('start_time')
+    live_classes_count = live_classes.count()
+    categories_count = categories.count()
+    featured_class = live_classes.first()
 
     return render(request, 'Erudition/live_classes.html', {
         'categories': categories,
+        'categories_count': categories_count,
+        'featured_class': featured_class,
         'live_classes': live_classes,
+        'live_classes_count': live_classes_count,
         'active_category_slug': category_slug,
+        'search_query': search_query,
         'page_title': 'Live Classes',
         'page_subtitle': 'Join our upcoming live sessions with expert instructors and practical learning experiences.',
     })

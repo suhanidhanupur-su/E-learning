@@ -1,4 +1,5 @@
 {% extends 'Erudition/base.html' %}
+{% load static %}
 
 {% block title %}Live Classes | Erudition{% endblock %}
 
@@ -7,48 +8,202 @@
 {% endblock %}
 
 {% block content %}
-<section class="page-section">
+<section class="page-section live-page-section">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="page-card shadow-soft">
-                    <div class="card-body">
-                        <h2 class="section-heading">Live Classes</h2>
-                        <p class="section-text">
-                            Join our live sessions and learn directly from experienced instructors in real time.
-                        </p>
-
-                        {% load category_tags %}
-                        {% category_tabs active_slug=active_category_slug %}
-
-                        {% if live_classes %}
-                            <div class="row g-4 mt-3">
-                                {% for live_class in live_classes %}
-                                    <div class="col-md-6">
-                                        <div class="card h-100 border-0 shadow-sm">
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-between align-items-start gap-3">
-                                                    <h3 class="h5 mb-2">{{ live_class.title }}</h3>
-                                                    <span class="badge bg-success">Live</span>
-                                                </div>
-                                                <p class="text-muted mb-2"><strong>Instructor:</strong> {{ live_class.instructor|default:"TBD" }}</p>
-                                                <p class="text-muted mb-2"><strong>Start:</strong> {{ live_class.start_time }}</p>
-                                                <p class="text-muted mb-2"><strong>Duration:</strong> {{ live_class.duration_minutes }} minutes</p>
-                                                <p class="mb-0">{{ live_class.description|default:"A focused live learning experience designed for practical growth." }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
+        <div class="row gy-4 justify-content-center">
+            <div class="col-12">
+                <div class="live-filter-card glass-card shadow-soft p-4">
+                    <form class="row align-items-end gy-3 gx-3" method="get" action="">
+                        <div class="col-lg-4 col-md-6">
+                            <label class="form-label text-uppercase text-secondary fw-bold small">Search Live Classes</label>
+                            <div class="input-group live-filter-input-group">
+                                <span class="input-group-text bg-white border-0 text-primary"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <input type="search" name="search" class="form-control live-filter-input" placeholder="Search by topic, instructor or keyword" value="{{ search_query }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <label class="form-label text-uppercase text-secondary fw-bold small">Category</label>
+                            <select name="category" class="form-select live-filter-select">
+                                <option value="">All Categories</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.slug }}" {% if category.slug == active_category_slug %}selected{% endif %}>{{ category.name }}</option>
                                 {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="alert alert-info mt-4" role="alert">
-                                No live classes are currently scheduled. Please check back soon.
-                            </div>
-                        {% endif %}
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <label class="form-label text-uppercase text-secondary fw-bold small">Instructor</label>
+                            <select name="instructor" class="form-select live-filter-select">
+                                <option value="">All Instructors</option>
+                                {% for live_class in live_classes %}
+                                    {% ifchanged live_class.instructor %}
+                                        <option value="{{ live_class.instructor }}">{{ live_class.instructor|default:'TBD' }}</option>
+                                    {% endifchanged %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <label class="form-label text-uppercase text-secondary fw-bold small">Date</label>
+                            <input type="date" name="date" class="form-control live-filter-input">
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <label class="form-label text-uppercase text-secondary fw-bold small">Status</label>
+                            <select name="status" class="form-select live-filter-select">
+                                <option value="">All Status</option>
+                                <option value="upcoming">Upcoming</option>
+                                <option value="live">Live</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 text-end">
+                            <button type="submit" class="btn btn-hero-primary px-4">Apply Filters</button>
+                            <a href="?" class="btn btn-hero-secondary px-4">Clear Filters</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="row g-3">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="live-stat-card">
+                            <span class="stat-label">Upcoming Classes</span>
+                            <span class="stat-value counter" data-target="{{ live_classes_count }}">0</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="live-stat-card">
+                            <span class="stat-label">Live Now</span>
+                            <span class="stat-value counter" data-target="{{ live_classes_count }}">0</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="live-stat-card">
+                            <span class="stat-label">Expert Trainers</span>
+                            <span class="stat-value counter" data-target="{{ categories_count }}">0</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="live-stat-card">
+                            <span class="stat-label">Students Registered</span>
+                            <span class="stat-value counter" data-target="382">0</span>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {% if featured_class %}
+                <div class="col-12">
+                    <div class="live-featured-card shadow-soft">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-lg-6 featured-thumb-wrap">
+                                <div class="featured-thumb" aria-hidden="true"></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="featured-content p-4 p-lg-5">
+                                    <span class="badge badge-live">LIVE</span>
+                                    <h3 class="featured-title">{{ featured_class.title }}</h3>
+                                    <p class="featured-text">{{ featured_class.description|default:'An interactive session designed to strengthen business skills and leadership confidence.' }}</p>
+                                    <div class="featured-meta-list">
+                                        <div><strong>Instructor</strong><span>{{ featured_class.instructor|default:'TBD' }}</span></div>
+                                        <div><strong>Date</strong><span>{{ featured_class.start_time|date:'M d, Y' }}</span></div>
+                                        <div><strong>Time</strong><span>{{ featured_class.start_time|time:'g:i A' }}</span></div>
+                                        <div><strong>Duration</strong><span>{{ featured_class.duration_minutes }} mins</span></div>
+                                    </div>
+                                    <a href="#" class="btn btn-hero-primary btn-join-now mt-3">Join Now <i class="fa-solid fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row g-4">
+                        {% for live_class in live_classes|slice:'1:' %}
+                            <div class="col-lg-6">
+                                <article class="live-card shadow-soft">
+                                    <div class="live-card-thumb">
+                                        <img src="{% static 'Erudition/images/LOGO.png' %}" alt="Live class thumbnail" loading="lazy">
+                                        <span class="live-badge"><i class="fa-solid fa-broadcast-tower"></i> LIVE</span>
+                                        <span class="live-cat-tag">{{ live_class.category|default:'General' }}</span>
+                                    </div>
+                                    <div class="live-card-body">
+                                        <h4 class="live-card-title">{{ live_class.title }}</h4>
+                                        <p class="live-card-description">{{ live_class.description|default:'A focused live learning experience designed for practical growth.' }}</p>
+                                        <div class="live-card-row">
+                                            <div class="live-card-avatar">
+                                                <span>{{ live_class.instructor|default:'TBD'|slice:':1'|upper }}</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-secondary small">Instructor</span>
+                                                <p class="mb-0 fw-semibold">{{ live_class.instructor|default:'TBD' }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="live-card-grid">
+                                            <div><strong>Date</strong><span>{{ live_class.start_time|date:'M d' }}</span></div>
+                                            <div><strong>Time</strong><span>{{ live_class.start_time|time:'g:i A' }}</span></div>
+                                            <div><strong>Duration</strong><span>{{ live_class.duration_minutes }} mins</span></div>
+                                            <div><strong>Seats</strong><span>24 left</span></div>
+                                        </div>
+                                        <div class="live-card-footer">
+                                            <div class="live-card-info">
+                                                <span><i class="fa-brands fa-google"></i> Google Meet</span>
+                                                <span><i class="fa-solid fa-user-graduate"></i> 72 enrolled</span>
+                                            </div>
+                                            <div class="live-card-actions">
+                                                <a href="#" class="btn btn-outline-secondary btn-sm">View Details</a>
+                                                <a href="#" class="btn btn-hero-primary btn-sm">Join Live</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <nav class="pagination-premium" aria-label="Live classes pagination">
+                        <ul class="pagination justify-content-center mb-0">
+                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"><i class="fa-solid fa-chevron-left"></i></a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#"><i class="fa-solid fa-chevron-right"></i></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <div class="empty-state-card text-center py-5">
+                        <div class="empty-illustration"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <h3>No Live Classes Available</h3>
+                        <p class="mb-4">We&#39;ll notify you when the next session is scheduled.</p>
+                        <a href="{% url 'courses' %}" class="btn btn-hero-primary">Browse Courses</a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </section>
+
+<script>
+(function() {
+    const counters = document.querySelectorAll('.counter');
+    if (!counters.length) return;
+    counters.forEach(counter => {
+        const update = () => {
+            const target = +counter.dataset.target;
+            const current = +counter.innerText;
+            const increment = Math.ceil(target / 50);
+            if (current < target) {
+                counter.innerText = current + increment;
+                requestAnimationFrame(update);
+            } else {
+                counter.innerText = target;
+            }
+        };
+        update();
+    });
+})();
+</script>
 {% endblock %}
