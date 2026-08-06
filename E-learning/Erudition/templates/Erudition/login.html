@@ -1,0 +1,57 @@
+{% extends 'Erudition/base.html' %}
+
+{% block title %}Login | Erudition{% endblock %}
+
+{% block header_banner %}
+    {% include 'Erudition/header_banner.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <div class="d-inline-flex align-items-center gap-2 text-primary fw-semibold mb-2">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            Login
+                        </div>
+                        <h2 class="h3 fw-bold text-dark">Welcome back</h2>
+                        <p class="text-muted mb-0">Sign in to continue to your profile and learning dashboard.</p>
+                    </div>
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            Please enter a correct username and password.
+                        </div>
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label fw-semibold">Username</label>
+                            <input type="text" class="form-control rounded-3" id="id_username" name="username" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="id_password" class="form-label fw-semibold">Password</label>
+                            <input type="password" class="form-control rounded-3" id="id_password" name="password" required>
+                        </div>
+                        <div class="text-end mb-4">
+                            <a href="{% url 'password_reset' %}" class="small fw-semibold text-decoration-none" style="color:#1E40AF;">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary-custom w-100 rounded-pill py-2">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Log In
+                        </button>
+                    </form>
+
+                    <p class="text-center text-muted mt-4 mb-0">
+                        Don't have an account?
+                        <a href="{% url 'register' %}" class="fw-semibold text-decoration-none" style="color:#1E40AF;">Register</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'Erudition/base.html' %}
+
+{% block title %}Register | Erudition{% endblock %}
+
+{% block header_banner %}
+    {% include 'Erudition/header_banner.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <div class="d-inline-flex align-items-center gap-2 text-primary fw-semibold mb-2">
+                            <i class="bi bi-person-plus-fill"></i>
+                            Register
+                        </div>
+                        <h2 class="h3 fw-bold text-dark">Create your account</h2>
+                        <p class="text-muted mb-0">Join Erudition and start your learning journey today.</p>
+                    </div>
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <form method="post" class="row g-3">
+                        {% csrf_token %}
+
+                        <div class="col-md-6">
+                            <label for="id_full_name" class="form-label fw-semibold">Full Name</label>
+                            <input type="text" class="form-control rounded-3 {% if form.full_name.errors %}is-invalid{% endif %}" id="id_full_name" name="full_name" value="{{ form.full_name.value|default:'' }}" required>
+                            {% if form.full_name.errors %}
+                                <div class="invalid-feedback d-block">{{ form.full_name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_email" class="form-label fw-semibold">Email Address</label>
+                            <input type="email" class="form-control rounded-3 {% if form.email.errors %}is-invalid{% endif %}" id="id_email" name="email" value="{{ form.email.value|default:'' }}" required>
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback d-block">{{ form.email.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_phone_number" class="form-label fw-semibold">Phone Number</label>
+                            <input type="text" class="form-control rounded-3 {% if form.phone_number.errors %}is-invalid{% endif %}" id="id_phone_number" name="phone_number" value="{{ form.phone_number.value|default:'' }}" required>
+                            {% if form.phone_number.errors %}
+                                <div class="invalid-feedback d-block">{{ form.phone_number.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_username" class="form-label fw-semibold">Username</label>
+                            <input type="text" class="form-control rounded-3 {% if form.username.errors %}is-invalid{% endif %}" id="id_username" name="username" value="{{ form.username.value|default:'' }}" required>
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback d-block">{{ form.username.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_password1" class="form-label fw-semibold">Password</label>
+                            <input type="password" class="form-control rounded-3 {% if form.password1.errors %}is-invalid{% endif %}" id="id_password1" name="password1" required>
+                            {% if form.password1.errors %}
+                                <div class="invalid-feedback d-block">{{ form.password1.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_password2" class="form-label fw-semibold">Confirm Password</label>
+                            <input type="password" class="form-control rounded-3 {% if form.password2.errors %}is-invalid{% endif %}" id="id_password2" name="password2" required>
+                            {% if form.password2.errors %}
+                                <div class="invalid-feedback d-block">{{ form.password2.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12 pt-2">
+                            <button type="submit" class="btn btn-primary-custom w-100 rounded-pill py-2">
+                                <i class="bi bi-person-plus-fill me-2"></i>Create Account
+                            </button>
+                        </div>
+                    </form>
+
+                    <p class="text-center text-muted mt-4 mb-0">
+                        Already have an account?
+                        <a href="{% url 'login' %}" class="fw-semibold text-decoration-none" style="color:#1E40AF;">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
