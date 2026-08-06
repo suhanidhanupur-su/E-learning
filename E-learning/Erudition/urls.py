@@ -16,4 +16,5 @@ urlpatterns = [
     path('terms-conditions/', views.terms_conditions, name='terms_conditions'),
     path('our-mission/', views.our_mission, name='our_mission'),
     path('our-vision/', views.our_vision, name='our_vision'),
+    path('register/', views.register, name='register'),
 ]

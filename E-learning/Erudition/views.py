@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 from .forms import ProfileUpdateForm
 from .models import LiveClass, Profile, Category, Course, TeamMember
 from django.db.models import Prefetch
+from django.contrib.auth import login as auth_login
+from .forms import ProfileUpdateForm, RegisterForm
 
 
 def home(request):
@@ -165,4 +167,22 @@ def edit_profile(request):
     })
 
 
+def register(request):
+    if request.user.is_authenticated:
+        return redirect('profile')
 
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            messages.success(request, 'Welcome to Erudition! Your account has been created.')
+            return redirect('profile')
+    else:
+        form = RegisterForm()
+
+    return render(request, 'Erudition/register.html', {
+        'form': form,
+        'page_title': 'Register',
+        'page_subtitle': 'Create your account and start your learning journey with Erudition.',
+    })
