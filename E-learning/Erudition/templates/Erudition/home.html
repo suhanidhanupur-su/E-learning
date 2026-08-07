@@ -160,6 +160,335 @@
 </script>
 
 <style>
+  /* ══════════════════════════
+   FEATURED COURSES
+══════════════════════════ */
+.featured-courses-section {
+  background: #f8fafc;
+}
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+}
+.course-card {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(15,23,42,0.07);
+  border: 1px solid rgba(15,23,42,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+.course-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 60px rgba(15,23,42,0.14);
+}
+.course-img-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 170px;
+  flex-shrink: 0;
+}
+.course-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+.course-card:hover .course-img {
+  transform: scale(1.06);
+}
+.course-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #d4af37;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+.course-body {
+  padding: 1.2rem 1.3rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.6rem;
+}
+.course-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.35;
+  margin: 0;
+  transition: color 0.22s ease;
+}
+.course-card:hover .course-title {
+  color: #1e3a8a;
+}
+.course-desc {
+  font-size: 0.83rem;
+  color: #64748b;
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+.course-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+.course-meta i { color: #d4af37; margin-right: 4px; }
+.course-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.7rem;
+  border-top: 1px solid #f1f5f9;
+}
+.course-price {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #b45309;
+}
+.course-enroll-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.course-enroll-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(59,130,246,0.35);
+  color: #fff;
+}
+@media (max-width: 1100px) {
+  .courses-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .courses-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════
+   LIVE CLASSES
+══════════════════════════ */
+.live-section {
+  background: #ffffff;
+}
+.live-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.8rem;
+}
+.live-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(15,23,42,0.08);
+  border: 1px solid rgba(15,23,42,0.07);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+.live-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 56px rgba(15,23,42,0.13);
+}
+.live-img-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 210px;
+  flex-shrink: 0;
+}
+.live-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+.live-card:hover .live-img { transform: scale(1.04); }
+.live-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 5px 14px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.live-badge i { font-size: 0.45rem; color: #bbf7d0; animation: livePulse 1.2s ease-in-out infinite; }
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.live-body {
+  padding: 1.5rem 1.6rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+.live-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.35;
+  margin: 0;
+}
+.live-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.82rem;
+  color: #64748b;
+  font-weight: 500;
+}
+.live-meta-row i { color: #d4af37; margin-right: 5px; }
+.live-desc {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.75;
+  margin: 0;
+  flex: 1;
+}
+.live-register-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: auto;
+}
+.live-register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(59,130,246,0.38);
+  color: #fff;
+}
+@media (max-width: 768px) {
+  .live-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════
+   LATEST ARTICLES
+══════════════════════════ */
+.articles-section {
+  background: #f8fafc;
+}
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.article-card {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(15,23,42,0.07);
+  border: 1px solid rgba(15,23,42,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+.article-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 22px 56px rgba(15,23,42,0.13);
+}
+.article-img-wrap {
+  overflow: hidden;
+  height: 190px;
+  flex-shrink: 0;
+}
+.article-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+.article-card:hover .article-img { transform: scale(1.05); }
+.article-body {
+  padding: 1.3rem 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+.article-category {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #d4af37;
+}
+.article-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.38;
+  margin: 0;
+  transition: color 0.22s ease;
+}
+.article-card:hover .article-title { color: #1e3a8a; }
+.article-excerpt {
+  font-size: 0.84rem;
+  color: #64748b;
+  line-height: 1.75;
+  margin: 0;
+  flex: 1;
+  /* 2-line clamp */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.article-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.85rem;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-top: auto;
+}
+.article-footer i { color: #d4af37; margin-right: 4px; }
+@media (max-width: 900px) {
+  .articles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .articles-grid { grid-template-columns: 1fr; }
+}
+
 /* ====== STATISTICS STRIP ====== */
 .stats-strip {
     background: #ffffff;
@@ -569,113 +898,6 @@
 </style>
 
 <!-- ============================================================
-     SECTION 1 — FEATURED COURSES
-============================================================ -->
-<section class="hp-section featured-courses-section">
-  <div class="container">
-
-    <!-- Heading -->
-    <div class="hp-section-head">
-      <span class="hp-eyebrow">OUR PROGRAMS</span>
-      <h2 class="hp-heading">Featured Courses</h2>
-      <p class="hp-subhead">Practical, expert-led programs designed to build real-world skills fast.</p>
-    </div>
-
-    <!-- Cards -->
-    <div class="courses-grid">
-
-      <!-- Card 1 -->
-      <div class="course-card">
-        <div class="course-img-wrap">
-          <img src="https://placehold.co/400x220/1e3a8a/ffffff?text=Leadership" alt="Leadership Development" class="course-img">
-          <span class="course-badge">Leadership</span>
-        </div>
-        <div class="course-body">
-          <h3 class="course-title">Leadership Development Program</h3>
-          <p class="course-desc">Build strategic thinking, team management and executive communication skills for the modern workplace.</p>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 8 Weeks</span>
-            <span><i class="fas fa-star"></i> 4.9</span>
-          </div>
-          <div class="course-footer">
-            <span class="course-price">₹4,999</span>
-            <a href="#" class="course-enroll-btn">Enroll Now</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="course-card">
-        <div class="course-img-wrap">
-          <img src="https://placehold.co/400x220/0f4c81/ffffff?text=Communication" alt="Communication Skills" class="course-img">
-          <span class="course-badge">Communication</span>
-        </div>
-        <div class="course-body">
-          <h3 class="course-title">Advanced Communication Skills</h3>
-          <p class="course-desc">Master public speaking, business writing and interpersonal communication to accelerate your career.</p>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 6 Weeks</span>
-            <span><i class="fas fa-star"></i> 4.8</span>
-          </div>
-          <div class="course-footer">
-            <span class="course-price">₹3,499</span>
-            <a href="#" class="course-enroll-btn">Enroll Now</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="course-card">
-        <div class="course-img-wrap">
-          <img src="https://placehold.co/400x220/1a5276/ffffff?text=Personality" alt="Personality Development" class="course-img">
-          <span class="course-badge">Personality</span>
-        </div>
-        <div class="course-body">
-          <h3 class="course-title">Personality Development Bootcamp</h3>
-          <p class="course-desc">Transform your confidence, body language and personal brand through intensive, hands-on sessions.</p>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 4 Weeks</span>
-            <span><i class="fas fa-star"></i> 4.7</span>
-          </div>
-          <div class="course-footer">
-            <span class="course-price">₹2,999</span>
-            <a href="#" class="course-enroll-btn">Enroll Now</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="course-card">
-        <div class="course-img-wrap">
-          <img src="https://placehold.co/400x220/154360/ffffff?text=Corporate" alt="Corporate Training" class="course-img">
-          <span class="course-badge">Corporate</span>
-        </div>
-        <div class="course-body">
-          <h3 class="course-title">Corporate Training & Consultancy</h3>
-          <p class="course-desc">Customised organisational learning solutions for teams, managers and enterprise leaders.</p>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> Flexible</span>
-            <span><i class="fas fa-star"></i> 5.0</span>
-          </div>
-          <div class="course-footer">
-            <span class="course-price">Custom</span>
-            <a href="#" class="course-enroll-btn">Enquire</a>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /courses-grid -->
-
-    <!-- CTA -->
-    <div class="hp-cta-wrap">
-      <a href="#" class="hp-btn-outline-blue">View All Courses</a>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- ============================================================
      SECTION 2 — UPCOMING LIVE CLASSES
 ============================================================ -->
 <section class="hp-section live-section">
@@ -982,334 +1204,6 @@
   box-shadow: 0 10px 28px rgba(30,58,138,0.22);
 }
 
-/* ══════════════════════════
-   FEATURED COURSES
-══════════════════════════ */
-.featured-courses-section {
-  background: #f8fafc;
-}
-.courses-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.4rem;
-}
-.course-card {
-  background: #ffffff;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 8px 28px rgba(15,23,42,0.07);
-  border: 1px solid rgba(15,23,42,0.06);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
-}
-.course-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 60px rgba(15,23,42,0.14);
-}
-.course-img-wrap {
-  position: relative;
-  overflow: hidden;
-  height: 170px;
-  flex-shrink: 0;
-}
-.course-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-  display: block;
-}
-.course-card:hover .course-img {
-  transform: scale(1.06);
-}
-.course-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: #d4af37;
-  color: #ffffff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 999px;
-}
-.course-body {
-  padding: 1.2rem 1.3rem 1.3rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 0.6rem;
-}
-.course-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #0f172a;
-  line-height: 1.35;
-  margin: 0;
-  transition: color 0.22s ease;
-}
-.course-card:hover .course-title {
-  color: #1e3a8a;
-}
-.course-desc {
-  font-size: 0.83rem;
-  color: #64748b;
-  line-height: 1.7;
-  margin: 0;
-  flex: 1;
-}
-.course-meta {
-  display: flex;
-  gap: 1rem;
-  font-size: 0.8rem;
-  color: #94a3b8;
-  font-weight: 500;
-}
-.course-meta i { color: #d4af37; margin-right: 4px; }
-.course-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.7rem;
-  border-top: 1px solid #f1f5f9;
-}
-.course-price {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #b45309;
-}
-.course-enroll-btn {
-  display: inline-flex;
-  align-items: center;
-  height: 32px;
-  padding: 0 14px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-  color: #fff;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.course-enroll-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(59,130,246,0.35);
-  color: #fff;
-}
-@media (max-width: 1100px) {
-  .courses-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 600px) {
-  .courses-grid { grid-template-columns: 1fr; }
-}
-
-/* ══════════════════════════
-   LIVE CLASSES
-══════════════════════════ */
-.live-section {
-  background: #ffffff;
-}
-.live-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.8rem;
-}
-.live-card {
-  background: #ffffff;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 8px 30px rgba(15,23,42,0.08);
-  border: 1px solid rgba(15,23,42,0.07);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
-}
-.live-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 22px 56px rgba(15,23,42,0.13);
-}
-.live-img-wrap {
-  position: relative;
-  overflow: hidden;
-  height: 210px;
-  flex-shrink: 0;
-}
-.live-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-  display: block;
-}
-.live-card:hover .live-img { transform: scale(1.04); }
-.live-badge {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  background: #16a34a;
-  color: #ffffff;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  padding: 5px 14px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.live-badge i { font-size: 0.45rem; color: #bbf7d0; animation: livePulse 1.2s ease-in-out infinite; }
-@keyframes livePulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-.live-body {
-  padding: 1.5rem 1.6rem 1.8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  flex: 1;
-}
-.live-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #0f172a;
-  line-height: 1.35;
-  margin: 0;
-}
-.live-meta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  font-size: 0.82rem;
-  color: #64748b;
-  font-weight: 500;
-}
-.live-meta-row i { color: #d4af37; margin-right: 5px; }
-.live-desc {
-  font-size: 0.88rem;
-  color: #475569;
-  line-height: 1.75;
-  margin: 0;
-  flex: 1;
-}
-.live-register-btn {
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  height: 40px;
-  padding: 0 24px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin-top: auto;
-}
-.live-register-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(59,130,246,0.38);
-  color: #fff;
-}
-@media (max-width: 768px) {
-  .live-grid { grid-template-columns: 1fr; }
-}
-
-/* ══════════════════════════
-   LATEST ARTICLES
-══════════════════════════ */
-.articles-section {
-  background: #f8fafc;
-}
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.article-card {
-  background: #ffffff;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 6px 24px rgba(15,23,42,0.07);
-  border: 1px solid rgba(15,23,42,0.06);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
-}
-.article-card:hover {
-  transform: translateY(-7px);
-  box-shadow: 0 22px 56px rgba(15,23,42,0.13);
-}
-.article-img-wrap {
-  overflow: hidden;
-  height: 190px;
-  flex-shrink: 0;
-}
-.article-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-  display: block;
-}
-.article-card:hover .article-img { transform: scale(1.05); }
-.article-body {
-  padding: 1.3rem 1.4rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  flex: 1;
-}
-.article-category {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #d4af37;
-}
-.article-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #0f172a;
-  line-height: 1.38;
-  margin: 0;
-  transition: color 0.22s ease;
-}
-.article-card:hover .article-title { color: #1e3a8a; }
-.article-excerpt {
-  font-size: 0.84rem;
-  color: #64748b;
-  line-height: 1.75;
-  margin: 0;
-  flex: 1;
-  /* 2-line clamp */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.article-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.85rem;
-  border-top: 1px solid #f1f5f9;
-  font-size: 0.78rem;
-  color: #94a3b8;
-  font-weight: 500;
-  margin-top: auto;
-}
-.article-footer i { color: #d4af37; margin-right: 4px; }
-@media (max-width: 900px) {
-  .articles-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 600px) {
-  .articles-grid { grid-template-columns: 1fr; }
-}
 
 /* ══════════════════════════
    TESTIMONIALS

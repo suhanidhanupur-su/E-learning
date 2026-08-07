@@ -15,7 +15,8 @@ from .forms import ProfileUpdateForm, RegisterForm
 
 
 def home(request):
-    return render(request, 'Erudition/home.html')
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+    return render(request, 'Erudition/home.html', {'featured_courses': featured_courses})
 
 
 def submit_enquiry(request):
@@ -56,10 +57,12 @@ def submit_enquiry(request):
 
 def about(request):
     team_members = TeamMember.objects.filter(is_active=True).order_by('display_order', 'employee_name')
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
     return render(request, 'Erudition/about.html', {
         'page_title': 'About Us',
         'page_subtitle': 'Discover our premium corporate and educational learning experiences designed for teams, leaders, and institutions.',
         'team_members': team_members,
+        'featured_courses': featured_courses,
     })
 
 
@@ -73,12 +76,15 @@ def courses(request):
 
     courses = courses.order_by('-is_featured', '-created_at')
 
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+
     return render(request, 'Erudition/courses.html', {
         'categories': categories,
         'courses': courses,
         'active_category_slug': category_slug,
         'page_title': 'Courses',
         'page_subtitle': 'Browse our curated collection of skills, certifications, and live training offerings built for modern professionals.',
+        'featured_courses': featured_courses,
     })
 
 
@@ -184,6 +190,8 @@ def live_classes(request):
     categories_count = categories.count()
     featured_class = live_classes.first()
 
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+
     return render(request, 'Erudition/live_classes.html', {
         'categories': categories,
         'categories_count': categories_count,
@@ -194,6 +202,7 @@ def live_classes(request):
         'search_query': search_query,
         'page_title': 'Live Classes',
         'page_subtitle': 'Join our upcoming live sessions with expert instructors and practical learning experiences.',
+        'featured_courses': featured_courses,
     })
 
 
@@ -201,46 +210,64 @@ def articles(request):
     category_slug = request.GET.get('category')
     categories = Category.objects.order_by('name')
 
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+
     return render(request, 'Erudition/articles.html', {
         'categories': categories,
         'active_category_slug': category_slug,
         'page_title': 'Articles',
         'page_subtitle': 'Explore thought leadership and practical business insights aligned with our learning programs.',
+        'featured_courses': featured_courses,
     })
 
 
 def privacy_policy(request):
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+
     return render(request, 'Erudition/privacy_policy.html', {
         'page_title': 'Privacy Policy',
         'page_subtitle': 'How we protect your information and maintain trust in every learning engagement.',
+        'featured_courses': featured_courses,
     })
 
 
 def refund_policy(request):
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+
     return render(request, 'Erudition/refund_policy.html', {
         'page_title': 'Refund Policy',
         'page_subtitle': 'Transparent guidance on enrollment changes, cancellations, and service adjustments.',
+        'featured_courses': featured_courses,
     })
 
 
 def terms_conditions(request):
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+
     return render(request, 'Erudition/terms_conditions.html', {
         'page_title': 'Terms & Conditions',
         'page_subtitle': 'The standards that shape our partnership, service delivery, and client engagement.',
+        'featured_courses': featured_courses,
     })
 
 
 def our_mission(request):
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+
     return render(request, 'Erudition/our_mission.html', {
         'page_title': 'Our Mission',
         'page_subtitle': 'A clear commitment to meaningful growth, leadership excellence, and premium learning impact.',
+        'featured_courses': featured_courses,
     })
 
 
 def our_vision(request):
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+
     return render(request, 'Erudition/our_vision.html', {
         'page_title': 'Our Vision',
         'page_subtitle': 'Building a future where organizations thrive through thoughtful education and strategic transformation.',
+        'featured_courses': featured_courses,
     })
 
 
@@ -252,10 +279,13 @@ def get_or_create_profile(user):
 @login_required
 def profile_view(request):
     profile = get_or_create_profile(request.user)
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+
     return render(request, 'Erudition/profile.html', {
         'profile': profile,
         'page_title': 'My Profile',
         'page_subtitle': 'Manage your personal details and professional presence.',
+        'featured_courses': featured_courses,
     })
 
 

@@ -63,6 +63,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'Erudition.context_processors.active_announcement',
+                'Erudition.context_processors.featured_courses_context',
             ],
         },
     },

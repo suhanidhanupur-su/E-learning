@@ -1,0 +1,45 @@
+{% if featured_courses %}
+<section class="hp-section featured-courses-section">
+  <div class="container">
+    <div class="hp-section-head">
+      <span class="hp-eyebrow">OUR PROGRAMS</span>
+      <h2 class="hp-heading">Featured Courses</h2>
+      <p class="hp-subhead">Practical, expert-led programs designed to build real-world skills fast.</p>
+    </div>
+
+    <div class="courses-grid">
+      {% for course in featured_courses %}
+      {% url 'course_detail' course.slug as course_detail_url %}
+      <div class="course-card" role="button" tabindex="0" onclick="window.location.href='{{ course_detail_url }}'" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.location.href='{{ course_detail_url }}'; }">
+        <div class="course-img-wrap">
+          <img src="{{ course.course_image.url|default:'https://placehold.co/400x220/1e3a8a/ffffff?text=Course' }}" alt="{{ course.title }}" class="course-img">
+          {% if course.is_featured %}
+            <span class="course-badge">Featured</span>
+          {% endif %}
+        </div>
+        <div class="course-body">
+          <h3 class="course-title">{{ course.title }}</h3>
+          <p class="course-desc">{{ course.short_description|default:course.description }}</p>
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> {{ course.duration|default:'Flexible' }}</span>
+            <span><i class="fas fa-star"></i> 4.8</span>
+          </div>
+          <div class="course-footer">
+            {% if course.price and course.price > 0 %}
+              <span class="course-price">₹{{ course.price|floatformat:0 }}</span>
+            {% else %}
+              <span class="course-price">Free</span>
+            {% endif %}
+            <a href="{% url 'enroll_course' course.slug %}" class="course-enroll-btn" onclick="event.stopPropagation();">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="hp-cta-wrap">
+      <a href="{% url 'courses' %}" class="hp-btn-outline-blue">View All Courses</a>
+    </div>
+  </div>
+</section>
+{% endif %}
