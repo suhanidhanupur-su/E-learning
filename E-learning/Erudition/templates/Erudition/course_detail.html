@@ -1,0 +1,187 @@
+{% extends 'Erudition/base.html' %}
+
+{% block title %}{{ course.title }} | Erudition{% endblock %}
+
+{% block header_banner %}
+    {% include 'Erudition/header_banner.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="container-xl">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="page-card shadow-soft">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="position-relative overflow-hidden rounded-4 mb-4" style="min-height: 320px; background: linear-gradient(135deg, rgba(30,64,175,0.95), rgba(59,130,246,0.85));">
+                            {% if course.course_image %}
+                                <img src="{{ course.course_image.url }}" alt="{{ course.title }}" style="width:100%; height:100%; object-fit:cover; opacity:0.9;">
+                            {% else %}
+                                <div class="d-flex align-items-center justify-content-center h-100 text-white" style="font-size: 2.4rem; font-weight: 700;">
+                                    <i class="bi bi-mortarboard-fill me-2"></i> {{ course.title }}
+                                </div>
+                            {% endif %}
+                            <div class="position-absolute top-0 start-0 p-3">
+                                <span class="badge rounded-pill px-3 py-2" style="background: #D4AF37; color: #3a2c05; font-weight: 700;">
+                                    <i class="bi bi-bookmark-fill me-1"></i> {{ course.category.name }}
+                                </span>
+                            </div>
+                            {% if course.is_featured %}
+                                <div class="position-absolute top-0 end-0 p-3">
+                                    <span class="badge rounded-pill px-3 py-2" style="background: #ffffff; color: #1E40AF; font-weight: 700;">
+                                        <i class="bi bi-star-fill me-1"></i> Featured
+                                    </span>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                            <span class="badge rounded-pill px-3 py-2" style="background: rgba(30,64,175,0.08); color: #1E40AF; border: 1px solid rgba(30,64,175,0.18);">
+                                <i class="bi bi-globe2 me-1"></i> Online Course
+                            </span>
+                            {% if is_enrolled %}
+                                <span class="badge rounded-pill px-3 py-2" style="background: rgba(21,128,61,0.12); color: #15803d; border: 1px solid rgba(21,128,61,0.18);">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Already Enrolled
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <h1 class="h2 fw-bold mb-3" style="color: #0f172a;">{{ course.title }}</h1>
+                        <p class="text-muted mb-4" style="font-size: 1.02rem; line-height: 1.8;">{{ course.short_description|default:course.description }}</p>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-sm-6 col-md-4">
+                                <div class="rounded-4 p-3" style="background: #f8fbff; border: 1px solid rgba(30,64,175,0.08);">
+                                    <div class="text-muted small">Price</div>
+                                    <div class="fw-bold" style="color: #b45309;">{% if course.price %}₹{{ course.price }}{% else %}Free{% endif %}</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <div class="rounded-4 p-3" style="background: #f8fbff; border: 1px solid rgba(30,64,175,0.08);">
+                                    <div class="text-muted small">Instructor</div>
+                                    <div class="fw-bold" style="color: #0f172a;">{{ course.instructor_name|default:'TBD' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <div class="rounded-4 p-3" style="background: #f8fbff; border: 1px solid rgba(30,64,175,0.08);">
+                                    <div class="text-muted small">Duration</div>
+                                    <div class="fw-bold" style="color: #0f172a;">{{ course.duration|default:'Flexible' }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-top border-bottom py-4 my-4">
+                            <div class="row g-3 text-muted">
+                                <div class="col-sm-6 col-md-3"><i class="bi bi-star-fill me-2" style="color: #D4AF37;"></i> Rating 4.8/5</div>
+                                <div class="col-sm-6 col-md-3"><i class="bi bi-people-fill me-2" style="color: #1E40AF;"></i> 1,200+ Students</div>
+                                <div class="col-sm-6 col-md-3"><i class="bi bi-translate me-2" style="color: #1E40AF;"></i> English</div>
+                                <div class="col-sm-6 col-md-3"><i class="bi bi-award-fill me-2" style="color: #D4AF37;"></i> Certificate Available</div>
+                            </div>
+                        </div>
+
+                        <h3 class="h5 fw-bold mb-3" style="color: #0f172a;">About this Course</h3>
+                        <p class="text-muted mb-4" style="line-height: 1.8;">{{ course.description }}</p>
+
+                        <h3 class="h5 fw-bold mb-3" style="color: #0f172a;">What You'll Learn</h3>
+                        <ul class="text-muted" style="line-height: 1.8;">
+                            {% for item in what_you_learn %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <h3 class="h5 fw-bold mt-4 mb-3" style="color: #0f172a;">Requirements</h3>
+                        <ul class="text-muted" style="line-height: 1.8;">
+                            {% for item in requirements %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <h3 class="h5 fw-bold mt-4 mb-3" style="color: #0f172a;">Course Curriculum</h3>
+                        <div class="accordion" id="curriculumAccordion">
+                            {% for module in curriculum %}
+                                <div class="accordion-item border-0 mb-2 rounded-4 overflow-hidden" style="box-shadow: 0 8px 24px rgba(15,23,42,0.06);">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#module{{ forloop.counter }}" aria-expanded="false">
+                                            {{ module.title }}
+                                        </button>
+                                    </h2>
+                                    <div id="module{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#curriculumAccordion">
+                                        <div class="accordion-body text-muted">{{ module.description }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <h3 class="h5 fw-bold mt-5 mb-3" style="color: #0f172a;">Instructor</h3>
+                        <div class="d-flex align-items-start gap-3 rounded-4 p-3" style="background: #f8fbff; border: 1px solid rgba(30,64,175,0.08);">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background: linear-gradient(135deg, #1E40AF, #3B82F6); color: #fff; font-size: 1.15rem; font-weight: 700;">
+                                {{ course.instructor_name|default:'T'|slice:':1' }}
+                            </div>
+                            <div>
+                                <div class="fw-bold" style="color: #0f172a;">{{ course.instructor_name|default:'TBD' }}</div>
+                                <div class="text-muted small">Senior Learning Strategist</div>
+                                <p class="mb-0 mt-2 text-muted">Experienced educator focused on leadership and professional growth with a practical learning approach.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="h5 fw-bold mt-5 mb-3" style="color: #0f172a;">Reviews</h3>
+                        <div class="rounded-4 p-4" style="background: linear-gradient(135deg, rgba(30,64,175,0.06), rgba(212,175,55,0.08));">
+                            <div class="fw-bold" style="color: #0f172a;">4.8/5 average rating</div>
+                            <div class="text-muted mt-2">“This course gave me immediate clarity and practical insights I could apply right away.”</div>
+                        </div>
+
+                        <h3 class="h5 fw-bold mt-5 mb-3" style="color: #0f172a;">Related Courses</h3>
+                        <div class="row g-3">
+                            {% for related_course in related_courses %}
+                                <div class="col-md-4">
+                                    <div class="rounded-4 p-3 h-100" style="background: #fff; border: 1px solid rgba(15,23,42,0.06); box-shadow: 0 8px 24px rgba(15,23,42,0.06);">
+                                        <div class="fw-bold mb-2" style="color: #0f172a;">{{ related_course.title }}</div>
+                                        <div class="text-muted small mb-3">{{ related_course.short_description|default:related_course.description|truncatechars:80 }}</div>
+                                        <a href="{% url 'course_detail' related_course.slug %}" class="btn btn-sm" style="background: #1E40AF; color: #fff; border-radius: 999px;">View Course</a>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <div class="col-12 text-muted">No related courses are available right now.</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="page-card shadow-soft position-sticky" style="top: 20px;">
+                    <div class="card-body p-4">
+                        <h3 class="h5 fw-bold mb-3" style="color: #0f172a;">Enroll Now</h3>
+                        <div class="rounded-4 p-4 mb-3" style="background: linear-gradient(135deg, rgba(30,64,175,0.06), rgba(212,175,55,0.08));">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted">Course Price</span>
+                                <span class="fw-bold" style="color: #b45309;">{% if course.price %}₹{{ course.price }}{% else %}Free{% endif %}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted">Duration</span>
+                                <span class="fw-bold" style="color: #0f172a;">{{ course.duration|default:'Flexible' }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted">Instructor</span>
+                                <span class="fw-bold" style="color: #0f172a;">{{ course.instructor_name|default:'TBD' }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">Certificate</span>
+                                <span class="fw-bold" style="color: #15803d;">Available</span>
+                            </div>
+                        </div>
+
+                        {% if is_enrolled %}
+                            <a href="{% url 'my_courses' %}" class="btn w-100 mb-2" style="background: #15803d; color:#fff; border-radius: 999px;">Continue Learning</a>
+                        {% else %}
+                            <a href="{% url 'enroll_course' course.slug %}" class="btn w-100 mb-2" style="background: linear-gradient(135deg, #1E40AF, #3B82F6); color: #fff; border-radius: 999px;">Enroll Now</a>
+                        {% endif %}
+                        <a href="{% url 'courses' %}" class="btn w-100 mb-2" style="background: #fff; color: #1E40AF; border: 1px solid #D4AF37; border-radius: 999px;">Back to Courses</a>
+                        <a href="{% url 'my_courses' %}" class="btn w-100" style="background: rgba(30,64,175,0.08); color: #1E40AF; border: 1px solid rgba(30,64,175,0.16); border-radius: 999px;">My Courses</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

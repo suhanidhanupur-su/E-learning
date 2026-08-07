@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from PIL import Image
 
-from .models import TeamMember
+from .models import Category, Course, Enrollment, TeamMember
 
 
 class HomePageTests(TestCase):
@@ -50,6 +50,49 @@ class TeamMemberModelTests(TestCase):
         self.assertTrue(team_member.is_active)
         self.assertEqual(team_member.display_order, 2)
         self.assertEqual(str(team_member), 'Aarav Sharma')
+
+
+class CourseEnrollmentTests(TestCase):
+    def setUp(self):
+        self.category = Category.objects.create(name='Technology', slug='technology')
+        self.course = Course.objects.create(
+            category=self.category,
+            title='Python for Beginners',
+            slug='python-for-beginners',
+            short_description='A practical introduction to Python.',
+            description='A comprehensive course for first-time learners.',
+            instructor_name='Ada Lovelace',
+            duration='4 weeks',
+            price=49.00,
+            is_active=True,
+        )
+        self.user = get_user_model().objects.create_user(
+            username='courseuser',
+            email='course@example.com',
+            password='strong-password-123',
+        )
+
+    def test_course_detail_page_renders(self):
+        response = self.client.get('/courses/python-for-beginners/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Python for Beginners')
+        self.assertContains(response, 'Ada Lovelace')
+
+    def test_enrollment_requires_login(self):
+        response = self.client.get('/enroll/python-for-beginners/')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('/accounts/login/', response.url)
+
+    def test_authenticated_user_can_enroll(self):
+        self.client.login(username='courseuser', password='strong-password-123')
+
+        response = self.client.get('/enroll/python-for-beginners/')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/enrollment-success/')
+        self.assertTrue(Enrollment.objects.filter(user=self.user, course=self.course).exists())
 
 
 class ProfileFlowTests(TestCase):

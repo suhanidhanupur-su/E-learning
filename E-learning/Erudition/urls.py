@@ -6,7 +6,11 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
+    path('courses/<slug:slug>/', views.course_detail, name='course_detail'),
     path('courses/', views.courses, name='courses'),
+    path('enroll/<slug:slug>/', views.enroll_course, name='enroll_course'),
+    path('my-courses/', views.my_courses, name='my_courses'),
+    path('enrollment-success/', views.enrollment_success, name='enrollment_success'),
     path('articles/', views.articles, name='articles'),
     path('live-classes/', views.live_classes, name='live_classes'),
     path('profile/', views.profile_view, name='profile'),

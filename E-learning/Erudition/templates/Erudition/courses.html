@@ -85,12 +85,13 @@
                                                             </div>
 
                                                             <div class="ec-card-footer">
-                                                                <a href="#" class="ec-btn-primary">Enroll Now</a>
-                                                                <a href="#" class="ec-btn-secondary">View Course</a>
+                                                                <a href="{% url 'enroll_course' course.slug %}" class="ec-btn-primary">Enroll Now</a>
+                                                                <a href="{% url 'course_detail' course.slug %}" class="ec-btn-secondary">View Course</a>
                                                             </div>
                                                         </div>
 
                                                     </div>
+                                                </div>
                                             {% endfor %}
                                         </div>
                                         <!-- ============ /PREMIUM COURSE CARD GRID ============ -->

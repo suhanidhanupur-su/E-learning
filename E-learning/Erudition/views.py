@@ -1,11 +1,14 @@
+from urllib.parse import quote
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ProfileUpdateForm
-from .models import LiveClass, Profile, Category, Course, TeamMember
+from .models import LiveClass, Profile, Category, Course, Enrollment, TeamMember
 from django.db.models import Prefetch
 from django.contrib.auth import login as auth_login
+from django.urls import reverse
 from .forms import ProfileUpdateForm, RegisterForm
 
 
@@ -38,6 +41,94 @@ def courses(request):
         'active_category_slug': category_slug,
         'page_title': 'Courses',
         'page_subtitle': 'Browse our curated collection of skills, certifications, and live training offerings built for modern professionals.',
+    })
+
+
+def course_detail(request, slug):
+    course = get_object_or_404(Course, slug=slug, is_active=True)
+    related_courses = Course.objects.filter(category=course.category, is_active=True).exclude(pk=course.pk)[:3]
+    is_enrolled = False
+
+    if request.user.is_authenticated:
+        is_enrolled = Enrollment.objects.filter(user=request.user, course=course).exists()
+
+    context = {
+        'course': course,
+        'related_courses': related_courses,
+        'is_enrolled': is_enrolled,
+        'what_you_learn': [
+            'Understand the foundations of the subject with structured, step-by-step guidance.',
+            'Apply practical strategies you can use immediately in your work or studies.',
+            'Build confidence through guided exercises and real-world scenarios.',
+        ],
+        'requirements': [
+            'Basic familiarity with the topic is helpful but not required.',
+            'A stable internet connection and a reliable device for online learning.',
+            'A willingness to practice and engage with the lessons.',
+        ],
+        'curriculum': [
+            {'title': 'Module 1: Foundations', 'description': 'Discover the core ideas, methods, and frameworks that shape the course.'},
+            {'title': 'Module 2: Applied Learning', 'description': 'Work through practical assignments and case-based examples.'},
+            {'title': 'Module 3: Advanced Practice', 'description': 'Build confidence with guided reflection and next-step planning.'},
+        ],
+        'page_title': course.title,
+        'page_subtitle': course.short_description or course.description,
+    }
+    return render(request, 'Erudition/course_detail.html', context)
+
+
+@login_required
+def enroll_course(request, slug):
+    course = get_object_or_404(Course, slug=slug, is_active=True)
+
+    if not request.user.is_authenticated:
+        next_url = reverse('course_detail', args=[course.slug])
+        return redirect(f"{reverse('login')}?next={quote(next_url)}")
+
+    enrollment, created = Enrollment.objects.get_or_create(
+        user=request.user,
+        course=course,
+        defaults={'status': 'approved', 'payment_status': 'pending'},
+    )
+
+    if not created:
+        messages.info(request, 'You are already enrolled in this course.')
+        return redirect('course_detail', slug=course.slug)
+
+    request.session['enrollment_success_slug'] = course.slug
+    messages.success(request, 'You have successfully enrolled in this course.')
+    return redirect('enrollment_success')
+
+
+@login_required
+def my_courses(request):
+    enrollments = Enrollment.objects.filter(user=request.user).select_related('course').order_by('-enrolled_at')
+    return render(request, 'Erudition/my_courses.html', {
+        'enrollments': enrollments,
+        'page_title': 'My Courses',
+        'page_subtitle': 'Continue learning from your enrolled programs and stay on track with your growth.',
+    })
+
+
+@login_required
+def enrollment_success(request):
+    slug = request.session.pop('enrollment_success_slug', None)
+    course = None
+
+    if slug:
+        course = get_object_or_404(Course, slug=slug, is_active=True)
+    else:
+        latest_enrollment = Enrollment.objects.filter(user=request.user).order_by('-enrolled_at').first()
+        if latest_enrollment:
+            course = latest_enrollment.course
+
+    if not course:
+        return redirect('courses')
+
+    return render(request, 'Erudition/enrollment_success.html', {
+        'course': course,
+        'page_title': 'Enrollment Success',
+        'page_subtitle': 'Your learning journey is ready to begin.',
     })
 
 

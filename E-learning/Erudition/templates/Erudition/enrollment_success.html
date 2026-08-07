@@ -1,0 +1,40 @@
+{% extends 'Erudition/base.html' %}
+
+{% block title %}Enrollment Success | Erudition{% endblock %}
+
+{% block header_banner %}
+    {% include 'Erudition/header_banner.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="container-xl">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="page-card shadow-soft">
+                    <div class="card-body p-4 p-lg-5 text-center">
+                        <div class="mb-4" style="font-size: 4rem; color: #15803d;">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                        <h2 class="section-heading">Successfully Enrolled</h2>
+                        <p class="section-text">You are now ready to begin learning with confidence.</p>
+
+                        <div class="rounded-4 p-4 my-4" style="background: linear-gradient(135deg, rgba(30,64,175,0.06), rgba(212,175,55,0.08)); border: 1px solid rgba(15,23,42,0.06);">
+                            {% if course.course_image %}
+                                <img src="{{ course.course_image.url }}" alt="{{ course.title }}" style="width: 100%; max-height: 240px; object-fit: cover; border-radius: 20px;">
+                            {% endif %}
+                            <h3 class="h4 fw-bold mt-4" style="color: #0f172a;">{{ course.title }}</h3>
+                            <p class="text-muted">Instructor: {{ course.instructor_name|default:'TBD' }}</p>
+                        </div>
+
+                        <div class="d-flex flex-wrap justify-content-center gap-3">
+                            <a href="{% url 'course_detail' course.slug %}" class="btn" style="background: linear-gradient(135deg, #1E40AF, #3B82F6); color: #fff; border-radius: 999px;">Start Learning</a>
+                            <a href="{% url 'courses' %}" class="btn" style="background: #fff; color: #1E40AF; border: 1px solid #D4AF37; border-radius: 999px;">Back to Courses</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

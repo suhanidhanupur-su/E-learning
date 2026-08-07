@@ -127,3 +127,32 @@ def _generate_unique_slug(instance, slug_field_name='slug'):
 def ensure_course_slug(sender, instance, **kwargs):
     if not instance.slug:
         instance.slug = _generate_unique_slug(instance)
+
+
+
+class Enrollment(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Payment Pending'),
+        ('approved', 'Approved'),
+        ('paid', 'Paid'),
+        ('cancelled', 'Cancelled'),
+    )
+    PAYMENT_STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('completed', 'Completed'),
+        ('failed', 'Failed'),
+        ('refunded', 'Refunded'),
+    )
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='enrollments')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='approved')
+    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending')
+    enrolled_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'course')
+        ordering = ('-enrolled_at',)
+
+    def __str__(self):
+        return f"{self.user.username} -> {self.course.title} ({self.get_status_display()})"
