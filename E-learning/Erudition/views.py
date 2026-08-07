@@ -1,3 +1,4 @@
+import json
 from urllib.parse import quote
 
 from django.contrib import messages
@@ -5,15 +6,52 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ProfileUpdateForm
-from .models import LiveClass, Profile, Category, Course, Enrollment, TeamMember
+from .models import LiveClass, Profile, Category, Course, Enrollment, Enquiry, TeamMember
 from django.db.models import Prefetch
 from django.contrib.auth import login as auth_login
 from django.urls import reverse
+from django.http import JsonResponse
 from .forms import ProfileUpdateForm, RegisterForm
 
 
 def home(request):
     return render(request, 'Erudition/home.html')
+
+
+def submit_enquiry(request):
+    if request.method != 'POST':
+        return JsonResponse({'errors': {'detail': 'Invalid request method.'}}, status=405)
+
+    if request.content_type and 'application/json' in request.content_type:
+        try:
+            data = request.body.decode('utf-8')
+            data = json.loads(data)
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            data = {}
+    else:
+        data = request.POST
+
+    errors = {}
+
+    name = (data.get('name') or '').strip()
+    phone = (data.get('phone') or '').strip()
+    email = (data.get('email') or '').strip()
+    message = (data.get('message') or '').strip()
+
+    if not name:
+        errors['name'] = 'Name is required.'
+    if not phone:
+        errors['phone'] = 'Phone number is required.'
+    if not email or '@' not in email:
+        errors['email'] = 'Enter a valid email address.'
+    if not message:
+        errors['message'] = 'Message is required.'
+
+    if errors:
+        return JsonResponse({'errors': errors}, status=400)
+
+    Enquiry.objects.create(name=name, phone=phone, email=email, message=message)
+    return JsonResponse({'success': True, 'message': 'Thank you! We will get back to you shortly.'})
 
 
 def about(request):

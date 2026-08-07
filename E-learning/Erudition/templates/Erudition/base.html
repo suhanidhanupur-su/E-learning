@@ -609,6 +609,198 @@
             .call-laptop { width: 190px; }
         }
 
+        .get-in-touch-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 8, 23, 0.74);
+            backdrop-filter: blur(7px);
+            z-index: 1060;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+        }
+        .get-in-touch-backdrop.show {
+            display: flex;
+            animation: modalFadeIn 0.24s ease forwards;
+        }
+        .get-in-touch-modal {
+            width: min(100%, 700px);
+            max-height: min(92vh, 800px);
+            overflow: hidden;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 30px 85px rgba(11, 23, 42, 0.24), 0 0 0 1px rgba(30, 78, 216, 0.08);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            transform: scale(0.96);
+            opacity: 0;
+            transition: transform 0.24s ease, opacity 0.24s ease;
+        }
+        .get-in-touch-backdrop.show .get-in-touch-modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .get-in-touch-header {
+            position: relative;
+            padding: 2.2rem 2.5rem 1.4rem;
+            background: linear-gradient(135deg, #0b3d91 0%, #1e4ed8 55%, #3b82f6 100%);
+            color: #ffffff;
+            border-radius: 18px 18px 0 0;
+        }
+        .get-in-touch-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.18), rgba(255, 255, 255, 0.06) 45%, rgba(212, 175, 55, 0.16));
+            pointer-events: none;
+        }
+        .get-in-touch-brand {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #d4af37;
+            margin-bottom: 0.55rem;
+        }
+        .get-in-touch-title {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+        }
+        .get-in-touch-subtitle {
+            position: relative;
+            z-index: 1;
+            margin: 0.5rem 0 0;
+            font-size: 0.98rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.65;
+            max-width: 34rem;
+        }
+        .get-in-touch-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.16);
+            color: #ffffff;
+            font-size: 1.45rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            z-index: 2;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+            cursor: pointer;
+        }
+        .get-in-touch-close:hover {
+            transform: translateY(-1px) scale(1.05);
+            background: rgba(255, 255, 255, 0.24);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+            color: #ffffff;
+        }
+        .get-in-touch-body {
+            padding: 1.6rem 2.5rem 2.2rem;
+            background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+        }
+        .get-in-touch-form .form-label {
+            color: #1e2b4e;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.45rem;
+        }
+        .get-in-touch-form .form-control,
+        .get-in-touch-form .form-select {
+            border-radius: 14px;
+            border: 1px solid #dce4f1;
+            padding: 0.95rem 1rem;
+            font-size: 0.95rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+            background: #ffffff;
+            color: #111827;
+        }
+        .get-in-touch-form .form-control::placeholder,
+        .get-in-touch-form textarea::placeholder {
+            color: #94a3b8;
+        }
+        .get-in-touch-form .form-control:focus,
+        .get-in-touch-form .form-select:focus {
+            border-color: #1e4ed8;
+            box-shadow: 0 0 0 0.2rem rgba(30, 78, 216, 0.16);
+            background: #ffffff;
+        }
+        .get-in-touch-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #1e4ed8 0%, #3b82f6 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            padding: 0.95rem 1.2rem;
+            font-weight: 700;
+            box-shadow: 0 14px 30px rgba(30, 78, 216, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+        .get-in-touch-submit:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 18px 36px rgba(30, 78, 216, 0.24);
+            filter: brightness(1.04);
+        }
+        .get-in-touch-success {
+            display: none;
+            color: #15803d;
+            background: rgba(21,128,61,0.08);
+            border: 1px solid rgba(21,128,61,0.18);
+            border-radius: 0.9rem;
+            padding: 0.95rem 1rem;
+            margin-top: 0.9rem;
+        }
+        .get-in-touch-error {
+            color: #b91c1c;
+            font-size: 0.82rem;
+            margin-top: 0.35rem;
+        }
+        .get-in-touch-form .is-invalid {
+            border-color: #ef4444;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 575.98px) {
+            .get-in-touch-header {
+                padding: 1.7rem 1.25rem 1.1rem;
+            }
+            .get-in-touch-body {
+                padding: 1rem 1.25rem 1.25rem;
+            }
+            .get-in-touch-title {
+                font-size: 1.5rem;
+            }
+            .get-in-touch-subtitle {
+                font-size: 0.9rem;
+            }
+            .get-in-touch-close {
+                width: 34px;
+                height: 34px;
+                top: 0.8rem;
+                right: 0.8rem;
+                font-size: 1.3rem;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .hero-section::before,
             .hero-section::after,
@@ -1267,6 +1459,51 @@
         {% block content %}{% endblock %}
     </main>
 
+    <div id="getInTouchBackdrop" class="get-in-touch-backdrop" aria-hidden="true">
+        <div class="get-in-touch-modal" role="dialog" aria-modal="true" aria-labelledby="getInTouchTitle" tabindex="-1">
+            <div class="get-in-touch-header">
+                <button type="button" class="get-in-touch-close" id="getInTouchClose" aria-label="Close popup">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+                <div class="get-in-touch-brand">Erudition Infinite</div>
+                <h3 id="getInTouchTitle" class="get-in-touch-title">Get in Touch</h3>
+                <p class="get-in-touch-subtitle">Let’s discuss your learning goals, team growth, and tailored training solutions.</p>
+            </div>
+            <div class="get-in-touch-body">
+                <p class="section-text mb-3">Share your requirements and our team will reach out to you with the right guidance.</p>
+                <form id="getInTouchForm" class="get-in-touch-form" method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold" for="modalName">Name</label>
+                            <input type="text" class="form-control" id="modalName" name="name" required>
+                            <div class="get-in-touch-error" data-error-for="name"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold" for="modalPhone">Phone</label>
+                            <input type="text" class="form-control" id="modalPhone" name="phone" required>
+                            <div class="get-in-touch-error" data-error-for="phone"></div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold" for="modalEmail">Email</label>
+                            <input type="email" class="form-control" id="modalEmail" name="email" required>
+                            <div class="get-in-touch-error" data-error-for="email"></div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold" for="modalMessage">Message</label>
+                            <textarea class="form-control" id="modalMessage" name="message" rows="4" required></textarea>
+                            <div class="get-in-touch-error" data-error-for="message"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="get-in-touch-submit">Submit Enquiry</button>
+                    </div>
+                    <div id="getInTouchSuccess" class="get-in-touch-success" role="status"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer class="site-footer">
         <div class="container-lg">
             <div class="footer-grid row gy-4">
@@ -1335,5 +1572,145 @@
 
     {% block extra_js %}{% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function () {
+            const backdrop = document.getElementById('getInTouchBackdrop');
+            const modal = backdrop ? backdrop.querySelector('.get-in-touch-modal') : null;
+            const form = document.getElementById('getInTouchForm');
+            const closeButton = document.getElementById('getInTouchClose');
+            const successBox = document.getElementById('getInTouchSuccess');
+            const storageKey = 'erudition-get-in-touch-shown';
+            let lastFocusedElement = null;
+
+            function openModal() {
+                if (!backdrop || !modal) return;
+                backdrop.classList.add('show');
+                backdrop.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                lastFocusedElement = document.activeElement;
+                const focusable = modal.querySelectorAll('input, textarea, button');
+                if (focusable.length) focusable[0].focus();
+            }
+
+            function closeModal() {
+                if (!backdrop || !modal) return;
+                backdrop.classList.remove('show');
+                backdrop.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (lastFocusedElement) lastFocusedElement.focus();
+            }
+
+            function markSeen() {
+                sessionStorage.setItem(storageKey, 'true');
+            }
+
+            function shouldShow() {
+                return !sessionStorage.getItem(storageKey);
+            }
+
+            function resetErrors() {
+                form.querySelectorAll('.get-in-touch-error').forEach(function (element) {
+                    element.textContent = '';
+                });
+                form.querySelectorAll('.is-invalid').forEach(function (element) {
+                    element.classList.remove('is-invalid');
+                });
+            }
+
+            function setErrors(errors) {
+                resetErrors();
+                Object.keys(errors).forEach(function (key) {
+                    const field = form.querySelector('[name="' + key + '"]');
+                    const errorBox = form.querySelector('[data-error-for="' + key + '"]');
+                    if (field) field.classList.add('is-invalid');
+                    if (errorBox) errorBox.textContent = errors[key];
+                });
+            }
+
+            if (backdrop && form) {
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    resetErrors();
+                    successBox.style.display = 'none';
+                    const formData = new FormData(form);
+
+                    fetch('{% url "submit_enquiry" %}', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {'X-Requested-With': 'XMLHttpRequest'}
+                    }).then(function (response) {
+                        if (!response.ok) {
+                            return response.json().then(function (payload) {
+                                throw payload;
+                            });
+                        }
+                        return response.json();
+                    }).then(function (payload) {
+                        if (payload.success) {
+                            successBox.textContent = payload.message || 'Thank you! We will get back to you shortly.';
+                            successBox.style.display = 'block';
+                            markSeen();
+                            setTimeout(function () {
+                                closeModal();
+                            }, 700);
+                        }
+                    }).catch(function (payload) {
+                        if (payload && payload.errors) {
+                            setErrors(payload.errors);
+                        }
+                    });
+                });
+
+                closeButton.addEventListener('click', function () {
+                    markSeen();
+                    closeModal();
+                });
+
+                backdrop.addEventListener('click', function (event) {
+                    if (event.target === backdrop) {
+                        markSeen();
+                        closeModal();
+                    }
+                });
+
+                document.addEventListener('keydown', function (event) {
+                    if (!backdrop.classList.contains('show')) return;
+                    if (event.key === 'Escape') {
+                        event.preventDefault();
+                        markSeen();
+                        closeModal();
+                    }
+                });
+
+                document.addEventListener('keydown', function (event) {
+                    if (!backdrop.classList.contains('show')) return;
+                    if (event.key === 'Tab') {
+                        const focusable = Array.from(modal.querySelectorAll('input, textarea, button'));
+                        if (!focusable.length) {
+                            event.preventDefault();
+                            return;
+                        }
+                        const first = focusable[0];
+                        const last = focusable[focusable.length - 1];
+                        if (event.shiftKey && document.activeElement === first) {
+                            event.preventDefault();
+                            last.focus();
+                        } else if (!event.shiftKey && document.activeElement === last) {
+                            event.preventDefault();
+                            first.focus();
+                        }
+                    }
+                });
+
+                window.addEventListener('load', function () {
+                    if (shouldShow()) {
+                        setTimeout(function () {
+                            openModal();
+                        }, 1000);
+                    }
+                });
+            }
+        })();
+    </script>
 </body>
 </html>

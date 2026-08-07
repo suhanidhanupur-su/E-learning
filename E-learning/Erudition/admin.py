@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Announcement, Category, LiveClass, Course, Enrollment, TeamMember
+from .models import Announcement, Category, LiveClass, Course, Enrollment, Enquiry, TeamMember
 
 
 @admin.register(Category)
@@ -42,6 +42,13 @@ class EnrollmentAdmin(admin.ModelAdmin):
     list_filter = ("status", "payment_status")
     search_fields = ("user__username", "course__title")
     ordering = ("-enrolled_at",)
+
+
+@admin.register(Enquiry)
+class EnquiryAdmin(admin.ModelAdmin):
+    list_display = ("name", "email", "phone", "created_at")
+    search_fields = ("name", "email", "phone", "message")
+    ordering = ("-created_at",)
 
 
 @admin.register(TeamMember)

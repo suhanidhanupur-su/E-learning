@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from PIL import Image
 
-from .models import Category, Course, Enrollment, TeamMember
+from .models import Category, Course, Enrollment, Enquiry, TeamMember
 
 
 class HomePageTests(TestCase):
@@ -93,6 +93,30 @@ class CourseEnrollmentTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/enrollment-success/')
         self.assertTrue(Enrollment.objects.filter(user=self.user, course=self.course).exists())
+
+
+class GetInTouchTests(TestCase):
+    def test_enquiry_submission_saves_and_returns_success(self):
+        response = self.client.post('/enquiries/', {
+            'name': 'Asha Rao',
+            'phone': '9876543210',
+            'email': 'asha@example.com',
+            'message': 'I would like to learn more about your programs.'
+        }, content_type='application/json')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(Enquiry.objects.filter(email='asha@example.com').exists())
+
+    def test_enquiry_submission_returns_validation_errors(self):
+        response = self.client.post('/enquiries/', {
+            'name': '',
+            'phone': '',
+            'email': 'not-an-email',
+            'message': ''
+        }, content_type='application/json')
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('errors', response.json())
 
 
 class ProfileFlowTests(TestCase):
