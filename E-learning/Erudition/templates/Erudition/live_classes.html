@@ -14,24 +14,35 @@
         {% if live_classes %}
             <div class="row g-4">
                 {% for live_class in live_classes %}
-                    <div class="col-lg-6 col-md-6 col-12">
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-12">
                         <article class="lc-card">
 
-                            <div class="lc-card-thumb">
-                                <img src="{% static 'Erudition/images/LOGO.png' %}" alt="{{ live_class.title }}" loading="lazy">
-                                <span class="lc-play-icon"><i class="bi bi-play-fill"></i></span>
+                            <div class="lc-card-thumb {% if 'Public Speaking' in live_class.title %}lc-thumb-speaking{% elif 'Leadership' in live_class.title %}lc-thumb-leadership{% elif 'Agile' in live_class.title %}lc-thumb-agile{% else %}lc-thumb-general{% endif %}">
+                                <div class="lc-thumb-overlay"></div>
+                                <div class="lc-thumb-badge">{{ live_class.category|default:'General' }}</div>
+                                <div class="lc-live-badge">LIVE</div>
+                                <div class="lc-thumb-icon">
+                                    {% if 'Public Speaking' in live_class.title %}
+                                        <i class="fa-solid fa-microphone-lines"></i>
+                                    {% elif 'Leadership' in live_class.title %}
+                                        <i class="fa-solid fa-people-group"></i>
+                                    {% elif 'Agile' in live_class.title %}
+                                        <i class="fa-solid fa-diagram-project"></i>
+                                    {% else %}
+                                        <i class="fa-solid fa-chalkboard-user"></i>
+                                    {% endif %}
+                                </div>
                             </div>
 
                             <div class="lc-card-body">
                                 <div class="lc-card-tags">
-                                    <span class="lc-tag-category">{{ live_class.category|default:'General' }}</span>
                                     <span class="lc-tag-session"><i class="bi bi-camera-video-fill"></i> Live Session</span>
                                 </div>
 
                                 <h4 class="lc-card-title">{{ live_class.title }}</h4>
 
                                 <p class="lc-card-desc">
-                                    {{ live_class.description|default:'A focused live learning experience designed for practical growth.'|truncatechars:70 }}
+                                    {{ live_class.description|default:'A focused live learning experience designed for practical growth.'|truncatechars:100 }}
                                 </p>
 
                                 <div class="lc-card-meta">
@@ -45,7 +56,7 @@
                             </div>
 
                             <div class="lc-card-cta">
-                                <a href="{% url 'login' %}" class="lc-btn-signin">Sign in</a>
+                                <a href="{% url 'login' %}" class="lc-btn-signin">Sign In</a>
                             </div>
 
                         </article>
@@ -66,8 +77,7 @@
 
 <style>
 /* =========================================================================
-   LIVE CLASS CARDS — matches production layout, recoloured in
-   Blue & Gold Erudition theme. Scoped to .lc- classes only.
+   LIVE CLASS CARDS — premium blue + gold card design for Live Classes page
    ========================================================================= */
 
 .live-page-section {
@@ -76,173 +86,236 @@
 
 .lc-card {
     display: flex;
-    align-items: center;
-    gap: 1.4rem;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.2rem;
     background: #ffffff;
-    border: 1px solid rgba(15, 23, 42, 0.07);
-    border-radius: 18px;
-    padding: 1.5rem;
-    box-shadow: 0 6px 22px rgba(15, 23, 42, 0.06);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    border: 1px solid rgba(59, 130, 246, 0.18);
+    border-radius: 28px;
+    padding: 0;
+    box-shadow: 0 24px 70px rgba(15, 23, 42, 0.1);
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
     height: 100%;
+    overflow: hidden;
 }
 .lc-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 44px rgba(15, 23, 42, 0.11);
-    border-color: rgba(212, 175, 55, 0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 34px 100px rgba(15, 23, 42, 0.16);
+    border-color: rgba(59, 130, 246, 0.34);
 }
 
-/* ---------- Thumbnail ---------- */
 .lc-card-thumb {
     position: relative;
-    width: 96px;
-    height: 96px;
-    flex-shrink: 0;
-    border-radius: 12px;
+    width: 100%;
+    min-height: 220px;
     overflow: hidden;
-    background: #f1f5f9;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(212, 175, 55, 0.12));
 }
-.lc-card-thumb img {
+.lc-card-thumb.lc-thumb-speaking {
+    background: linear-gradient(135deg, #1f4bb8 0%, #5b8efa 100%);
+}
+.lc-card-thumb.lc-thumb-leadership {
+    background: linear-gradient(135deg, #0b3d91 0%, #3b82f6 100%);
+}
+.lc-card-thumb.lc-thumb-agile {
+    background: linear-gradient(135deg, #2563eb 0%, #fbbf24 100%);
+}
+.lc-card-thumb.lc-thumb-general {
+    background: linear-gradient(135deg, #1e40af 0%, #60a5fa 100%);
+}
+.lc-thumb-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
-.lc-play-icon {
+.lc-thumb-overlay {
     position: absolute;
     inset: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.04) 0%, rgba(15, 23, 42, 0.24) 100%);
+    pointer-events: none;
+}
+.lc-thumb-badge {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    color: #0b3d91;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(59, 130, 246, 0.18);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.1);
+}
+.lc-live-badge {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: #d4af37;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    padding: 0.5rem 0.85rem;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+}
+.lc-thumb-icon {
+    position: absolute;
+    bottom: 22px;
+    left: 22px;
+    width: 56px;
+    height: 56px;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.96);
+    color: #0b3d91;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(11, 31, 77, 0.32);
-    color: #ffffff;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
+    border: 1px solid rgba(59, 130, 246, 0.18);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
 }
-.lc-play-icon i { margin-left: 2px; }
 
-/* ---------- Body ---------- */
 .lc-card-body {
     flex: 1;
     min-width: 0;
+    padding: 1.75rem 1.75rem 1rem;
 }
 
 .lc-card-tags {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 0.5rem;
-}
-.lc-tag-category {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: #1E40AF;
-    background: rgba(30, 64, 175, 0.08);
-    border: 1px solid rgba(30, 64, 175, 0.16);
-    padding: 4px 12px;
-    border-radius: 999px;
+    gap: 0.75rem;
+    margin-bottom: 0.9rem;
 }
 .lc-tag-session {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-size: 0.76rem;
+    gap: 0.45rem;
+    padding: 0.5rem 0.9rem;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.18);
+    border-radius: 999px;
+    font-size: 0.78rem;
     font-weight: 600;
-    color: #64748b;
+    color: #0b3d91;
 }
-.lc-tag-session i { color: #D4AF37; }
+.lc-tag-session i {
+    color: #d4af37;
+}
 
 .lc-card-title {
-    font-size: 1.12rem;
+    font-size: 1.3rem;
     font-weight: 800;
     color: #0f172a;
-    margin: 0 0 0.35rem;
-    line-height: 1.3;
+    margin: 0 0 0.65rem;
+    line-height: 1.2;
 }
 
 .lc-card-desc {
-    font-size: 0.86rem;
-    color: #64748b;
-    margin: 0 0 0.65rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 0.95rem;
+    color: #475569;
+    margin: 0 0 1rem;
+    min-height: 70px;
 }
 
 .lc-card-meta {
     display: flex;
-    align-items: center;
-    gap: 1.1rem;
-    font-size: 0.82rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #475569;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.9rem;
 }
-.lc-card-meta i { color: #D4AF37; margin-right: 4px; }
+.lc-card-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.lc-card-meta i {
+    color: #d4af37;
+}
 
 .lc-card-instructor {
     display: flex;
     align-items: center;
-    font-size: 0.85rem;
-    font-weight: 600;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
     color: #334155;
+    margin-bottom: 1rem;
 }
-.lc-card-instructor i { color: #D4AF37; margin-right: 6px; }
+.lc-card-instructor i {
+    color: #d4af37;
+}
 
-/* ---------- CTA ---------- */
 .lc-card-cta {
     flex-shrink: 0;
+    padding: 0 1.75rem 1.5rem;
 }
 .lc-btn-signin {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 44px;
-    padding: 0 26px;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 24px;
     border-radius: 999px;
-    border: 1.5px solid #D4AF37;
-    background: #ffffff;
-    color: #1E40AF;
+    border: 1.5px solid #d4af37;
+    background: #1e40af;
+    color: #ffffff;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     text-decoration: none;
-    white-space: nowrap;
-    transition: background 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
 }
 .lc-btn-signin:hover {
-    background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
-    border-color: transparent;
-    color: #ffffff;
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
     transform: translateY(-2px);
     box-shadow: 0 10px 24px rgba(59, 130, 246, 0.32);
 }
 
-/* ---------- Responsive ---------- */
-@media (max-width: 575.98px) {
+@media (max-width: 991.98px) {
     .lc-card {
-        flex-wrap: wrap;
-        text-align: center;
-        align-items: stretch;
+        min-height: 100%;
     }
-    .lc-card-thumb { margin: 0 auto; }
-    .lc-card-desc { white-space: normal; }
-    .lc-card-tags, .lc-card-meta { justify-content: center; }
-    .lc-card-instructor { justify-content: center; }
-    .lc-card-cta { width: 100%; }
-    .lc-btn-signin { width: 100%; }
 }
 
-/* ---------- Empty state ---------- */
+@media (max-width: 575.98px) {
+    .lc-card {
+        text-align: center;
+    }
+    .lc-card-body {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+    .lc-card-tags,
+    .lc-card-meta,
+    .lc-card-instructor {
+        justify-content: center;
+    }
+    .lc-card-cta {
+        padding: 0 1.5rem 1.5rem;
+    }
+}
+
 .empty-state-card {
     background: #ffffff;
-    border: 1px solid rgba(15,23,42,0.07);
+    border: 1px solid rgba(15, 23, 42, 0.07);
     border-radius: 18px;
-    box-shadow: 0 6px 22px rgba(15,23,42,0.06);
+    box-shadow: 0 6px 22px rgba(15, 23, 42, 0.06);
 }
 .empty-illustration {
     font-size: 2.6rem;
-    color: #D4AF37;
+    color: #d4af37;
     margin-bottom: 1rem;
 }
 </style>
