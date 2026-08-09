@@ -27,74 +27,56 @@
                                     <div class="mt-5">
                                         <h4 class="ec-category-heading mb-3">{{ category.name }}</h4>
 
-                                        <div class="row g-4">
+                                        <!-- ============ COURSE CARD GRID (matches Home "Featured Courses" style) ============ -->
+                                        <div class="ec-grid">
                                             {% for course in category.courses.all %}
-                                                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
-                                                    <div class="ec-card">
+                                                <div class="ec-card">
 
-                                                        <!-- ===== Image ===== -->
-                                                        <div class="ec-card-img-wrap">
-                                                            {% if course.course_image %}
-                                                                <img src="{{ course.course_image.url }}" alt="{{ course.title }}" class="ec-card-img">
-                                                            {% else %}
-                                                                <div class="ec-card-img ec-card-img-placeholder">
-                                                                    <i class="bi bi-mortarboard-fill"></i>
-                                                                </div>
-                                                            {% endif %}
-
-                                                            {% if course.is_featured %}
-                                                                <span class="ec-badge ec-badge-featured">
-                                                                    <i class="bi bi-star-fill"></i> Featured
-                                                                </span>
-                                                            {% endif %}
-                                                        </div>
-
-                                                        <!-- ===== Body ===== -->
-                                                        <div class="ec-card-body">
-                                                            <span class="ec-category-pill">{{ category.name }}</span>
-
-                                                            <h3 class="ec-card-title">{{ course.title }}</h3>
-
-                                                            <p class="ec-card-desc">
-                                                                {{ course.short_description|default:course.description|truncatechars:130 }}
-                                                            </p>
-
-                                                            <div class="ec-info-row">
-                                                                {% if course.duration %}
-                                                                    <span class="ec-info-item">
-                                                                        <i class="bi bi-clock-fill"></i> {{ course.duration }}
-                                                                    </span>
-                                                                {% endif %}
-                                                                <span class="ec-info-item">
-                                                                    <i class="bi bi-person-badge-fill"></i> {{ course.instructor_name|default:'TBD' }}
-                                                                </span>
+                                                    <div class="ec-card-img-wrap">
+                                                        {% if course.course_image %}
+                                                            <img src="{{ course.course_image.url }}" alt="{{ course.title }}" class="ec-card-img">
+                                                        {% else %}
+                                                            <div class="ec-card-img ec-card-img-placeholder">
+                                                                <i class="bi bi-mortarboard-fill"></i>
                                                             </div>
+                                                        {% endif %}
 
-                                                            <div class="ec-card-bottom">
-                                                                <div class="ec-price-block">
-                                                                    {% if course.price %}
-                                                                        <span class="ec-price">₹{{ course.price }}</span>
-                                                                    {% else %}
-                                                                        <span class="ec-price ec-price-free">Free</span>
-                                                                    {% endif %}
-                                                                </div>
-                                                                <div class="ec-instructor-block">
-                                                                    <span class="ec-instructor-label">Instructor</span>
-                                                                    <span class="ec-instructor-name">{{ course.instructor_name|default:'TBD' }}</span>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="ec-card-footer">
-                                                                <a href="{% url 'enroll_course' course.slug %}" class="ec-btn-primary">Enroll Now</a>
-                                                                <a href="{% url 'course_detail' course.slug %}" class="ec-btn-secondary">View Course</a>
-                                                            </div>
-                                                        </div>
-
+                                                        {% if course.is_featured %}
+                                                            <span class="ec-badge ec-badge-featured">Featured</span>
+                                                        {% endif %}
                                                     </div>
+
+                                                    <div class="ec-card-body">
+                                                        <a href="{% url 'course_detail' course.slug %}" class="ec-card-title-link">
+                                                            <h3 class="ec-card-title">{{ course.title }}</h3>
+                                                        </a>
+
+                                                        <p class="ec-card-desc">
+                                                            {{ course.short_description|default:course.description|truncatechars:110 }}
+                                                        </p>
+
+                                                        <div class="ec-info-row">
+                                                            {% if course.duration %}
+                                                                <span class="ec-info-item">
+                                                                    <i class="bi bi-clock-fill"></i> {{ course.duration }}
+                                                                </span>
+                                                            {% endif %}
+                                                        </div>
+
+                                                        <div class="ec-card-bottom">
+                                                            {% if course.price %}
+                                                                <span class="ec-price">₹{{ course.price }}</span>
+                                                            {% else %}
+                                                                <span class="ec-price ec-price-free">Free</span>
+                                                            {% endif %}
+                                                            <a href="{% url 'enroll_course' course.slug %}" class="ec-btn-enroll">Enroll Now</a>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             {% endfor %}
                                         </div>
-                                        <!-- ============ /PREMIUM COURSE CARD GRID ============ -->
+                                        <!-- ============ /COURSE CARD GRID ============ -->
 
                                     </div>
                                 {% endif %}
@@ -113,8 +95,8 @@
 
 <style>
 /* =========================================================================
-   PREMIUM COURSE CARDS — scoped to .ec- (Erudition Course) classes only.
-   Blue & Gold theme, matches existing brand tokens used across the site.
+   COURSE CARDS — matches Home page "Featured Courses" visual style.
+   Blue & Gold theme. Scoped to .ec- classes only.
    ========================================================================= */
 
 .ec-category-heading {
@@ -123,42 +105,38 @@
     letter-spacing: -0.01em;
 }
 
-/* ---------- Fixed 3-column grid (always 3 across on tablet+/desktop) ---------- */
 .ec-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.6rem;
     align-items: stretch;
 }
-@media (max-width: 767.98px) {
-    .ec-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+@media (max-width: 991.98px) {
+    .ec-grid { grid-template-columns: repeat(2, 1fr); gap: 1.3rem; }
 }
 @media (max-width: 575.98px) {
     .ec-grid { grid-template-columns: 1fr; }
 }
 
-/* ---------- Card shell ---------- */
 .ec-card {
     display: flex;
     flex-direction: column;
     background: #ffffff;
-    border-radius: 18px;
+    border-radius: 16px;
     overflow: hidden;
     border: 1px solid rgba(15, 23, 42, 0.06);
-    box-shadow: 0 6px 22px rgba(15, 23, 42, 0.07);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 8px 26px rgba(15, 23, 42, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .ec-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 26px 60px rgba(15, 23, 42, 0.14);
-    border-color: rgba(212, 175, 55, 0.35);
+    box-shadow: 0 26px 60px rgba(15, 23, 42, 0.15);
 }
 
-/* ---------- Image ---------- */
 .ec-card-img-wrap {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 190px;
     flex-shrink: 0;
     overflow: hidden;
 }
@@ -169,24 +147,20 @@
     display: block;
     transition: transform 0.45s ease;
 }
-.ec-card:hover .ec-card-img {
-    transform: scale(1.07);
-}
+.ec-card:hover .ec-card-img { transform: scale(1.06); }
 .ec-card-img-placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #eef2ff 0%, #fdfbf4 100%);
     color: #94a3b8;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
 }
 
 .ec-badge {
     position: absolute;
     top: 12px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
+    left: 12px;
     font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.04em;
@@ -196,12 +170,10 @@
     box-shadow: 0 6px 16px rgba(0,0,0,0.18);
 }
 .ec-badge-featured {
-    right: 12px;
     background: linear-gradient(135deg, #D4AF37, #F0D97D);
     color: #3a2c05;
 }
 
-/* ---------- Body ---------- */
 .ec-card-body {
     display: flex;
     flex-direction: column;
@@ -209,35 +181,23 @@
     padding: 1.35rem 1.4rem 1.5rem;
 }
 
-.ec-category-pill {
-    align-self: flex-start;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #1E40AF;
-    background: rgba(30, 64, 175, 0.08);
-    border: 1px solid rgba(30, 64, 175, 0.18);
-    padding: 4px 12px;
-    border-radius: 999px;
-    margin-bottom: 0.7rem;
+.ec-card-title-link {
+    text-decoration: none;
 }
-
 .ec-card-title {
-    font-size: 1.05rem;
+    font-size: 1.08rem;
     font-weight: 800;
     color: #0f172a;
     line-height: 1.35;
     margin: 0 0 0.5rem;
-    /* clamp to 2 lines so all titles take equal space */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 2.7em;
+    min-height: 2.75em;
     transition: color 0.22s ease;
 }
-.ec-card:hover .ec-card-title {
+.ec-card-title-link:hover .ec-card-title {
     color: #1E40AF;
 }
 
@@ -260,6 +220,7 @@
     padding-bottom: 1rem;
     margin-bottom: 1rem;
     border-bottom: 1px solid #f1f5f9;
+    min-height: 1.6em;
 }
 .ec-info-item {
     display: inline-flex;
@@ -269,112 +230,50 @@
     font-weight: 600;
     color: #475569;
 }
-.ec-info-item i {
-    color: #D4AF37;
-    font-size: 0.85rem;
-}
+.ec-info-item i { color: #D4AF37; font-size: 0.85rem; }
 
-/* push price/instructor + buttons to the bottom of every card, equal height */
 .ec-card-bottom {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
     margin-top: auto;
-    margin-bottom: 1.1rem;
 }
 
-.ec-price-block { display: flex; flex-direction: column; }
 .ec-price {
-    font-size: 1.3rem;
+    font-size: 1.28rem;
     font-weight: 800;
     color: #b45309;
     line-height: 1;
 }
-.ec-price-free {
-    color: #15803d;
-}
+.ec-price-free { color: #15803d; }
 
-.ec-instructor-block {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-}
-.ec-instructor-label {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #94a3b8;
-}
-.ec-instructor-name {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #1e293b;
-}
-
-/* ---------- Footer buttons ---------- */
-.ec-card-footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.ec-btn-primary,
-.ec-btn-secondary {
+.ec-btn-enroll {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     height: 42px;
+    padding: 0 22px;
     border-radius: 10px;
+    background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+    color: #ffffff;
     font-size: 0.85rem;
     font-weight: 700;
     font-family: inherit;
     text-decoration: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
-}
-
-.ec-btn-primary {
-    background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
-    color: #ffffff;
-    border: none;
+    white-space: nowrap;
     box-shadow: 0 8px 20px rgba(59, 130, 246, 0.28);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.ec-btn-primary:hover {
+.ec-btn-enroll:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 28px rgba(59, 130, 246, 0.42);
     color: #ffffff;
 }
 
-.ec-btn-secondary {
-    background: #ffffff;
-    color: #1E40AF;
-    border: 1.5px solid #D4AF37;
-}
-.ec-btn-secondary:hover {
-    background: rgba(212, 175, 55, 0.10);
-    color: #1E40AF;
-    transform: translateY(-2px);
-}
-
-/* ---------- Responsive ---------- */
-@media (max-width: 991.98px) and (min-width: 768px) {
-    /* 3 cards still share the row on tablet width — trim padding a touch */
-    .ec-card-img-wrap { height: 160px; }
-    .ec-card-body { padding: 1.1rem 1.1rem 1.25rem; }
-    .ec-card-title { font-size: 0.96rem; }
-    .ec-card-desc { font-size: 0.8rem; }
-    .ec-price { font-size: 1.1rem; }
-    .ec-btn-primary, .ec-btn-secondary { font-size: 0.78rem; height: 38px; }
-}
-
 @media (max-width: 767.98px) {
-    .ec-card-img-wrap { height: 190px; }
-}
-
-@media (max-width: 575.98px) {
-    .ec-card-footer { grid-template-columns: 1fr; }
+    .ec-card-img-wrap { height: 180px; }
+    .ec-card-bottom { flex-wrap: wrap; }
 }
 </style>
 {% endblock %}

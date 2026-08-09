@@ -15,10 +15,11 @@
             color: #1f2937;
         }
        .navbar {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
     min-height: 90px;
-    padding: 8px 0;
+    padding: 10px 0;
 }
 
 .navbar-brand {
@@ -29,7 +30,7 @@
 }
 
 .navbar-brand img.logo-img {
-    height: 58px;
+    height: 64px;
     width: auto;
     max-width: none;
     object-fit: contain;
@@ -46,21 +47,41 @@
     }
 
     .navbar-brand img.logo-img {
-        height: 42px;
-        width: auto;
+        height: 48px;
         max-width: none;
     }
 }
         
         .navbar-nav .nav-link {
+            position: relative;
             font-weight: 600;
             color: #334155;
-            padding: 0.5rem 1rem;
+            padding: 0.65rem 0.95rem;
+            letter-spacing: 0.01em;
+            transition: color 0.25s ease, transform 0.25s ease;
         }
-        .navbar-nav .nav-link.active,
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0.25rem;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transition: width 0.25s ease, left 0.25s ease;
+        }
         .navbar-nav .nav-link:hover,
         .navbar-nav .nav-link:focus {
-            color: #3b82f6;
+            color: #0b3d91;
+        }
+        .navbar-nav .nav-link:hover::after,
+        .navbar-nav .nav-link:focus::after,
+        .navbar-nav .nav-link.active::after {
+            width: 70%;
+            left: 15%;
+        }
+        .navbar-nav .nav-link.active {
+            color: #0b3d91;
         }
         .navbar-nav .dropdown-menu {
             border: none;
@@ -234,22 +255,29 @@
             position: relative;
             display: flex;
             align-items: center;
-            background: #f1f5f9;
+            background: #f8fbff;
             border-radius: 999px;
-            padding: 0.5rem 1rem;
-            gap: 8px;
-            min-width: 250px;
+            padding: 0.55rem 1rem;
+            gap: 10px;
+            min-width: 260px;
             margin-right: 0.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.14);
+            transition: border-color 0.25s ease, background 0.25s ease;
+        }
+        .nav-search:hover,
+        .nav-search:focus-within {
+            border-color: rgba(59, 130, 246, 0.28);
+            background: #ffffff;
         }
         .nav-search i {
-            color: #94a3b8;
-            font-size: 0.85rem;
+            color: #3b82f6;
+            font-size: 0.9rem;
         }
         .nav-search input {
             border: none;
             background: transparent;
             outline: none;
-            font-size: 0.85rem;
+            font-size: 0.92rem;
             width: 100%;
             color: #334155;
         }
@@ -263,26 +291,30 @@
         .nav-link-plain {
             color: #334155;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             text-decoration: none;
+            transition: color 0.25s ease;
         }
         .nav-link-plain:hover {
-            color: #3b82f6;
+            color: #0b3d91;
         }
         .btn-register {
             background: #3b82f6;
             color: #fff;
-            font-weight: 600;
-            padding: 0.5rem 1.4rem;
+            font-weight: 700;
+            padding: 0.55rem 1.45rem;
             border-radius: 999px;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             text-decoration: none;
-            transition: background-color 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
             white-space: nowrap;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.18);
         }
         .btn-register:hover {
             background: #2563eb;
             color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 12px 34px rgba(59, 130, 246, 0.22);
         }
 
         @media (max-width: 991.98px) {
@@ -729,27 +761,27 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.16);
+            border: none;
+            background: transparent;
             color: #ffffff;
-            font-size: 1.45rem;
+            font-size: 1.35rem;
+            font-weight: 700;
             line-height: 1;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            transition: opacity 0.2s ease;
             z-index: 2;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
             cursor: pointer;
+            padding: 0;
+            width: auto;
+            height: auto;
         }
         .get-in-touch-close:hover {
-            transform: translateY(-1px) scale(1.05);
-            background: rgba(255, 255, 255, 0.24);
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-            color: #ffffff;
+            opacity: 0.85;
+        }
+        .get-in-touch-close:focus-visible {
+            outline: none;
         }
         .get-in-touch-body {
             padding: 1.6rem 2.5rem 2.2rem;
@@ -1503,8 +1535,8 @@
     <div id="getInTouchBackdrop" class="get-in-touch-backdrop" aria-hidden="true">
         <div class="get-in-touch-modal" role="dialog" aria-modal="true" aria-labelledby="getInTouchTitle" tabindex="-1">
             <div class="get-in-touch-header">
-                <button type="button" class="get-in-touch-close" id="getInTouchClose" aria-label="Close popup">
-                    <i class="bi bi-x-lg"></i>
+                <button type="button" class="get-in-touch-close" id="getInTouchClose" aria-label="Close">
+                    ×
                 </button>
                 <div class="get-in-touch-brand">Erudition Infinite</div>
                 <h3 id="getInTouchTitle" class="get-in-touch-title">Get in Touch</h3>
