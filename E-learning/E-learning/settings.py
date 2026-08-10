@@ -10,10 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
-
+import os
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
@@ -59,7 +63,8 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.request',
+                        'django.template.context_processors.request',
+                'django.template.context_processors.csrf',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'Erudition.context_processors.active_announcement',
@@ -122,6 +127,11 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Razorpay configuration from environment variables
+RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
+RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
+RAZORPAY_CURRENCY = 'INR'
+
 # Redirect after login/logout
 LOGIN_REDIRECT_URL = 'profile'
 LOGOUT_REDIRECT_URL = 'home'
@@ -139,3 +149,8 @@ EMAIL_HOST_USER = "yourgmail@gmail.com"
 EMAIL_HOST_PASSWORD = "your_16_character_app_password"
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
+RAZORPAY_KEY_ID = os.getenv("rzp_test_TO8oYzplm62ODK")
+RAZORPAY_KEY_SECRET = os.getenv("WIDHv6ce3kst8z5cFnRAizms")

@@ -6,9 +6,10 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
-    path('courses/<slug:slug>/', views.course_detail, name='course_detail'),
     path('courses/', views.courses, name='courses'),
+    path('courses/<slug:slug>/', views.course_detail, name='course_detail'),
     path('enroll/<slug:slug>/', views.enroll_course, name='enroll_course'),
+    path('checkout/verify/', views.verify_payment, name='verify_payment'),
     path('my-courses/', views.my_courses, name='my_courses'),
     path('enrollment-success/', views.enrollment_success, name='enrollment_success'),
     path('articles/', views.articles, name='articles'),

@@ -1,8 +1,9 @@
 from io import BytesIO
+from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from PIL import Image
 
 from .models import Category, Course, Enrollment, Enquiry, TeamMember
@@ -85,14 +86,73 @@ class CourseEnrollmentTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertIn('/accounts/login/', response.url)
 
-    def test_authenticated_user_can_enroll(self):
+    def test_authenticated_user_can_enroll_free_course(self):
+        free_course = Course.objects.create(
+            category=self.category,
+            title='Free Course',
+            slug='free-course',
+            short_description='Free enrollment',
+            description='This course is free for all users.',
+            instructor_name='Ada Lovelace',
+            duration='1 week',
+            price=0.00,
+            is_active=True,
+        )
         self.client.login(username='courseuser', password='strong-password-123')
 
-        response = self.client.get('/enroll/python-for-beginners/')
+        response = self.client.get('/enroll/free-course/')
 
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/enrollment-success/')
-        self.assertTrue(Enrollment.objects.filter(user=self.user, course=self.course).exists())
+        enrollment = Enrollment.objects.get(user=self.user, course=free_course)
+        self.assertEqual(enrollment.payment_status, 'completed')
+        self.assertEqual(enrollment.status, 'paid')
+
+    @override_settings(RAZORPAY_KEY_ID='test_id', RAZORPAY_KEY_SECRET='test_secret')
+    @patch('Erudition.views.razorpay.Client')
+    def test_authenticated_user_starts_payments_checkout(self, mock_client_class):
+        mock_client = mock_client_class.return_value
+        mock_client.order.create.return_value = {'id': 'order_test_123'}
+
+        self.client.login(username='courseuser', password='strong-password-123')
+        response = self.client.get('/enroll/python-for-beginners/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Complete Your Enrollment')
+        self.assertContains(response, 'Pay ₹49.00')
+        enrollment = Enrollment.objects.get(user=self.user, course=self.course)
+        self.assertEqual(enrollment.payment_status, 'pending')
+        self.assertEqual(enrollment.razorpay_order_id, 'order_test_123')
+
+    @override_settings(RAZORPAY_KEY_ID='test_id', RAZORPAY_KEY_SECRET='test_secret')
+    @patch('Erudition.views.razorpay.Client')
+    def test_verify_payment_completes_enrollment(self, mock_client_class):
+        mock_client = mock_client_class.return_value
+        mock_client.utility.verify_payment_signature.return_value = None
+
+        enrollment = Enrollment.objects.create(
+            user=self.user,
+            course=self.course,
+            status='approved',
+            payment_status='pending',
+            razorpay_order_id='order_verify_123',
+        )
+
+        self.client.login(username='courseuser', password='strong-password-123')
+        response = self.client.post('/checkout/verify/', {
+            'razorpay_payment_id': 'pay_verify_123',
+            'razorpay_order_id': 'order_verify_123',
+            'razorpay_signature': 'signature-test',
+            'course_slug': 'python-for-beginners',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json().get('success'))
+
+        enrollment.refresh_from_db()
+        self.assertEqual(enrollment.payment_status, 'completed')
+        self.assertEqual(enrollment.razorpay_payment_id, 'pay_verify_123')
+        self.assertEqual(enrollment.status, 'paid')
 
 
 class GetInTouchTests(TestCase):

@@ -162,6 +162,8 @@ class Enrollment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='approved')
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending')
+    razorpay_order_id = models.CharField(max_length=255, blank=True, null=True)
+    razorpay_payment_id = models.CharField(max_length=255, blank=True, null=True)
     enrolled_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -1,0 +1,104 @@
+{% extends 'Erudition/base.html' %}
+
+{% block title %}Checkout | Erudition{% endblock %}
+
+{% block header_banner %}
+    {% include 'Erudition/header_banner.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="container-xl">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="page-card shadow-soft">
+                    <div class="card-body p-4 p-lg-5 text-center">
+                        <h2 class="section-heading">Complete Your Enrollment</h2>
+                        <p class="section-text">Pay securely with Razorpay to access this course immediately.</p>
+
+                        <div class="rounded-4 p-4 my-4" style="background: linear-gradient(135deg, rgba(30,64,175,0.06), rgba(212,175,55,0.08)); border: 1px solid rgba(15,23,42,0.06);">
+                            {% if course.course_image %}
+                                <img src="{{ course.course_image.url }}" alt="{{ course.title }}" style="width: 100%; max-height: 240px; object-fit: cover; border-radius: 20px;">
+                            {% endif %}
+                            <h3 class="h4 fw-bold mt-4" style="color: #0f172a;">{{ course.title }}</h3>
+                            <p class="text-muted">Instructor: {{ course.instructor_name|default:'TBD' }}</p>
+                            <div class="d-flex justify-content-between mt-4">
+                                <span class="text-muted">Total Amount</span>
+                                <span class="fw-bold">₹{{ course.price }}</span>
+                            </div>
+                        </div>
+
+                        <button id="payButton" class="btn" style="background: linear-gradient(135deg, #1E40AF, #3B82F6); color: #fff; border-radius: 999px;">Pay ₹{{ course.price }}</button>
+
+                        <div id="checkoutMessage" class="alert mt-4 d-none" role="alert"></div>
+                        <a href="{% url 'course_detail' course.slug %}" class="btn btn-outline-secondary mt-3">Back to Course</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const payButton = document.getElementById('payButton');
+        const messageBox = document.getElementById('checkoutMessage');
+
+        function showMessage(text, type) {
+            messageBox.classList.remove('d-none', 'alert-success', 'alert-danger');
+            messageBox.classList.add(type === 'success' ? 'alert-success' : 'alert-danger');
+            messageBox.textContent = text;
+        }
+
+        payButton.addEventListener('click', function () {
+            const options = {
+                key: '{{ razorpay_key_id }}',
+                amount: '{{ amount }}',
+                currency: '{{ currency }}',
+                name: '{{ course.title }}',
+                description: 'Course Enrollment',
+                order_id: '{{ razorpay_order.id }}',
+                handler: function (response) {
+                    const formData = new FormData();
+                    formData.append('razorpay_payment_id', response.razorpay_payment_id);
+                    formData.append('razorpay_order_id', response.razorpay_order_id);
+                    formData.append('razorpay_signature', response.razorpay_signature);
+                    formData.append('course_slug', '{{ course.slug }}');
+
+                    fetch('{% url "verify_payment" %}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: formData
+                    })
+                    .then(function (res) { return res.json(); })
+                    .then(function (payload) {
+                        if (payload.success) {
+                            showMessage('Payment successful! Redirecting...', 'success');
+                            window.location.href = payload.redirect_url;
+                        } else {
+                            showMessage(payload.error || 'Payment verification failed.', 'danger');
+                        }
+                    })
+                    .catch(function () {
+                        showMessage('Unable to verify payment. Please try again.', 'danger');
+                    });
+                },
+                prefill: {
+                    name: '{{ user.get_full_name|default:user.username }}',
+                    email: '{{ user.email }}'
+                },
+                theme: {
+                    color: '#1E40AF'
+                }
+            };
+            const razorpay = new Razorpay(options);
+            razorpay.open();
+        });
+    });
+</script>
+{% endblock %}

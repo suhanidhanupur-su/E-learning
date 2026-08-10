@@ -1,17 +1,18 @@
 import json
 from urllib.parse import quote
 
+from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
-
-from .forms import ProfileUpdateForm
-from .models import LiveClass, Profile, Category, Course, Enrollment, Enquiry, TeamMember
-from django.db.models import Prefetch
-from django.contrib.auth import login as auth_login
 from django.urls import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
+
+import razorpay
+
 from .forms import ProfileUpdateForm, RegisterForm
+from .models import LiveClass, Profile, Category, Course, Enrollment, Enquiry, TeamMember
 
 
 def home(request):
@@ -125,23 +126,99 @@ def course_detail(request, slug):
 def enroll_course(request, slug):
     course = get_object_or_404(Course, slug=slug, is_active=True)
 
-    if not request.user.is_authenticated:
-        next_url = reverse('course_detail', args=[course.slug])
-        return redirect(f"{reverse('login')}?next={quote(next_url)}")
+    if course.price == 0:
+        enrollment, created = Enrollment.objects.get_or_create(
+            user=request.user,
+            course=course,
+            defaults={'status': 'paid', 'payment_status': 'completed'},
+        )
+        if not created and enrollment.payment_status != 'completed':
+            enrollment.payment_status = 'completed'
+            enrollment.status = 'paid'
+            enrollment.save(update_fields=['payment_status', 'status'])
+        request.session['enrollment_success_slug'] = course.slug
+        messages.success(request, 'You have successfully enrolled in this course.')
+        return redirect('enrollment_success')
 
-    enrollment, created = Enrollment.objects.get_or_create(
-        user=request.user,
-        course=course,
-        defaults={'status': 'approved', 'payment_status': 'pending'},
-    )
+    if not settings.RAZORPAY_KEY_ID or not settings.RAZORPAY_KEY_SECRET:
+        messages.error(request, 'Payment configuration is missing. Please contact support.')
+        return redirect('course_detail', slug=course.slug)
 
-    if not created:
+    existing_enrollment = Enrollment.objects.filter(user=request.user, course=course).first()
+    if existing_enrollment and existing_enrollment.payment_status == 'completed':
         messages.info(request, 'You are already enrolled in this course.')
         return redirect('course_detail', slug=course.slug)
 
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+    amount_paise = int(course.price * 100)
+
+    razorpay_order = client.order.create({
+        'amount': amount_paise,
+        'currency': settings.RAZORPAY_CURRENCY,
+        'receipt': f'course_{course.id}_user_{request.user.id}',
+        'payment_capture': 1,
+    })
+
+    enrollment, _ = Enrollment.objects.get_or_create(
+        user=request.user,
+        course=course,
+        defaults={'status': 'approved', 'payment_status': 'pending', 'razorpay_order_id': razorpay_order.get('id')},
+    )
+    if enrollment.razorpay_order_id != razorpay_order.get('id'):
+        enrollment.razorpay_order_id = razorpay_order.get('id')
+        enrollment.payment_status = 'pending'
+        enrollment.save(update_fields=['razorpay_order_id', 'payment_status'])
+
+    return render(request, 'Erudition/checkout.html', {
+        'course': course,
+        'enrollment': enrollment,
+        'razorpay_key_id': settings.RAZORPAY_KEY_ID,
+        'razorpay_order': razorpay_order,
+        'user': request.user,
+        'amount': amount_paise,
+        'currency': settings.RAZORPAY_CURRENCY,
+    })
+
+
+@login_required
+def verify_payment(request):
+    if request.method != 'POST':
+        return HttpResponseBadRequest('Invalid request method.')
+
+    if not settings.RAZORPAY_KEY_ID or not settings.RAZORPAY_KEY_SECRET:
+        return JsonResponse({'error': 'Payment configuration is missing.'}, status=500)
+
+    payment_id = request.POST.get('razorpay_payment_id')
+    order_id = request.POST.get('razorpay_order_id')
+    signature = request.POST.get('razorpay_signature')
+    course_slug = request.POST.get('course_slug')
+
+    if not payment_id or not order_id or not signature or not course_slug:
+        return JsonResponse({'error': 'Missing payment details.'}, status=400)
+
+    course = get_object_or_404(Course, slug=course_slug, is_active=True)
+    enrollment = get_object_or_404(Enrollment, user=request.user, course=course, razorpay_order_id=order_id)
+
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
+    try:
+        client.utility.verify_payment_signature({
+            'razorpay_order_id': order_id,
+            'razorpay_payment_id': payment_id,
+            'razorpay_signature': signature,
+        })
+    except razorpay.errors.SignatureVerificationError:
+        enrollment.payment_status = 'failed'
+        enrollment.save(update_fields=['payment_status'])
+        return JsonResponse({'error': 'Payment signature verification failed.'}, status=400)
+
+    enrollment.payment_status = 'completed'
+    enrollment.razorpay_payment_id = payment_id
+    enrollment.status = 'paid'
+    enrollment.save(update_fields=['payment_status', 'razorpay_payment_id', 'status'])
+
     request.session['enrollment_success_slug'] = course.slug
-    messages.success(request, 'You have successfully enrolled in this course.')
-    return redirect('enrollment_success')
+    return JsonResponse({'success': True, 'redirect_url': reverse('enrollment_success')})
 
 
 @login_required
