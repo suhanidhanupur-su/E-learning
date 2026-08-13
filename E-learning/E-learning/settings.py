@@ -152,5 +152,4 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 
-RAZORPAY_KEY_ID = os.getenv("rzp_test_TO8oYzplm62ODK")
-RAZORPAY_KEY_SECRET = os.getenv("WIDHv6ce3kst8z5cFnRAizms")
+# Razorpay keys are read from environment via RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET
