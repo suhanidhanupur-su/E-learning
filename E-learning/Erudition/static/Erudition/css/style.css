@@ -1346,7 +1346,7 @@ img {
     .hero-video-card { min-height: 240px; max-width: 100%; }
     .hero-video { min-height: 240px; }
     .page-section { padding-top: 3rem; padding-bottom: 3rem; }
-    .site-footer { padding: 3rem 0 2rem; }
+    .site-footer { padding: 2.5rem 0 1.25rem; }
     .footer-logo { width: 140px; }
     .footer-panel { padding-bottom: 1.5rem; }
     .footer-bottom { margin-top: 2rem; }
@@ -1685,7 +1685,7 @@ img {
     position: relative;
     background: linear-gradient(180deg, #071627 0%, #061123 100%);
     color: #f5f7fb;
-    padding: 4rem 0 2.5rem;
+    padding: 2.5rem 0 1.25rem;
     overflow: hidden;
 }
 .site-footer::before {
@@ -1701,7 +1701,7 @@ img {
     z-index: 1;
 }
 .footer-panel {
-    min-height: 100%;
+    min-height: 0;
 }
 .footer-brand {
     display: flex;
@@ -1832,7 +1832,7 @@ img {
 .footer-bottom {
     position: relative;
     z-index: 1;
-    margin-top: 3rem;
+    margin-top: 1rem;
 }
 .footer-divider {
     width: 90px;

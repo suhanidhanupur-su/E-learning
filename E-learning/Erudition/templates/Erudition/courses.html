@@ -22,6 +22,7 @@
                         </p>
 
                         {% if categories %}
+                            <div class="ec-section">
                             {% for category in categories %}
                                 {% if category.courses.all %}
                                     <div class="mt-5">
@@ -81,6 +82,7 @@
                                     </div>
                                 {% endif %}
                             {% endfor %}
+                            </div>
                         {% else %}
                             <div class="alert alert-info mt-4" role="alert">
                                 No courses are currently available. Please check back soon.
@@ -287,6 +289,83 @@
     width: 100%;
     max-width: none;
     align-self: stretch;
+}
+
+/* Additional premium layout and visual tuning */
+.ec-section {
+    position: relative;
+    padding: 2rem 1rem 2.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 1rem;
+    overflow: visible;
+}
+
+.ec-section::before {
+    content: '';
+    position: absolute;
+    inset: -40px -60px auto -60px;
+    height: 260px;
+    background: radial-gradient(ellipse at 10% 20%, rgba(59,130,246,0.06), transparent 18%),
+                radial-gradient(ellipse at 90% 80%, rgba(212,175,55,0.04), transparent 20%);
+    pointer-events: none;
+    filter: blur(28px);
+    z-index: 0;
+}
+
+.ec-section .ec-grid, .ec-section .ec-category-heading {
+    position: relative;
+    z-index: 1;
+}
+
+.ec-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+}
+
+@media (max-width: 991.98px) {
+    .ec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+}
+@media (max-width: 575.98px) {
+    .ec-grid { grid-template-columns: 1fr; gap: 16px; }
+}
+
+.ec-card {
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 10px 30px rgba(11,31,77,0.06);
+}
+
+.ec-card-img-wrap { height: 220px; }
+.ec-card-img { transition: transform 0.45s ease, opacity 0.25s ease; }
+
+.ec-card:hover { box-shadow: 0 26px 60px rgba(11,31,77,0.12); transform: translateY(-6px); }
+.ec-card:hover .ec-badge { transform: translateY(-2px); }
+
+.ec-badge-featured { box-shadow: 0 10px 26px rgba(212,175,55,0.12); }
+
+.ec-card-body { padding: 1.25rem 1.25rem 1.25rem; }
+.ec-card-title { min-height: 2.6em; }
+.ec-card-desc { min-height: 4.2em; }
+
+.ec-card-bottom { margin-top: 1rem; }
+
+.ec-price { color: #b45309; }
+
+/* ensure grid items fill rows evenly */
+.ec-grid { align-items: stretch; }
+.ec-grid > .ec-card { align-self: stretch; }
+
+/* Make sure buttons stay inside cards on small widths */
+@media (max-width: 767.98px) {
+    .ec-card-img-wrap { height: 180px; }
+    .ec-card { min-height: auto; }
 }
 </style>
 {% endblock %}
