@@ -7,6 +7,7 @@
       <p class="hp-subhead">Practical, expert-led programs designed to build real-world skills fast.</p>
     </div>
 
+    
     <div class="courses-grid">
       {% for course in featured_courses %}
       {% url 'course_detail' course.slug as course_detail_url %}
@@ -37,6 +38,7 @@
       {% endfor %}
     </div>
 
+    
     <div class="hp-cta-wrap">
       <a href="{% url 'courses' %}" class="hp-btn-outline-blue">View All Courses</a>
     </div>
