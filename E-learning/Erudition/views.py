@@ -14,10 +14,52 @@ import razorpay
 from .forms import ProfileUpdateForm, RegisterForm
 from .models import LiveClass, Profile, Category, Course, Enrollment, Enquiry, TeamMember
 
+try:
+    from .models import Article
+except ImportError:  # pragma: no cover
+    Article = None
+
 
 def home(request):
     featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
-    return render(request, 'Erudition/home.html', {'featured_courses': featured_courses})
+    live_classes = LiveClass.objects.filter(is_active=True).order_by('start_time')[:2]
+
+    latest_articles = []
+    if Article is not None:
+        latest_articles = Article.objects.order_by('-published_at')[:3]
+    else:
+        latest_articles = [
+            {
+                'title': '5 Habits That Separate Good Managers From Great Leaders',
+                'category': 'Leadership',
+                'excerpt': 'Leadership is a set of daily habits, not a title. Discover the five habits that turn ordinary managers into trusted leaders.',
+                'author': 'Erudition Team',
+                'read_time': '5 min read',
+                'image': '',
+            },
+            {
+                'title': 'How to Speak With Confidence in Any Situation',
+                'category': 'Communication',
+                'excerpt': 'From boardroom conversations to difficult feedback, these practical techniques help professionals communicate clearly and confidently.',
+                'author': 'Erudition Team',
+                'read_time': '4 min read',
+                'image': '',
+            },
+            {
+                'title': 'Why Soft Skills Are the New Hard Skills in 2025',
+                'category': 'Career Growth',
+                'excerpt': 'Technical expertise helps you get hired, but soft skills help you stay relevant, lead teams, and grow in the real world.',
+                'author': 'Erudition Team',
+                'read_time': '6 min read',
+                'image': '',
+            },
+        ]
+
+    return render(request, 'Erudition/home.html', {
+        'featured_courses': featured_courses,
+        'live_classes': live_classes,
+        'latest_articles': latest_articles,
+    })
 
 
 def submit_enquiry(request):
