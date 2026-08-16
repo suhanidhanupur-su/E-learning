@@ -738,9 +738,14 @@
 
       <!-- Live Card 1 -->
       <div class="live-card">
-        <div class="live-img-wrap">
-          <img src="https://placehold.co/640x300/0b2f6e/ffffff?text=Live+Class" alt="Live Class" class="live-img">
+        <div class="live-img-wrap fc-visual-1">
+          <i class="fas fa-video fc-visual-icon-bg"></i>
           <span class="live-badge"><i class="fas fa-circle"></i> LIVE</span>
+          <svg class="fc-wave" viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,26 C120,46 280,6 400,26 L400,44 L0,44 Z" fill="#ffffff"></path>
+            <path d="M0,26 C120,46 280,6 400,26" fill="none" stroke="#C9A227" stroke-width="2"></path>
+          </svg>
+          <span class="article-icon"><i class="fas fa-video"></i></span>
         </div>
         <div class="live-body">
           <h3 class="live-title">Masterclass: Executive Presence &amp; Boardroom Communication</h3>
@@ -755,9 +760,14 @@
 
       <!-- Live Card 2 -->
       <div class="live-card">
-        <div class="live-img-wrap">
-          <img src="https://placehold.co/640x300/154360/ffffff?text=Live+Session" alt="Live Session" class="live-img">
+        <div class="live-img-wrap fc-visual-3">
+          <i class="fas fa-chalkboard-user fc-visual-icon-bg"></i>
           <span class="live-badge"><i class="fas fa-circle"></i> LIVE</span>
+          <svg class="fc-wave" viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,26 C120,46 280,6 400,26 L400,44 L0,44 Z" fill="#ffffff"></path>
+            <path d="M0,26 C120,46 280,6 400,26" fill="none" stroke="#C9A227" stroke-width="2"></path>
+          </svg>
+          <span class="article-icon"><i class="fas fa-chalkboard-user"></i></span>
         </div>
         <div class="live-body">
           <h3 class="live-title">Workshop: Confidence Building for Young Professionals</h3>
@@ -796,8 +806,10 @@
 
       <!-- Article 1 -->
       <div class="article-card">
-        <div class="article-img-wrap">
-          <img src="https://placehold.co/600x280/1e3a8a/ffffff?text=Article" alt="Article" class="article-img">
+        <div class="article-img-wrap fc-visual-1">
+          <i class="fas fa-chalkboard-teacher fc-visual-icon-bg"></i>
+          <span class="fc-course-badge"><i class="fas fa-newspaper"></i> Article</span>
+          <span class="article-corner-icon"><i class="fas fa-chalkboard-teacher"></i></span>
         </div>
         <div class="article-body">
           <span class="article-category">Leadership</span>
@@ -812,8 +824,14 @@
 
       <!-- Article 2 -->
       <div class="article-card">
-        <div class="article-img-wrap">
-          <img src="https://placehold.co/600x280/0f4c81/ffffff?text=Article" alt="Article" class="article-img">
+        <div class="article-img-wrap fc-visual-2">
+          <i class="fas fa-comments fc-visual-icon-bg"></i>
+          <span class="fc-course-badge"><i class="fas fa-newspaper"></i> Article</span>
+          <svg class="fc-wave" viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,26 C120,46 280,6 400,26 L400,44 L0,44 Z" fill="#ffffff"></path>
+            <path d="M0,26 C120,46 280,6 400,26" fill="none" stroke="#C9A227" stroke-width="2"></path>
+          </svg>
+          <span class="article-icon"><i class="fas fa-comments"></i></span>
         </div>
         <div class="article-body">
           <span class="article-category">Communication</span>
@@ -828,8 +846,14 @@
 
       <!-- Article 3 -->
       <div class="article-card">
-        <div class="article-img-wrap">
-          <img src="https://placehold.co/600x280/1a5276/ffffff?text=Article" alt="Article" class="article-img">
+        <div class="article-img-wrap fc-visual-3">
+          <i class="fas fa-chart-line fc-visual-icon-bg"></i>
+          <span class="fc-course-badge"><i class="fas fa-newspaper"></i> Article</span>
+          <svg class="fc-wave" viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,26 C120,46 280,6 400,26 L400,44 L0,44 Z" fill="#ffffff"></path>
+            <path d="M0,26 C120,46 280,6 400,26" fill="none" stroke="#C9A227" stroke-width="2"></path>
+          </svg>
+          <span class="article-icon"><i class="fas fa-chart-line"></i></span>
         </div>
         <div class="article-body">
           <span class="article-category">Career Growth</span>
@@ -1456,15 +1480,30 @@
   overflow: hidden;
   height: 210px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.live-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-  display: block;
+.live-img-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.055) 0px, rgba(255,255,255,0.055) 1px, transparent 1px, transparent 20px);
+  z-index: 1;
+  pointer-events: none;
 }
-.live-card:hover .live-img { transform: scale(1.04); }
+.live-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 25% 20%, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 55%);
+  z-index: 1;
+  pointer-events: none;
+}
+.live-card:hover .fc-visual-icon-bg {
+  transform: rotate(-2deg) scale(1.06);
+  color: rgba(255,255,255,0.14);
+}
 .live-badge {
   position: absolute;
   top: 14px;
@@ -1479,6 +1518,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  z-index: 3;
 }
 .live-badge i { font-size: 0.45rem; color: #bbf7d0; animation: livePulse 1.2s ease-in-out infinite; }
 @keyframes livePulse {
@@ -1486,7 +1526,7 @@
   50% { opacity: 0.3; }
 }
 .live-body {
-  padding: 1.5rem 1.6rem 1.8rem;
+  padding: 2.3rem 1.6rem 1.8rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -1565,20 +1605,60 @@
   box-shadow: 0 22px 56px rgba(15,23,42,0.13);
 }
 .article-img-wrap {
-  overflow: hidden;
+  position: relative;
   height: 190px;
   flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 18px 18px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.article-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-  display: block;
+.article-img-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.055) 0px, rgba(255,255,255,0.055) 1px, transparent 1px, transparent 20px);
+  z-index: 1;
+  pointer-events: none;
 }
-.article-card:hover .article-img { transform: scale(1.05); }
+.article-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 25% 20%, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 55%);
+  z-index: 1;
+  pointer-events: none;
+}
+.article-card:hover .fc-visual-icon-bg {
+  transform: rotate(-2deg) scale(1.06);
+  color: rgba(255,255,255,0.14);
+}
+.article-icon {
+  position: absolute;
+  bottom: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C9A227, #e6c35c);
+  border: 3px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0B2A5B;
+  font-size: 1.05rem;
+  box-shadow: 0 10px 24px rgba(11,42,91,0.28), 0 0 0 5px rgba(201,162,39,0.12);
+  z-index: 4;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.article-card:hover .article-icon {
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 14px 30px rgba(11,42,91,0.32), 0 0 0 6px rgba(201,162,39,0.2);
+}
 .article-body {
-  padding: 1.3rem 1.4rem 1.5rem;
+  padding: 2.3rem 1.4rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
