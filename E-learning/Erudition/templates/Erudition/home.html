@@ -93,120 +93,72 @@
 
     <!-- Cards -->
     <div class="fc-courses-grid">
-
-      <!-- Card 1 -->
-      <div class="fc-course-card">
-        <div class="fc-course-img-wrap fc-visual-1">
-          <i class="fas fa-chalkboard-teacher fc-visual-icon-bg"></i>
-          <span class="fc-course-badge"><i class="fas fa-star"></i> Featured</span>
-          <span class="fc-visual-tag">Leadership</span>
-          <svg class="fc-wave" viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,26 C120,46 280,6 400,26 L400,44 L0,44 Z" fill="#ffffff"></path>
-            <path d="M0,26 C120,46 280,6 400,26" fill="none" stroke="#C9A227" stroke-width="2"></path>
-          </svg>
-          <span class="fc-course-icon"><i class="fas fa-chalkboard-teacher"></i></span>
-        </div>
-        <div class="fc-course-body">
-          <h3 class="fc-course-title">Leadership Development Program</h3>
-          <span class="fc-title-divider"></span>
-          <p class="fc-course-desc">Build strategic thinking, team management and executive communication skills for the modern workplace.</p>
-          <div class="fc-course-meta">
-            <span><i class="fas fa-clock"></i> 8 Weeks</span>
-            <span class="fc-meta-sep">|</span>
-            <span><i class="fas fa-star"></i> 4.9</span>
+      {% for course in featured_courses %}
+        <div class="fc-course-card" data-course-url="{% url 'course_detail' course.slug %}" tabindex="0" role="button" aria-label="Open {{ course.title }} details">
+          <div class="fc-course-img-wrap fc-visual-{{ forloop.counter }}">
+            {% if course.course_image %}
+              <img src="{{ course.course_image.url }}" alt="{{ course.title }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            {% else %}
+              <i class="fas fa-graduation-cap fc-visual-icon-bg"></i>
+            {% endif %}
+            <span class="fc-course-badge"><i class="fas fa-star"></i> Featured</span>
+            <span class="fc-visual-tag">{{ course.category.name|default:'Program' }}</span>
+            <svg class="fc-wave" viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,26 C120,46 280,6 400,26 L400,44 L0,44 Z" fill="#ffffff"></path>
+              <path d="M0,26 C120,46 280,6 400,26" fill="none" stroke="#C9A227" stroke-width="2"></path>
+            </svg>
+            <span class="fc-course-icon"><i class="fas fa-graduation-cap"></i></span>
           </div>
-          <div class="fc-course-footer">
-            <span class="fc-course-price-wrap"><span class="fc-course-price-label">Starting at</span><span class="fc-course-price">₹4,999</span></span>
-            <a href="#" class="fc-enroll-btn">Enroll Now <i class="fas fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="fc-course-card">
-        <div class="fc-course-img-wrap fc-visual-2">
-          <i class="fas fa-comments fc-visual-icon-bg"></i>
-          <span class="fc-course-badge"><i class="fas fa-star"></i> Featured</span>
-          <span class="fc-visual-tag">Communication</span>
-          <svg class="fc-wave" viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,26 C120,46 280,6 400,26 L400,44 L0,44 Z" fill="#ffffff"></path>
-            <path d="M0,26 C120,46 280,6 400,26" fill="none" stroke="#C9A227" stroke-width="2"></path>
-          </svg>
-          <span class="fc-course-icon"><i class="fas fa-comments"></i></span>
-        </div>
-        <div class="fc-course-body">
-          <h3 class="fc-course-title">Advanced Communication Skills</h3>
-          <span class="fc-title-divider"></span>
-          <p class="fc-course-desc">Master public speaking, business writing and interpersonal communication to accelerate your career.</p>
-          <div class="fc-course-meta">
-            <span><i class="fas fa-clock"></i> 6 Weeks</span>
-            <span class="fc-meta-sep">|</span>
-            <span><i class="fas fa-star"></i> 4.8</span>
-          </div>
-          <div class="fc-course-footer">
-            <span class="fc-course-price-wrap"><span class="fc-course-price-label">Starting at</span><span class="fc-course-price">₹3,499</span></span>
-            <a href="#" class="fc-enroll-btn">Enroll Now <i class="fas fa-arrow-right"></i></a>
+          <div class="fc-course-body">
+            <h3 class="fc-course-title">{{ course.title }}</h3>
+            <span class="fc-title-divider"></span>
+            <p class="fc-course-desc">{{ course.short_description|default:course.description|truncatechars:110 }}</p>
+            <div class="fc-course-meta">
+              <span><i class="fas fa-clock"></i> {{ course.duration|default:'Flexible' }}</span>
+              <span class="fc-meta-sep">|</span>
+              <span><i class="fas fa-star"></i> 4.8</span>
+            </div>
+            <div class="fc-course-footer">
+              <span class="fc-course-price-wrap">
+                <span class="fc-course-price-label">{% if course.price and course.price != 0 %}Starting at{% else %}Investment{% endif %}</span>
+                <span class="fc-course-price">{% if course.price and course.price != 0 %}₹{{ course.price }}{% else %}Free{% endif %}</span>
+              </span>
+              <a href="{% if course.price and course.price != 0 %}{% url 'enroll_course' course.slug %}{% else %}{% url 'course_detail' course.slug %}{% endif %}" class="fc-enroll-btn">{% if course.price and course.price != 0 %}Enroll Now{% else %}View Course{% endif %} <i class="fas fa-arrow-right"></i></a>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="fc-course-card">
-        <div class="fc-course-img-wrap fc-visual-3">
-          <i class="fas fa-user-tie fc-visual-icon-bg"></i>
-          <span class="fc-course-badge"><i class="fas fa-star"></i> Featured</span>
-          <span class="fc-visual-tag">Personality</span>
-          <svg class="fc-wave" viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,26 C120,46 280,6 400,26 L400,44 L0,44 Z" fill="#ffffff"></path>
-            <path d="M0,26 C120,46 280,6 400,26" fill="none" stroke="#C9A227" stroke-width="2"></path>
-          </svg>
-          <span class="fc-course-icon"><i class="fas fa-user-tie"></i></span>
-        </div>
-        <div class="fc-course-body">
-          <h3 class="fc-course-title">Personality Development Bootcamp</h3>
-          <span class="fc-title-divider"></span>
-          <p class="fc-course-desc">Transform your confidence, body language and personal brand through intensive, hands-on sessions.</p>
-          <div class="fc-course-meta">
-            <span><i class="fas fa-clock"></i> 4 Weeks</span>
-            <span class="fc-meta-sep">|</span>
-            <span><i class="fas fa-star"></i> 4.7</span>
-          </div>
-          <div class="fc-course-footer">
-            <span class="fc-course-price-wrap"><span class="fc-course-price-label">Starting at</span><span class="fc-course-price">₹2,999</span></span>
-            <a href="#" class="fc-enroll-btn">Enroll Now <i class="fas fa-arrow-right"></i></a>
+      {% empty %}
+        <div class="fc-course-card" style="grid-column: 1 / -1;">
+          <div class="fc-course-body">
+            <h3 class="fc-course-title">No featured courses available yet.</h3>
+            <p class="fc-course-desc">Please check back soon for our upcoming premium programs.</p>
           </div>
         </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="fc-course-card">
-        <div class="fc-course-img-wrap fc-visual-4">
-          <i class="fas fa-crown fc-visual-icon-bg"></i>
-          <span class="fc-course-badge"><i class="fas fa-star"></i> Featured</span>
-          <span class="fc-visual-tag">Corporate</span>
-          <svg class="fc-wave" viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,26 C120,46 280,6 400,26 L400,44 L0,44 Z" fill="#ffffff"></path>
-            <path d="M0,26 C120,46 280,6 400,26" fill="none" stroke="#C9A227" stroke-width="2"></path>
-          </svg>
-          <span class="fc-course-icon"><i class="fas fa-crown"></i></span>
-        </div>
-        <div class="fc-course-body">
-          <h3 class="fc-course-title">Corporate Training &amp; Consultancy</h3>
-          <span class="fc-title-divider"></span>
-          <p class="fc-course-desc">Customised organisational learning solutions for teams, managers and enterprise leaders.</p>
-          <div class="fc-course-meta">
-            <span><i class="fas fa-clock"></i> Flexible</span>
-            <span class="fc-meta-sep">|</span>
-            <span><i class="fas fa-star"></i> 5.0</span>
-          </div>
-          <div class="fc-course-footer">
-            <span class="fc-course-price-wrap"><span class="fc-course-price-label">Investment</span><span class="fc-course-price">Custom</span></span>
-            <a href="#" class="fc-enroll-btn">Enquire <i class="fas fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </div>
-
+      {% endfor %}
     </div><!-- /fc-courses-grid -->
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.fc-course-card').forEach(function (card) {
+          const url = card.dataset.courseUrl;
+          if (!url) return;
+
+          card.addEventListener('click', function (event) {
+            if (event.target.closest('.fc-enroll-btn')) {
+              return;
+            }
+            window.location.href = url;
+          });
+
+          card.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              window.location.href = url;
+            }
+          });
+        });
+      });
+    </script>
 
     <!-- CTA -->
     <div class="fc-cta-wrap">

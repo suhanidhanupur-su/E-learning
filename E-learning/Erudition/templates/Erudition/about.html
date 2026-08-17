@@ -1,573 +1,225 @@
 {% extends 'Erudition/base.html' %}
-{% load static %}
 
-{% block title %}About Us | Erudition Infinite{% endblock %}
+{% block title %}About Us | Erudition{% endblock %}
 
 {% block header_banner %}
     {% include 'Erudition/header_banner.html' %}
 {% endblock %}
 
 {% block content %}
-
-<!-- 1. HERO / ABOUT INTRODUCTION SECTION -->
-<section class="premium-hero-section">
+<section class="page-section about-page">
     <div class="container-xl">
-        <div class="row g-5 align-items-center">
-            <!-- Left: Text Content -->
-            <div class="col-lg-6">
-                <div class="premium-hero-content">
-                    <span class="premium-label">WHO WE ARE</span>
-                    <h1 class="premium-heading">About Erudition Infinite</h1>
-                    
-                    <p class="premium-text">At Erudition Infinite we strive to nurture and shape aspirants' talents and personalities. We are committed to offer solutions to our esteemed clients after studying their area of business and analysing their needs. We deliver customized training and management development programs for corporates, government and private organisations, as well as for students of management, engineering and other professional institutes/establishments.</p>
-                    
-                    <p class="premium-text">Erudition Infinite offers consultancy in training, management development, project management, ISO 9001:2008, subject research and report, and guidance to MBA and engineering students for final year projects. With our panel of qualified professionals, who are also highly experienced domain experts, we shall endeavour to deliver solutions to completely satisfy and delight the client.</p>
-                </div>
-            </div>
-            
-            <!-- Right: Statistics Grid -->
-            <div class="col-lg-6">
-                <div class="premium-stats-grid">
-                    <div class="premium-stat-card">
-                        <div class="stat-icon stat-icon-users">
-                            <i class="fas fa-users"></i>
+        <div class="row justify-content-center mb-5">
+            <div class="col-12">
+                <div class="page-card shadow-soft about-hero-card">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="row g-5 align-items-center about-hero">
+                            <div class="col-lg-7">
+                                <div class="about-intro about-intro-copy">
+                                    <span class="about-hero-badge">Who We Are</span>
+                                    <h2 class="about-hero-title">About Erudition Infinite</h2>
+                                    <p class="about-hero-text">
+                                        Erudition Infinite is a premium training and development partner helping professionals and organizations grow with clarity, confidence, and measurable impact.
+                                    </p>
+                                    <p class="about-hero-text">
+                                        We blend executive coaching, leadership development, and industry-focused learning into a modern experience that is practical, strategic, and deeply relevant to today’s workplace.
+                                    </p>
+                                    <p class="about-hero-text mb-0">
+                                        From live sessions to structured programs and long-term growth support, every experience is designed to elevate performance and build lasting professional excellence.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="row g-3 about-stats about-stats-grid">
+                                    <div class="col-6">
+                                        <div class="about-stat-card h-100">
+                                            <div class="about-stat-icon">
+                                                <i class="fas fa-users"></i>
+                                            </div>
+                                            <div class="about-stat-number">4000+</div>
+                                            <div class="about-stat-label">Professionals Trained</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="about-stat-card h-100">
+                                            <div class="about-stat-icon">
+                                                <i class="fas fa-award"></i>
+                                            </div>
+                                            <div class="about-stat-number">15+</div>
+                                            <div class="about-stat-label">Years Experience</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="about-stat-card h-100">
+                                            <div class="about-stat-icon">
+                                                <i class="fas fa-layer-group"></i>
+                                            </div>
+                                            <div class="about-stat-number">10+</div>
+                                            <div class="about-stat-label">Training Programs</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="about-stat-card h-100">
+                                            <div class="about-stat-icon">
+                                                <i class="fas fa-certificate"></i>
+                                            </div>
+                                            <div class="about-stat-number">2500+</div>
+                                            <div class="about-stat-label">Certificates</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="stat-number">4,000+</div>
-                        <div class="stat-label">Professionals Trained</div>
                     </div>
-                    
-                    <div class="premium-stat-card">
-                        <div class="stat-icon stat-icon-experience">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <div class="stat-number">15+</div>
-                        <div class="stat-label">Years Experience</div>
-                    </div>
-                    
-                    <div class="premium-stat-card">
-                        <div class="stat-icon stat-icon-programs">
-                            <i class="fas fa-layer-group"></i>
-                        </div>
-                        <div class="stat-number">10+</div>
-                        <div class="stat-label">Training Programs</div>
-                    </div>
-                    
-                    <div class="premium-stat-card">
-                        <div class="stat-icon stat-icon-cert">
-                            <i class="fas fa-certificate"></i>
-                        </div>
-                        <div class="stat-number">2,500+</div>
-                        <div class="stat-label">Certifications Issued</div>
-                    </div>
-                </div>
-                
-                <!-- Decorative elements -->
-                <div class="hero-accent-blob blob-1"></div>
-                <div class="hero-accent-blob blob-2"></div>
-            </div>
-        </div>
-    </div>
-    <div class="hero-wave-divider"></div>
-</section>
-
-<!-- 2. VISION + MISSION SECTION -->
-<section class="vision-mission-section">
-    <div class="container-xl">
-        <div class="row g-4">
-            <div class="col-lg-6">
-                <div class="vision-mission-card vision-card">
-                    <div class="card-badge vision-badge">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h2 class="card-title">Our Vision</h2>
-                    <p class="card-text">To become a leader in the training and development and management consulting domain.</p>
-                    <div class="card-accent-line"></div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="vision-mission-card mission-card">
-                    <div class="card-badge mission-badge">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h2 class="card-title">Our Mission</h2>
-                    <p class="card-text">To deliver training and management solutions to the total satisfaction and delight of the customer and exceed expectations.</p>
-                    <div class="card-accent-line"></div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- 3. EXTERNAL RECOGNITION SECTION -->
-<section class="recognition-section">
-    <div class="container-xl">
+        <div class="row justify-content-center mb-5">
+            <div class="col-12">
+                <div class="about-vision-section about-values-section">
+                    <div class="row g-4 about-values">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="about-focus-card h-100">
+                                <div class="about-focus-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <h3>Our Vision</h3>
+                                <p>To inspire future-ready professionals and organizations through purposeful learning, innovation, and excellence.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="about-focus-card h-100">
+                                <div class="about-focus-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <h3>Our Mission</h3>
+                                <p>To deliver meaningful training experiences that build confidence, sharpen capability, and create lasting impact.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="about-focus-card h-100">
+                                <div class="about-focus-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <h3>Training Philosophy</h3>
+                                <p>We believe practical learning, expert guidance, and real-world relevance are the foundation of powerful growth.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-12">
+                <div class="page-card shadow-soft about-choose-section">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="about-section-intro mx-auto text-center mb-4">
+                            <p class="about-eyebrow">Why Choose Us</p>
+                            <h2 class="section-heading">Why Choose Erudition Infinite</h2>
+                            <p class="section-text about-paragraph">A premium learning experience crafted for growth, confidence, and long-term professional success.</p>
+                        </div>
+                        <div class="row g-4 justify-content-center about-choose-grid">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="choose-card h-100 text-center">
+                                    <div class="feature-icon mx-auto">
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                    </div>
+                                    <h3>Industry Experts</h3>
+                                    <p>Learn from seasoned professionals who bring real-world insight and proven leadership experience.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="choose-card h-100 text-center">
+                                    <div class="feature-icon mx-auto">
+                                        <i class="fas fa-video"></i>
+                                    </div>
+                                    <h3>Live Training</h3>
+                                    <p>Join interactive sessions designed to keep learning practical, collaborative, and immediately useful.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="choose-card h-100 text-center">
+                                    <div class="feature-icon mx-auto">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <h3>Career Guidance</h3>
+                                    <p>Gain mentorship and career direction that helps you move forward with clarity and purpose.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="choose-card h-100 text-center">
+                                    <div class="feature-icon mx-auto">
+                                        <i class="fas fa-certificate"></i>
+                                    </div>
+                                    <h3>Certifications</h3>
+                                    <p>Build credibility with recognized credentials that support growth at work and in your profession.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="choose-card h-100 text-center">
+                                    <div class="feature-icon mx-auto">
+                                        <i class="fas fa-project-diagram"></i>
+                                    </div>
+                                    <h3>Practical Learning</h3>
+                                    <p>Apply concepts in realistic scenarios that improve retention, confidence, and workplace performance.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="choose-card h-100 text-center">
+                                    <div class="feature-icon mx-auto">
+                                        <i class="fas fa-headset"></i>
+                                    </div>
+                                    <h3>Lifetime Support</h3>
+                                    <p>Receive ongoing guidance and support long after your course ends, helping you stay on track.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="recognition-card">
-                    <div class="recognition-header">
-                        <span class="recognition-label">EXTERNAL RECOGNITION · JUNE 2021</span>
-                        <div class="recognition-icon">
-                            <i class="fas fa-award"></i>
-                        </div>
-                    </div>
-                    
-                    <h2 class="recognition-title">Named Among India's Top 10 Workforce Development Companies</h2>
-                    
-                    <p class="recognition-text">SiliconIndia Magazine — one of India's leading business and technology publications — recognised Erudition Infinite in its annual feature on the most promising workforce development companies in the country. The feature highlighted our commitment to building future-ready professionals through outcome-focused, customised training programs at a time when the skills gap had never been more critical.</p>
-                    
-                    <div class="recognition-quote">
-                        <div class="quote-accent"></div>
-                        <p class="quote-text">"This recognition reaffirms what our learners and clients already know — that meaningful workforce transformation starts with a partner deeply invested in outcomes, not just content delivery."</p>
-                    </div>
-                    
-                    <a href="https://www.siliconindia.com/digital-magazine/workforce-development-companies-june-2021/#page=14" target="_blank" class="premium-btn premium-btn-gold">
-                        Read the Feature <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+            <div class="col-12">
+                <div class="page-card shadow-soft about-team-section">
+                    <div class="card-body p-4 p-lg-5">
+                        <p class="about-eyebrow text-center">Our Leadership Team</p>
+                        <h2 class="section-heading text-center">Meet the professionals behind our learning experience</h2>
+                        <p class="section-text about-paragraph text-center mb-4">Experienced mentors and trainers committed to delivering excellence at every step.</p>
 
-<!-- 4. TRAINING PHILOSOPHY SECTION -->
-<section class="philosophy-section">
-    <div class="container-xl">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <span class="premium-label">OUR APPROACH</span>
-                <h2 class="premium-section-title">Training Philosophy</h2>
-                <p class="premium-section-text">At Erudition Infinite, we believe that true learning happens at the intersection of theory and practice. Our training methodology draws from military leadership principles, corporate best practices, and behavioral science research.</p>
-            </div>
-        </div>
-        
-        <div class="row g-4">
-            <div class="col-lg-4">
-                <div class="philosophy-card">
-                    <div class="philosophy-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h3 class="philosophy-title">Experiential Learning</h3>
-                    <p class="philosophy-text">Learning by doing through simulations, case studies, and real-world scenarios.</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="philosophy-card">
-                    <div class="philosophy-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <h3 class="philosophy-title">Collaborative Growth</h3>
-                    <p class="philosophy-text">Peer learning and group activities that build teamwork and communication.</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="philosophy-card">
-                    <div class="philosophy-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3 class="philosophy-title">Measurable Outcomes</h3>
-                    <p class="philosophy-text">Every program has defined learning objectives with assessable outcomes.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 5. HELPING OTHERS TO SUCCEED SECTION -->
-<section class="success-section">
-    <div class="container-xl">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <span class="premium-label">OUR PURPOSE</span>
-                <h2 class="premium-section-title">Helping Others to Succeed</h2>
-                <p class="premium-section-text">Erudition Infinite emphasizes bringing out the best in an individual or organization by helping them to identify their talents, set and accomplish goals, and succeed in their endeavors.</p>
-            </div>
-        </div>
-        
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-6">
-                <div class="success-card">
-                    <div class="success-icon">
-                        <i class="fas fa-project-diagram"></i>
-                    </div>
-                    <h3 class="success-title">SWOT Analysis</h3>
-                    <p class="success-text">Use of tools like SWOT analysis in conjunction with reflections on own life experiences, as aids to helping individuals find their mojo.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6">
-                <div class="success-card">
-                    <div class="success-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3 class="success-title">Self-Awareness & Goal Setting</h3>
-                    <p class="success-text">Bringing about awareness of the significance of one's role at a personal level and in the organization's scheme of things is a critical deliverable in the Firm's T & D process.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6">
-                <div class="success-card">
-                    <div class="success-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <h3 class="success-title">Continuous Learning</h3>
-                    <p class="success-text">The focus is on helping to navigate the thought process and then spurring oneself to align with one's desired personal or organizational goals.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6">
-                <div class="success-card">
-                    <div class="success-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h3 class="success-title">Multiple Intelligences</h3>
-                    <p class="success-text">The concept of multiple intelligences helps individuals develop attitudes that will help them acquire knowledge and skills, apply them correctly, and learn from experience.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 6. FLAGSHIP SERVICE - PERSONALITY DEVELOPMENT -->
-<section class="flagship-section">
-    <div class="container-xl">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="flagship-card">
-                    <span class="premium-label flagship-label">FLAGSHIP SERVICE</span>
-                    <h2 class="flagship-title">Personality Development</h2>
-                    
-                    <p class="flagship-text">Personality encompasses an infinite number of contributing factors. Individuals have to adapt to develop attitudes that will help them acquire knowledge and skills, apply them correctly, and learn from experience to permanently imbibe the most critical positive attributes.</p>
-                    
-                    <div class="flagship-topics">
-                        <span class="flagship-tag">Integrity</span>
-                        <span class="flagship-tag">Self Motivation</span>
-                        <span class="flagship-tag">Goal Setting</span>
-                        <span class="flagship-tag">Empathy</span>
-                        <span class="flagship-tag">Discipline</span>
-                        <span class="flagship-tag">Adaptability</span>
-                        <span class="flagship-tag">Effective Communication</span>
-                        <span class="flagship-tag">Pursuit of Knowledge</span>
-                        <span class="flagship-tag">Excellence</span>
-                        <span class="flagship-tag">Presentation Skills</span>
-                        <span class="flagship-tag">Etiquette</span>
-                        <span class="flagship-tag">Time Management</span>
-                        <span class="flagship-tag">Stress Management</span>
-                        <span class="flagship-tag">Interpersonal Relations</span>
-                        <span class="flagship-tag">Work-Life Balance</span>
-                        <span class="flagship-tag">Cross-Cultural Interaction</span>
-                        <span class="flagship-tag">Entrepreneurial Skills</span>
-                        <span class="flagship-tag">Ethical Leadership</span>
-                    </div>
-                    
-                    <div class="flagship-footer">
-                        <p class="flagship-attribution">— Lt Col Shreesh Kumar (Retd), Founder & CEO</p>
-                    </div>
-                </div>
-                <div class="flagship-accent-blob blob-1"></div>
-                <div class="flagship-accent-blob blob-2"></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 7. ORGANIZATIONAL DEVELOPMENT SOLUTIONS -->
-<section class="org-development-section">
-    <div class="container-xl">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6">
-                <div class="org-dev-content">
-                    <h2 class="premium-section-title">Organizational Development Solutions</h2>
-                    
-                    <p class="org-dev-text">Besides development programs, Erudition Infinite also offers organizational development solutions, thinking ahead from individual to the corporate entity. Performing a needs analysis by looking at core business processes data, employees' expertise, perceived deficiencies, desired and actual outcomes, the Firm provides tailor-made re-organization solutions and customized programs to their clients.</p>
-                    
-                    <p class="org-dev-text">Col Kumar's operational army combat experience and leadership stints in Corporate help steer the Firm's pursuit of excellence. Delivery of solutions in a non-contact manner via online platforms is also an option.</p>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="org-dev-visual">
-                    <div class="org-dev-visual-inner">
-                        <div class="org-accent-1"></div>
-                        <div class="org-accent-2"></div>
-                        <div class="org-accent-3"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 8. TRAINING AREAS SECTION -->
-<section class="training-areas-section">
-    <div class="container-xl">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <span class="premium-label">COMPREHENSIVE COVERAGE</span>
-                <h2 class="premium-section-title">Training Areas</h2>
-                <p class="premium-section-text">Our interactive training aims to transform, make good team players and leaders, evolve value systems to live by and share those learnings and mentor others.</p>
-            </div>
-        </div>
-        
-        <div class="row g-3">
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-comment-dots"></i>
-                    <span>Communication Skills</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-crown"></i>
-                    <span>Leadership Development</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-mic"></i>
-                    <span>Presentation Skills</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-clock"></i>
-                    <span>Time Management</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-handshake"></i>
-                    <span>Business Etiquette</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-heart"></i>
-                    <span>Life Skills</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                    <span>Train the Trainer</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-briefcase"></i>
-                    <span>Project Management</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Campus to Corporate</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Building Resilience</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-users"></i>
-                    <span>Team Building</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-balance-scale"></i>
-                    <span>Conflict Management</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-rupee-sign"></i>
-                    <span>Cost Management</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-megaphone"></i>
-                    <span>Public Speaking</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-lightbulb"></i>
-                    <span>Problem Solving</span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="training-area-card">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span>Crisis Management</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 9. OUR PROGRAMS SECTION -->
-<section class="programs-section">
-    <div class="container-xl">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <span class="premium-label">WHAT WE OFFER</span>
-                <h2 class="premium-section-title">Our Programs</h2>
-            </div>
-        </div>
-        
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-comment-dots"></i>
-                    </div>
-                    <h3 class="program-name">Communication Skills</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                    <h3 class="program-name">Leadership Development</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <h3 class="program-name">Personality Development</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3 class="program-name">Time Management</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <h3 class="program-name">Business Etiquette</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <h3 class="program-name">Corporate Training</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3 class="program-name">Campus to Corporate</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-mic"></i>
-                    </div>
-                    <h3 class="program-name">Presentation Skills</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <h3 class="program-name">Management Consultancy</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <h3 class="program-name">Training & Development</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-sitemap"></i>
-                    </div>
-                    <h3 class="program-name">Organization Development</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-tasks"></i>
-                    </div>
-                    <h3 class="program-name">Project Management</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h3 class="program-name">Life Skills</h3>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <h3 class="program-name">Train the Trainer</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 10. TEAM SECTION -->
-{% if team_members %}
-<section class="team-section">
-    <div class="container-xl">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <span class="premium-label">OUR TEAM</span>
-                <h2 class="premium-section-title">Meet Our Team</h2>
-            </div>
-        </div>
-        
-        <div class="row g-4 align-items-stretch">
-            {% for member in team_members %}
-            <div class="col-md-6 col-lg-4">
-                <div class="team-member-card">
-                    <div class="team-member-image">
-                        {% if member.employee_image %}
-                            <img src="{{ member.employee_image.url }}" alt="{{ member.employee_name }}" class="team-member-img">
+                        {% if team_members %}
+                            <div class="row g-4 align-items-stretch about-team-grid">
+                                {% for member in team_members %}
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="team-card h-100 d-flex flex-column about-team-card">
+                                            {% if member.employee_image %}
+                                                <img src="{{ member.employee_image.url }}" alt="{{ member.employee_name }}" class="team-card-image">
+                                            {% else %}
+                                                <div class="team-card-image team-card-image-placeholder">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            {% endif %}
+                                            <div class="team-card-body text-center">
+                                                <h4 class="team-name">{{ member.employee_name }}</h4>
+                                                <p class="team-role">{{ member.role }}</p>
+                                                <p class="team-description">{{ member.description }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         {% else %}
-                            <div class="team-member-placeholder">
-                                <i class="fas fa-user"></i>
+                            <div class="text-center py-4">
+                                <p class="section-text mb-0">No team members available.</p>
                             </div>
                         {% endif %}
                     </div>
-                    <div class="team-member-content">
-                        <h3 class="team-member-name">{{ member.employee_name }}</h3>
-                        <p class="team-member-role">{{ member.role }}</p>
-                        <p class="team-member-description">{{ member.description }}</p>
-                    </div>
-                    <div class="team-member-accent"></div>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        
     </div>
 </section>
-{% endif %}
-
 {% endblock %}

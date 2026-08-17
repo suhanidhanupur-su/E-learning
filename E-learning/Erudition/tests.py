@@ -4,6 +4,7 @@ from unittest.mock import patch
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
+from django.urls import reverse
 from PIL import Image
 
 from .models import Category, Course, Enrollment, Enquiry, TeamMember
@@ -16,6 +17,25 @@ class HomePageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Erudition')
         self.assertContains(response, 'Courses')
+
+    def test_featured_courses_link_to_own_course_detail_pages(self):
+        category = Category.objects.create(name='Leadership', slug='leadership')
+        course = Course.objects.create(
+            category=category,
+            title='Leadership Development Program',
+            slug='leadership-development-program',
+            short_description='Build strategic thinking and team leadership skills.',
+            description='A leadership course designed for career growth.',
+            duration='8 weeks',
+            price=4999.00,
+            is_active=True,
+            is_featured=True,
+        )
+
+        response = self.client.get('/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, reverse('course_detail', args=[course.slug]))
 
 
 class LiveClassesPageTests(TestCase):
