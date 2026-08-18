@@ -821,7 +821,7 @@
     </div><!-- /articles-grid -->
 
     <div class="hp-cta-wrap">
-      <a href="#" class="hp-btn-outline-blue">Read More Articles</a>
+      <a href="{% url 'articles' %}" class="hp-btn-outline-blue">Read More Articles</a>
     </div>
 
   </div>
@@ -927,10 +927,10 @@
         <h2 class="cta-final-heading">Begin Your Professional<br>Transformation</h2>
         <p class="cta-final-para">Join thousands of individuals, students and organisations who have already unlocked their potential through Erudition's world-class training programs.</p>
         <div class="cta-final-btns">
-          <a href="#" class="cta-btn-primary">
+          <a href="{% url 'register' %}" class="cta-btn-primary">
             <i class="fas fa-rocket"></i> Register Now
           </a>
-          <a href="#" class="cta-btn-outline">
+          <a href="{% url 'courses' %}" class="cta-btn-outline">
             <i class="fas fa-th-large"></i> Browse Courses
           </a>
         </div>

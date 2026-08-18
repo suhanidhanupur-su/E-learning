@@ -1,0 +1,69 @@
+{% extends 'Erudition/base.html' %}
+
+{% block title %}{% if article.title %}{{ article.title }}{% else %}Article{% endif %} | Erudition{% endblock %}
+
+{% block header_banner %}
+    {% include 'Erudition/header_banner.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="page-section article-detail-page">
+    <div class="container-xl">
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-8">
+                <div class="page-card shadow-soft">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                            <span class="badge rounded-pill px-3 py-2" style="background: rgba(30,64,175,0.08); color: #1E40AF; border: 1px solid rgba(30,64,175,0.18);">
+                                <i class="bi bi-newspaper me-1"></i>
+                                {% if article.category %}{{ article.category }}{% else %}Article{% endif %}
+                            </span>
+                            {% if article.read_time %}
+                                <span class="badge rounded-pill px-3 py-2" style="background: rgba(212,175,55,0.12); color: #8a6700; border: 1px solid rgba(212,175,55,0.22);">
+                                    <i class="bi bi-clock-history me-1"></i> {{ article.read_time }}
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <h1 class="fw-bold mb-3" style="color: #0f172a; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.2;">
+                            {{ article.title }}
+                        </h1>
+
+                        <div class="d-flex flex-wrap align-items-center gap-3 text-muted small mb-4">
+                            <span><i class="bi bi-person-circle me-1"></i> {{ article.author|default:'Erudition Team' }}</span>
+                            <span><i class="bi bi-calendar3 me-1"></i> {% if article.published_at %}{{ article.published_at|date:'d M Y' }}{% else %}Recently published{% endif %}</span>
+                        </div>
+
+                        <div class="rounded-4 overflow-hidden mb-4" style="background: linear-gradient(135deg, rgba(30,64,175,0.96), rgba(59,130,246,0.88)); min-height: 260px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2.2rem; font-weight: 700;">
+                            <span class="text-center px-4">
+                                <i class="bi bi-journal-richtext me-2"></i>
+                                {{ article.title }}
+                            </span>
+                        </div>
+
+                        {% if article.excerpt %}
+                            <p class="lead text-muted mb-4" style="line-height: 1.8;">
+                                {{ article.excerpt }}
+                            </p>
+                        {% endif %}
+
+                        <div class="article-content" style="color: #334155; font-size: 1.04rem; line-height: 1.9;">
+                            {% if article.content %}
+                                {{ article.content|linebreaksbr }}
+                            {% else %}
+                                <p>This article detail page is ready for your editorial content. Add real article content in the Article model or update this template with the final copy for the published version.</p>
+                                <p>Erudition keeps the learning experience practical, strategic and career-focused. These article pages are intentionally built to support premium thought-leadership content without changing the homepage card styling or routing behavior.</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="mt-5 d-flex flex-wrap gap-3">
+                            <a href="{% url 'articles' %}" class="btn btn-primary-custom rounded-pill px-4 py-2">Back to Articles</a>
+                            <a href="{% url 'courses' %}" class="btn btn-outline-custom rounded-pill px-4 py-2">Explore Courses</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

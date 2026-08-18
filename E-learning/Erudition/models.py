@@ -99,6 +99,26 @@ class LiveClass(models.Model):
         return self.title
 
 
+class Article(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
+    category = models.CharField(max_length=100, blank=True)
+    excerpt = models.TextField(blank=True)
+    content = models.TextField(blank=True)
+    author = models.CharField(max_length=255, default='Erudition Team')
+    read_time = models.CharField(max_length=50, default='5 min read')
+    is_published = models.BooleanField(default=True)
+    published_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-published_at',)
+
+    def __str__(self):
+        return self.title
+
+
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -142,6 +162,11 @@ def ensure_course_slug(sender, instance, **kwargs):
     if not instance.slug:
         instance.slug = _generate_unique_slug(instance)
 
+
+@receiver(pre_save, sender=Article)
+def ensure_article_slug(sender, instance, **kwargs):
+    if not instance.slug:
+        instance.slug = _generate_unique_slug(instance)
 
 
 class Enrollment(models.Model):

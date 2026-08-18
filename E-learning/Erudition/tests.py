@@ -7,7 +7,7 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 from PIL import Image
 
-from .models import Category, Course, Enrollment, Enquiry, TeamMember
+from .models import Article, Category, Course, Enrollment, Enquiry, TeamMember
 
 
 class HomePageTests(TestCase):
@@ -44,6 +44,25 @@ class LiveClassesPageTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Live Classes')
+
+
+class ArticleDetailPageTests(TestCase):
+    def test_article_detail_page_renders_for_existing_article(self):
+        article = Article.objects.create(
+            title='5 Habits That Separate Good Managers From Great Leaders',
+            slug='5-habits-that-separate-good-managers-from-great-leaders',
+            category='Leadership',
+            excerpt='Leadership is a set of daily habits.',
+            content='A practical article about leading with confidence.',
+            author='Erudition Team',
+            read_time='5 min read',
+            is_published=True,
+        )
+
+        response = self.client.get(reverse('article_detail', args=[article.slug]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, article.title)
 
 
 class FaviconTests(TestCase):

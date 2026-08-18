@@ -12,12 +12,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 import razorpay
 
 from .forms import ProfileUpdateForm, RegisterForm
-from .models import LiveClass, Profile, Category, Course, Enrollment, Enquiry, TeamMember
-
-try:
-    from .models import Article
-except ImportError:  # pragma: no cover
-    Article = None
+from .models import Article, LiveClass, Profile, Category, Course, Enrollment, Enquiry, TeamMember
 
 
 def home(request):
@@ -328,14 +323,73 @@ def live_classes(request):
 def articles(request):
     category_slug = request.GET.get('category')
     categories = Category.objects.order_by('name')
+    articles = Article.objects.filter(is_published=True).order_by('-published_at')
+
+    if category_slug and category_slug != 'all':
+        articles = articles.filter(category__iexact=category_slug)
+
+    if not articles.exists():
+        articles = [
+            {
+                'title': '5 Habits That Separate Good Managers From Great Leaders',
+                'slug': '5-habits-that-separate-good-managers-from-great-leaders',
+                'category': 'Leadership',
+                'excerpt': 'Leadership is a set of daily habits. Discover the five behaviours that transform managers into leaders others want to follow.',
+                'author': 'Erudition Team',
+                'read_time': '5 min read',
+            },
+            {
+                'title': 'How to Speak With Confidence in Any Situation',
+                'slug': 'how-to-speak-with-confidence-in-any-situation',
+                'category': 'Communication',
+                'excerpt': 'Whether it is a boardroom presentation or a difficult conversation, these techniques help you speak clearly and confidently.',
+                'author': 'Erudition Team',
+                'read_time': '4 min read',
+            },
+            {
+                'title': 'Why Soft Skills Are the New Hard Skills in 2025',
+                'slug': 'why-soft-skills-are-the-new-hard-skills-in-2025',
+                'category': 'Career Growth',
+                'excerpt': 'Technical expertise helps you get hired, but soft skills help you lead, adapt and stay relevant in a changing world.',
+                'author': 'Erudition Team',
+                'read_time': '6 min read',
+            },
+        ]
 
     featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
 
     return render(request, 'Erudition/articles.html', {
         'categories': categories,
+        'articles': articles,
         'active_category_slug': category_slug,
         'page_title': 'Articles',
         'page_subtitle': 'Explore thought leadership and practical business insights aligned with our learning programs.',
+        'featured_courses': featured_courses,
+    })
+
+
+def article_detail(request, slug):
+    article = Article.objects.filter(slug=slug, is_published=True).first()
+
+    if article is None:
+        fallback = {
+            'title': slug.replace('-', ' ').title(),
+            'slug': slug,
+            'category': 'Leadership',
+            'excerpt': 'Thought leadership, learning strategies and practical insights for modern professionals.',
+            'content': 'This article detail page is available for the homepage article links. Use the existing article model and add real content when your editorial content is ready.',
+            'author': 'Erudition Team',
+            'read_time': '5 min read',
+            'published_at': None,
+        }
+        article = fallback
+
+    featured_courses = Course.objects.filter(is_active=True, is_featured=True)[:4]
+
+    return render(request, 'Erudition/article_detail.html', {
+        'article': article,
+        'page_title': article['title'] if isinstance(article, dict) else article.title,
+        'page_subtitle': article['excerpt'] if isinstance(article, dict) else article.excerpt or 'Read more from Erudition.',
         'featured_courses': featured_courses,
     })
 
