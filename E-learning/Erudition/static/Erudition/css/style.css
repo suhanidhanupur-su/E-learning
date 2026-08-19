@@ -1304,101 +1304,116 @@ img {
     box-shadow: 0 30px 90px rgba(15, 23, 42, 0.08);
 }
 .about-page .about-hero-card {
-    background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
-    border: none;
+    background: #ffffff;
+    border: 1px solid rgba(11, 42, 91, 0.1);
     overflow: hidden;
     padding: 0;
 }
-.about-page .about-hero {
-    gap: 2.5rem;
+.about-page .about-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: center;
 }
-.about-page .about-intro,
-.about-page .about-intro-copy {
-    padding-right: 1.25rem;
+.about-page .about-copy {
+    padding-right: 0;
+    min-width: 0;
 }
 .about-page .about-hero-badge {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 0.85rem 1.4rem;
-    border-radius: 999px;
-    background: rgba(212, 175, 55, 0.14);
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    color: #b78800;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    color: #d4a72c;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    font-size: 0.82rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.78rem;
+    margin-bottom: 1.15rem;
+    padding-bottom: 0.55rem;
+}
+.about-page .about-hero-badge::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2.5rem;
+    height: 2px;
+    background: #d4a72c;
 }
 .about-page .about-hero-title {
-    font-size: clamp(2.8rem, 4vw, 4.6rem);
+    font-size: clamp(2.25rem, 3.5vw, 3.4rem);
     font-weight: 800;
-    line-height: 1.05;
-    color: #0f172a;
-    margin-bottom: 1.6rem;
-    letter-spacing: -0.03em;
-    max-width: 760px;
-    text-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+    line-height: 1.15;
+    color: #0b2a5b;
+    margin-bottom: 1.4rem;
+    letter-spacing: 0;
+    max-width: 650px;
+    text-shadow: none;
 }
 .about-page .about-hero-text {
-    color: #475569;
-    font-size: 1.05rem;
-    line-height: 2;
-    margin-bottom: 1.25rem;
-    max-width: 720px;
+    color: #55657a;
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 1.15rem;
+    max-width: 650px;
 }
 .about-page .about-hero-text + .about-hero-text {
     margin-top: 0;
 }
-.about-page .about-stats-grid {
-    margin-left: 0;
+.about-page .about-stats {
+    width: min(100%, 500px);
+    margin: 0 0 0 auto;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 1.25rem;
 }
 .about-page .about-stat-card {
     background: #ffffff;
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    border-radius: 24px;
-    padding: 1.9rem 1.5rem;
-    box-shadow: 0 28px 90px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(11, 42, 91, 0.12);
+    border-radius: 7px;
+    width: 100%;
+    min-width: 0;
+    height: 142px;
+    padding: 1.15rem 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 190px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: border-color 0.2s ease, transform 0.2s ease;
 }
 .about-page .about-stat-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 32px 100px rgba(15, 23, 42, 0.12);
-    border-color: rgba(212, 175, 55, 0.28);
+    transform: translateY(-2px);
+    border-color: rgba(212, 167, 44, 0.55);
 }
 .about-page .about-stat-icon {
-    width: 58px;
-    height: 58px;
-    border-radius: 18px;
-    background: rgba(30, 64, 175, 0.14);
-    color: #1e40af;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: transparent;
+    color: #d4a72c;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.7rem;
 }
 .about-page .about-stat-number {
-    font-size: 2.25rem;
+    font-size: 1.75rem;
     font-weight: 800;
-    color: #0f172a;
+    color: #0b2a5b;
     line-height: 1.05;
     margin-bottom: 0.35rem;
 }
 .about-page .about-stat-label {
     color: #55657a;
-    font-size: 0.95rem;
-    line-height: 1.8;
+    font-size: 0.82rem;
+    line-height: 1.35;
 }
 .about-page .about-section-intro {
     max-width: 760px;
@@ -1559,22 +1574,25 @@ img {
     line-height: 1.8;
 }
 @media (max-width: 991.98px) {
-    .about-page .about-intro-copy {
+    .about-page .about-layout {
+        grid-template-columns: 1fr;
+        row-gap: 2.5rem;
+    }
+    .about-page .about-copy {
         padding-right: 0;
     }
-    .about-page .about-stats-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .about-page .about-stats {
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 @media (max-width: 767.98px) {
     .about-page .about-hero-title {
         font-size: clamp(2.4rem, 7vw, 3.4rem);
     }
-    .about-page .about-intro-copy {
+    .about-page .about-copy {
         margin-bottom: 2rem;
-    }
-    .about-page .about-stats-grid {
-        grid-template-columns: 1fr;
     }
     .about-page .about-vision-section {
         padding: 2rem;
